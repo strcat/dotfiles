@@ -1,0 +1,39 @@
+# $Id: mutt.scoring,v 1.2 2003/09/17 13:08:45 dope Exp dope $
+
+# Note: Scoring on a (X-)Header won't work :/
+
+set score_threshold_delete=0    # delete messages with score 0
+set score_threshold_flag=50     # auto-flag messages w/ score >= 50
+set score_threshold_read=5      # mark messages w/ score <= 5 as read
+
+# Remove all scorings
+unscore *
+
+# Default - Scoring
+#-------------------------------------------------- 
+score '~A'                                                      +10     # all messages start with score 10
+score '~g|~G'                                                   +2      # PGP signed / encrypted messages
+score ~F                                                        +20     # flagged mails are important
+score ~D                                                        =0      # this is a deleted email
+score ~S                                                        =0      # superseded messages
+
+# The good one ;)
+score '~t strcat@gmx.net'                                       +20     # i'm quite important
+score '~s painless'                                             +10     # Backup-Daemon ;)
+score '~s Wetter'                                               +10     # <http://www.donnerwetter.de/>
+score '~s ahog | ~s FAQ'                                        +10     # Flames / Hints / Questions about the FAQ
+score '(~f @buug.de) |(~f @bzimage.de)'                         +10     # <http://www.buug.de/>
+score '~x bofh.my-fqdn.de'                                      +10     # Reply on an Usenet - Posting
+
+# SPAM
+score '~f @aol.com'                                             -9999   # I HATE AOL!
+score '~f webmaster@*'                                          -9999   # Webmasters kidnapped by evil cult :>
+score '~s ^test$'                                               -9999   # all messages w/ subject "test" are killed
+score '~s sex | ~s adult'                                       -9999   # STFU
+score '~f anonymous'                                            -9999   # Yeah. Sure. Evil hackers from Serbia.
+score '~='                                                      -9999   # all duplicates are killed
+score '~s ^unsubscribe$ !(~p|~P|~Q|~F)'                         -9999   # all msgs w/ subject "unsubscribe" not by myself are killed
+score '~s "for sale"'                                           -9999   # sale yout compter. moron..
+score '!~f@'                                                    -9999   # no mail address present?
+score "~f '^([^ <>@]+ ){5,}'"                                   -9999   # a realname consisting of >=5 portions is invalid, too
+

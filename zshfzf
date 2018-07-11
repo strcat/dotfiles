@@ -1,0 +1,86 @@
+# FZF is a general-purpose command-line fuzzy finder.
+export FZF_FILE_HIGHLIGHTER='cat'
+	(( $+commands[rougify]   )) && FZF_FILE_HIGHLIGHTER='rougify'
+	(( $+commands[coderay]   )) && FZF_FILE_HIGHLIGHTER='coderay'
+	(( $+commands[highlight] )) && FZF_FILE_HIGHLIGHTER='highlight --out-format="xterm256" --style="pablo"'
+	(( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --color=always'
+
+export FZF_DEFAULT_COMMAND='tty'
+	(( $+commands[rg] )) && FZF_DEFAULT_COMMAND="rg --files --no-messages --no-ignore --hidden --follow --ignore-case --glob '!{.git,node_modules}/*'"
+	(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+	(( $+commands[fd] )) && export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+
+#export FZF_DEFAULT_COLORS='--color=dark,fg:7,fg+:7,bg:0,bg+:8,hl:4,hl+:4,info:8,border:8,prompt:4,pointer:3,marker:3,spinner:8,header:6'
+#export FZF_DEFAULT_COLORS='--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229,info:150,prompt:110,spinner:150,pointer:167,marker:174'
+#export FZF_DEFAULT_COLORS='--color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
+export FZF_DEFAULT_COLORS='--color light,hl:124,fg+:242,bg+:230,hl+:33,info:52,prompt:245,spinner:245,pointer:245,marker:208'
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_COLORS \
+	--border \
+	--height 80% \
+	--extended \
+	--ansi \
+	--reverse \
+	--cycle \
+	--bind ?:toggle-preview,alt-w:toggle-preview-wrap \
+	--bind ctrl-u:half-page-up \
+	--bind ctrl-d:half-page-down \
+	--bind alt-a:select-all,ctrl-r:toggle-all \
+	--bind ctrl-s:toggle-sort \
+	--preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\" \
+	--preview-window right:50%:hidden"
+export FZF_DEFAULT_OPTS
+
+# https://github.com/junegunn/fzf
+# fzf+vim == HELL, YEAH!!!11!
+# cd /path/to/directory
+# Fvim
+# CTRL-J / CTRL-K (or CTRL-N / CTRL-P) to move cursor up and down, Enter
+# key to select the item, CTRL-C / CTRL-G / ESC to exit and On
+# multi-select mode (-m), TAB and Shift-TAB to mark multiple items
+Fvim() { vim $(fzf -m  --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -$LINES') }
+
+# fshow - git commit browser (enter for show, ctrl-d for diff)
+# fshow - git commit browser
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+# v - open files in ~/.viminfo
+v() {
+  local files
+  files=$(grep '^>' ~/.viminfo | cut -c3- |
+          while read line; do
+            [ -f "${line/\~/$HOME}" ] && echo "$line"
+          done | fzf-tmux -d -m -q "$*" -1) && vim ${files//\~/$HOME}
+}
+
+# Browsing Google Chromes history and open urls with xdg-open
+gch() {
+	local cols sep google_history open
+	cols=$(( COLUMNS / 3 ))
+	sep='{::}'
+	google_history="$HOME/.config/google-chrome/Default/History"
+	open=xdg-open
+	cp -f "$google_history" /tmp/h
+	sqlite3 -separator $sep /tmp/h \
+		"select substr(title, 1, $cols), url
+		 from urls order by last_visit_time desc" |
+	awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+	fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
+}
+
+# checkout git commit
+fcoc() {
+  local commits commit
+  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+  commit=$(echo "$commits" | fzf --tac +s +m -e) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
+

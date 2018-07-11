@@ -1,0 +1,6 @@
+# $Id: mutt.ssl,v 1.2 2003/09/12 00:51:32 dope Exp dope $
+#
+set ssl_starttls
+set certificate_file="~./mutt/certificates"
+set ssl_use_sslv3
+set ssl_use_tlsv1

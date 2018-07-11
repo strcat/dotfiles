@@ -1,0 +1,19 @@
+# $Id: mutt.unignore,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+# Note: 'From' != 'From:'
+# Useful for Mailinglists
+unignore From:
+unignore To
+unignore Date
+unignore Subject
+unignore Cc
+unignore X-Mailer
+unignore User-Agent
+unignore Organization
+unignore X-Operating-System
+unignore X-GPG-Public-Key
+unignore X-Uptime
+unignore X-Now-Playing
+unignore X-Newsreader
+unignore Newsgroup
+hdr_order From: To: Subject: Cc: Date: X-Mailer:

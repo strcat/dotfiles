@@ -1,0 +1,22 @@
+function keep()
+{
+	setopt localoptions nomarkdirs nonomatch nocshnullglob nullglob
+        kept=()		# Erase old value in case of error on next line
+        kept=($~*)
+	if [[ ! -t 0 ]]; then
+		local line
+		while read line; do
+			kept+=( $line )   # += is a zsh 4.2+ feature
+		done
+	fi
+	print -Rc - ${^kept%/}(T)
+}
+_insert_kept() {
+	compstate[insert]=all
+        compadd -a kept
+}
+
+zle -C insert-kept-result complete-word _insert_kept
+bindkey '^S' insert-kept-result 
+zle -C insert-kept-result complete-word _generic
+zstyle ':completion:insert-kept-result:*' completer _insert_kept

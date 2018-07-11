@@ -1,0 +1,174 @@
+# $Id: mutt.headers,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+# unset all headers
+unmy_hdr *
+
+# define my own headers
+set hdrs
+
+# The complete 'From:' - Line
+#--------------------------------------------------
+# my_hdr From: Christian Schneider <strcat@gmx.net>
+#-------------------------------------------------- 
+
+# my Organization
+my_hdr Organization: Guerrilla UNIX Development (Venimus, Vidimus, Dolavimus)
+ 
+# How to get my GPG-Key
+my_hdr X-GPG-Key: gpg --recv-keys --keyserver wwwkeys.eu.pgp.net F678E1DA
+ 
+#my_hdr X-Message-Flag: Microsoft Security Advice: Youre machine has been compromised. Reinstall Windows
+# Born to frag!
+#my_hdr X-Editor: `vim --version | grep "VIM - Vi IM" | sed 's/(.*)/\<http:\/\/www.vim.org\>/g'`
+
+# G(nu)PG
+#my_hdr X-Important: <http://www.ccc.de/updates/2007/biometrie-terror>
+# my_hdr User-Agent: Mutt/1.5.4i (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`)
+# Result        : User-Agent: Mutt/1.5.4i (OpenBSD 3.2)
+# Disadvantage  : The "versions-part" ist static :/
+# 
+# YES!!!11!
+# Result: User-Agent: Mutt/1.5.4i (OpenBSD 3.2)
+#my_hdr User-Agent: Mutt/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`)
+#--------------------------------------------------
+# my_hdr User-Agent: Mutt/1.5.9 (UNIX)
+#-------------------------------------------------- 
+#my_hdr User-Agent: Mutt/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -sr`)
+#--------------------------------------------------
+# my_hdr User-Agent: Mutt/`muttng -v | head -n 1 | cut -f 7 -d " "`
+#-------------------------------------------------- 
+# Too simple? Hey .. no problem ;)
+# my_hdr User-Agent: `mutt -v | head -n 1 |  awk '{ print $1}'`/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`) 
+
+# *bg* 
+#
+# X-Header-001:  	 
+# X-Header-002:  	 
+# X-Header-003:  	                          ,.--..
+# X-Header-004:  	                       ,:".   .'"V:.::..  .
+# X-Header-005:  	                     ,::.'..  . . "VI:I:".':-.,.
+# X-Header-006:  	                    ,I::. ..   .   'VHMHII:.::;:.:,..
+# X-Header-007:  	                   :I:I:.. .   .    MHMHIHI:MHHI:I:'.:.
+# X-Header-008:  	                   A:I::. ...  .   .MMHHIIHIHI:IHHII:.:,
+# X-Header-009:  	                  .M:I::... ..   . AMMMMMHI::IHII::II.::.
+# X-Header-010:  	                  IMA"::.:.. .    .MMMMMHHII:IMHIHIA:::"'
+# X-Header-011:  	                  'MV.:.:.. .     AMMMMHMHI:I:HIHHIIIA;.
+# X-Header-012:  	                   P.:.:.. .  .  .MMMMMMMHHIIMHHHIIHIIH.
+# X-Header-013:  	                   :..:.. . .    AMMMMMMMHHI:AMIVHI:HIII:
+# X-Header-014:  	                  ,:.:.. .  .    MMMMMMMMMH:IHHI:HHI:HIIH.
+# X-Header-015:  	                  :..:...  .    .MMMHP:""''':HHIH:HHH:HIII
+# X-Header-016:  	                 ;.:..:.. .     AMH:". ' ' ''":HII:HHH:HII:
+# X-Header-017:  	                 ::..:.. . .   .H:'.. .     '".:VA:I:H::HI:
+# X-Header-018:  	                ;.:.:... ..    A:.'...     .   ':HA:IHI::I:
+# X-Header-019:  	               ,::..:. . .    .M::. .    .      ':HA:HH:II:.
+# X-Header-020:  	               ;.::... ..     AML;,'       .    .:VHI:HI:I:;
+# X-Header-021:  	              ,:.:.:. . .    .H. "PA,           .:IHH:HHII::.
+# X-Header-022:  	             ,:.::... ..     A:I:::";, .   .  ,ILIIIH:HI:I:I;
+# X-Header-023:  	            ,;:.:.:.. . .   .H:TP"VB')..   .,;T;,,::I:HI:I:::
+# X-Header-024:  	           ,::.:.:.. . .    AI:.":IAAT:.  .(':BB');V::IH:I:I;
+# X-Header-025:  	          ,::.:.:.. . .    .H:. ' . . ..  .":;AITP;I:IIH:I::;,
+# X-Header-026:  	         ,::.::.:. . . .   A::.   . ..:.  .  . ..:AI:IHII:I::;.
+# X-Header-027:  	         ;:.::.:.. .  .   AM:I:.   ..:.   .: . .::HIIIHIIHII::.
+# X-Header-028:  	        ,:::.:.:..  .    .MM:I:..  .:,    .:.  .::HHIIIHIHII::'
+# X-Header-029:  	       ,::.:..:.. .   .  AMM:I:.  . .'"-""''. ..::HIHI:HI:III:
+# X-Header-030:  	       ;:.::..:.. . .   AMMM::. . ,,,, '..   '.::IMHIHIHIIHI::;
+# X-Header-031:  	      ,:::.:..:. .   .  MMMM:I:.  ':::;;;::;' .::AMHIHIHHIHHI:"
+# X-Header-032:  	      ;::.:.:.. . .   .:VMMV:A:. .  ':;,,."  .::AMMMIHIHHIHHII
+# X-Header-033:  	     ;::.:.:.. ..  .  .::VM:IHA:. .''   ' . ..:AMMMMHIHHHIHHII:
+# X-Header-034:  	     ;:::.:.. .  .. . .::P::IHHAA.. .   .. .:AMMMMMMMIIHHIHHI::
+# X-Header-035:  	     ;::.:.. .  . .  ..:.:VIHHHIHHA::,,,,,:AMMMMMMMMMHIIHHHHII;
+# X-Header-036:  	     ;.::.. .    . .  ..:.:VHHIHI:IHIHHIHI:MMMMMMMMMMHIHHIHHII:
+# X-Header-037:  	     ::.:.. .     ..  ...:.::VHI:IIVIHIHII:MMMMMMMMMMMIHHIHHII:,
+# X-Header-038:  	     ;:..:. .    ..  . ..:.::::VAII:IIIIII:MMMMMMMMMMMIHHIIHIIHI
+# X-Header-039:  	     ';:.. .        . .. ..:...:.VII::III:.VMMMMMMMMMHIHHHIHI::I,
+# X-Header-040:  	      ;:. . .    ' . .. ... . .::.::V::II:..VMMMMMMMMHIHHHIHI::I;
+# X-Header-041:  	      ;:.. . .     . .. ..:..  .::...:VIITPL:VMMMMMMMVIHHHIH:. :;
+# X-Header-042:  	      ;:. .  .    . .. ... .   ..:.:.. .:IIIA:.MMMMMVI:HIHIH:. .:
+# X-Header-043:  	      I:. . .   . .. . .. . . . . ..:.. ..::IIA.VMMMVIHIIHIV:. .'
+# X-Header-044:  	      I:..    . . .. .... .  .   . .. ... .:.:IA:.VMVIMHIHIH:..:
+# X-Header-045:  	      I.. .  .  . ..... .       .  . .. . .. .:IIAV:HIMHHIHII:.'
+# X-Header-046:  	      :. ..   . . .:.. .          .  .. ... ..::.:CVI:MHHIHHI...
+# X-Header-047:  	      :..  . . .. ..:.               . . ... .:.:::VHA.VIHHMI:..
+# X-Header-048:  	      :. .. .  . ..:..        . .     . .  ..  .. ...:VIIHIHI: .
+# X-Header-049:  	      ':.. .  . .::. .       .::,.      .    .  . .  ...V:IHII..
+# X-Header-050:  	       ;:.. .. .:I:.        ..:T"::.     .  . .  .  . .  .VIIH:.
+# X-Header-051:  	       ;:.:.. .:I:..        .::V:::.         . . . .  .    VIII..
+# X-Header-052:  	       ;:.. ..::::. .        ..::. .      .  . .. . .  .    VIII.
+# X-Header-053:  	       I:.:.. .:I:.           ..:.'        . . .. :. .  .    "VI:.
+# X-Header-054:  	       I::......::.  .                    . .. .:.:.:. .       "I:
+# X-Header-055:  	       II::.. ..::. .       .    .      . .. .. .::::.. .      .:.
+# X-Header-056:  	       II::.:. ..::. .  . .   .    .     .:. . .:I:::. .       .::HD
+# X-Header-057:  	       'I:::.. .: . .. ..  .. . .     .  .::. . .:I:. .         .:V:
+# X-Header-058:  	        I:. .. .  . . ... ..  .. . .    .. ..  ..::.             .:.
+# X-Header-059:  	        I:.. .. .  ..:.. .. .. ..  . .      .   .                . :
+# X-Header-060:  	        ;:.... . ..:::I:.. ..:.. ... .::. . ... . ..              .I.
+# X-Header-061:  	        ::.:....::.::I:III:I::::I:II:I::.. .:.. . .:. .     .  . .AI:
+# X-Header-062:  	        '::.:...:..::::::III::II::::::.. ...::. .  .::. . .. .  .AMMI.
+# X-Header-063:  	         :::.:.:. ..::::III:II:I:::.:. .. ..::.. ..  ..::,.  ..::HMMI:
+# X-Header-064:  	         ':::.:.. ...::I:::I:I:::.:.. :. . ..::.. . . . .'PTIHI:IIHHI:.
+# X-Header-065:  	          ::I::.:...:::II:I::.:....:.:. . ...::. .  . .  .AI:IHI'':'  '.
+# X-Header-066:  	          ':::.:... ..I::I::.:....:. .: .. ...::. .  .   III:II:.  '
+# X-Header-067:  	           'I:::..:...:.::I::.:..:. .: .. . ..:... .  .  III.I'
+# X-Header-068:  	            VI:::.::.::...:II::...:...:. . . .:::. . .   :''
+# X-Header-069:  	            'HI:I::.::.::..:II::.:..:.... . .:.:I:.. .   :
+# X-Header-070:  	             VI:I:I::.::.:...:I:::I:::.... ..:.:I::...   :
+# X-Header-071:  	             'II:I::II:I:::.:.:I:III:I:... ....::::... .  :
+# X-Header-072:  	              VII::I::I::.::..:.::II::.:.. . .:.::::. .   .
+# X-Header-073:  	               VI:.:..::II:::..:..::.... .   ..::I::...  . .
+# X-Header-074:  	               'I::.. ..::II::..:..::.... . ...::I:::.   .  .
+# X-Header-075:  	                V::.:.. .:I:II::.:..::.. .. ...:::I::..  . . .
+# X-Header-076:  	                I:::.:....::III:::.:..:.:.. .:.:II:::. .  . . .
+# X-Header-077:  	                I::.:::...:::II::.:.:.:... ...:II::.. . . . .  .
+# X-Header-078:  	                I::..:...:.:::.:.:.:.:..:.. .:II:. .. .    . .   .
+# X-Header-079:  	               .::.:.:....:.:::.:.:.:.:.: . .:I:... . . . . .  .  .
+# X-Header-080:  	               :.:.:...:.:.:::.::.:.::.... .:::.. .. .  . .  . .
+# X-Header-081:  	              .:. ..:.:.:::.:..::.::.:.. . .::.. .. . . .  . . .   :
+# X-Header-082:  	             .:. .:....::..:.:.:.:.:... .. .NI:.. . .. . . .  . .  :.
+# X-Header-083:  	            .:. . . ..:.:.::.::.::.::.::.. . :.:.. .. .. . . . . . .)O
+# X-Header-084:  	           .:.. ... .. ..:.::.::.:::.:..:.. . ..:.. .. .. . .. . . ,()
+# X-Header-085:  	           ::.:. ...:.. ..:..::..::.:.:.:.:. .:.:... .. .. .:.. ..0OO.
+# X-Header-086:  	          /:::.:...:.:..:..:..::.::.::.::..:..:.:..:.... ..:.:..:.()"'
+# X-Header-087:  	        (0):::.::...:..:..:...::::I:.:I:.:.:.::.::..:.:...:..::O0O'.. .
+# X-Header-088:  	         : ::.:..:.:..:.:..:.:I:.::I:::I:.:I::.I:.::..:.:.::.:/0O/.. .
+# X-Header-089:  	        .:: ::I:.:..::.::.::.::I:::I::.:I::.::I::.:::.::.:I::( ):.:..  .
+# X-Header-090:  	        ::I:."::.:.:..:.:.::::II::::II:::II::::II::::.::I::0OO::.:.    .
+# X-Header-091:  	        ::I:::,('')OO::.:.::.::III:::III::III::I:::::.:I:"V0O:.' .   .
+# X-Header-092:  	       .:::I::I::-:000::..:::.::::III:I::I::II::I:::IIII( ),) .    . . .
+# X-Header-093:  	       .:.::I::II:I(,)(  )00):.::.::II:I:II:I:I:::III0OO".M:M.   . . .
+# X-Header-094:  	       .. .:.::.:I:I:IIHHI000 ')OO:II:O:II:III::OO(")00//XXVM . .. . . .
+# X-Header-095:  	       . .. ..:.::.::II:II:III,(0O0"")!0:III:(0OO)..AMV AXXXXI .. .. . .
+# X-Header-096:  	       .:.. . .::I:IIIHHII:IHIHH(0),M0OOO( )M00AMMHMM',XXXXXX.. . .  .
+# X-Header-097:  	      .:.:.:.. . ..:IHHHII::::.'.MMIIIIMMXIMMMMMMMMMMV AXXXV:MI. .. .  .
+# X-Header-098:  	      ::.:.:.:.:.. . ''.' .. ..:.MMIII:MMIMMMMMMMMMMM' .X::M.MI.. . . .
+# X-Header-099:  	     .::.::..::.:.:.:. .  .. .::AMMXXXIAMHMMIHMMMMMMV ...::M.MM ... . ..
+# X-Header-100:  	     ::.::.::.::.::.:.:.. . .:::MMXXXXI:.:VMMHMPMHVMI ..:I:H-'"''.:. . .
+# X-Header-101:  	    ::.::..:.:.:..:.:.::.:. . .:MMXXX:IXX:MMMMMLMMAM' ..I:M.  :  ':.. .
+# X-Header-102:  	  .::.:..:...:...::.:.::I::...IMM:XXX:XX:LMMMMMI:MV  ..I:V   .   :... .
+# X-Header-103:  	   :.:.:..:.:.:..:..:::II:II:"..M".VMXX:XXMMMMMMMI.I ...IVI   .  .::. ..
+# X-Header-104:  	  :.:.:.:.:.:.::...:.::IHI' - . ."VIMHX:XIIMMV/IMLMI ...HV     .  ::.. .
+# X-Header-105:  	 .::.:.:.:.:..:.. ..::IHI:-.  . .  "'IX:XXIVMI XMMV I...HI    .   :::...
+# X-Header-106:  	::.:.:.:.:.:.. ...:.:IHHHI:.' .    .XXX:XX.MMAXMHA I..AMI    .    ::...
+# X-Header-107:  	::.::.::.:.:.... .:.:IHHIHI". ..    :XXX:XX:MHHIMMMAI,AHHI     .  :::...
+# X-Header-108:  	:::.:.:.:.:.:.. .:.::IHHHHI:  ..   ':XXX:XX:MV"".I,V:':HHI.    .   :::..
+# X-Header-109:  	::.::.:.:..:.. ...::IIHHHHI:   .   :.XXX:XXXI:.'.    "-VH:    .    ::.:.
+# X-Header-110:  	:::.::..:..:.. ..:.:IHHHHHI'   .    ::XX:XXXI:.A. .  "VHH      .   :::..
+# X-Header-111:  	::.::.::.:... ...:::IIHHHIH   ..    :IAX:XXXIHHH:  .  .:MI    .   .:::..
+# X-Header-112:  	:::.::.:..... ..:.::IIHHIHH   .     ::XX:IXXIHHV .     "V. . . .  :I:::.
+# X-Header-113:  	:.::.:.:... ...:.::IIIHHHIH    .    I:XX:XXVHMMI .      I.. .:. . .I::.:
+# X-Header-114:  	::.:::.:.... ..:.::IIIHIHHH.  .     :"XX:XXXVIVI  . .   ::..:. . .I::::.
+# X-Header-115:  	:::.::.:... ..:.:.::IIHIHV":   .    ':XXIXXXVIIA  .      ':II:..:.II:::.
+# X-Header-116:  	::.:.::... ...:.:.:IIIHHV' :  .      IXXIXXXV:::A .       ':X:XXXXIII::.
+# X-Header-117:  	:::.:.:.:.. ...:.::IIIHV'  :   .     XXXIXXXX  ":  ..     "IX:XIXI:II::.
+# X-Header-118:  	::.::.... ...:.:::IIHHV'  .:   .     ':XXIXXX   :  .       VH:XXX:II::..
+# X-Header-119:  	:.:.:.. ....:.::IIIHHV' ..:: . .   .  :XXIXXX   :   . .     VIXXX:III::.
+# X-Header-120:  	::.:.... ..:.:I:IHHHV:.::" ':. .   . .:XXIXXX   ':   .       VXXXIII:::.
+# X-Header-121:  	::.:.:...:.::IIIHIHV. .   . 'X:.. .:"-:-XXXX'    '.  . .     XXXHIII::..
+# X-Header-122:  	:.:.:.:.:.::IIHIHH" .  .   ..XXX.:.XXX:.:,"       ;   . '-.   XXAHII:::.
+# X-Header-123:  	::.:.:.:.::IIIHHH" . . . ..:.XXXX:XXXXX:.:         :  .   '-. XAHHIII:..
+# X-Header-124:  	:.:.::..:.:IIIHH". .  . . .::.XXXX:XXXXX.:.        :   .      'VHHIII::.
+# X-Header-125:  	::.:.::..:IIIIHV... . .  .::I:XXXXIXXXXX  :         :    . .    VHHII::.
+# X-Header-126:  	:.:.:.:.:.:IIIV:.:.. .. .:IV:::XXXXIXXXXX,:.        :A   .   . ..VHII:::
+# X-Header-127:  	::.::.::..::IV:::.:. .::I:"    'XXXXIXXXX:.:        :HA  .. .. .::VIII:.
+# X-Header-128:  	:.:.::.:..::IV:::I::.:V"  .  .  "XXXXXXXXXX:  .     :HHA. .:.::X:X;VI::.
+# X-Header-129:  	::.::.:...:IVI:I:I:IIV . . . . . ."XXXXXXX". . . .  :HHAIX:XX:XXXXXX.:..
+# X-Header-130:  	:.:.::.:..:IV:.:IIIHV . . . . . . . ."XX". .. . . ..:PPHAXXXXXIXXXXXX:..

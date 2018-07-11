@@ -1,0 +1,32 @@
+# $Id: mutt.pop,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+ 
+# my popserver
+set pop_host="pop.host.tld"
+
+# my username 
+set pop_user="user@foo.tld"
+
+# my password
+# BEDIT
+set pop_pass="password"
+# EEDIT
+
+# delete after fetch
+set pop_delete
+
+# This is a colon-delimited list of authentication methods mutt may
+# attempt to use to log in to an POP server, in the order mutt should
+# try them.
+set pop_authenticators="digest-md5:apop"
+
+# If set, Mutt will try all available methods. When unset, Mutt will
+# only fall back to other authentication methods if the previous methods
+# are unavailable. If a method is available but authentication fails,
+# Mutt will not connect to the POP server.
+unset pop_auth_try_all
+
+# Controls whether or not Mutt will try to reconnect to POP server when
+# connection lost.
+set pop_reconnect="ask-no"
+
+

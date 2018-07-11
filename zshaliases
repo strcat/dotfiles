@@ -1,0 +1,539 @@
+# Wetter
+alias wetter="curl -4 'wttr.in/Pfatter?lang=de'"
+# *I* *HATE* *OpenGL*!!!11!
+   alias gl="gcc  -L/usr/X11R6/lib -L/usr/X11/lib -lglut  -lGL -lGLU -lXi -lXmu -lXt -lXext -lSM -lm -lX11"
+   alias ogl="g++  -L/usr/X11R6/lib -lglut -lGLU -lGL  -lXi -lXmu"
+
+# needed for some sources from CVS (fucking autohell *narf*)
+   alias autofuck='aclocal && autoheader && libtoolize --copy --automake && automake --copy --add-missing && autoconf'
+
+# get top 10 shell commands:
+alias top10='print -l ? ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
+
+# grc - frontend for generic colouriser grcat(1)
+if [[ -x `which grc` ]]; then
+	alias grc='grc --colour=auto'
+	alias ping='grc ping'
+	alias last='grc last'
+	alias netstat='grc netstat'
+	alias traceroute='grc traceroute'
+	alias diff='grc diff'
+	alias gcc='grc gcc'
+	alias configure='grc configure'
+	alias cvs='grc cvs'
+	alias gcc='grc gcc'
+	alias configure='grc ./configure'
+	alias cat="grc cat"
+fi
+
+# /better/ calendars
+alias cal="gcal --highlighting='\e[41m:\e[0m:\e[33m:\e[0m' --pager --starting-day=1 --cc-holidays=TR \$(date +'%Y')"
+
+# ripgrep - https://github.com/BurntSushi/ripgrep
+alias search="rg --color='always' --heading --line-number --no-messages --no-ignore --hidden --follow --smart-case --glob '!{.git/*,node_modules/*}' --regexp"
+
+# See <http://strcat.neessen.net/hacks/rand-useragent.pl> ;-)
+if [[ -x ~/bin/rand-useragent.pl ]] && [[ -x `which w3m` ]]; then
+       alias w3m='w3m -o user_agent="`rand-useragent.pl`" $1'
+fi
+
+# Edit my sigquotes ;-)
+alias esig="$EDITOR ~/.sigs/own-stuff"
+
+# Make a certificat
+alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 365"
+
+# Aterm
+  [[ -x `which aterm` ]] && alias aterm="aterm -bg black -fg AntiqueWhite +sb --geometry 110x48+112+32"
+
+# Indent (according to GCS - Gnu Coding Standards)
+  [[ -x `which indent` ]] && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
+
+# Quick edit often used setup file
+  alias Ez='$EDITOR ~/.zshrc'
+  alias Es='$EDITOR ~/.slrnrc'
+  alias Ev='$EDITOR ~/.vimrc'
+  alias Em='$EDITOR ~/.muttrc'
+  alias Esc='$EDITOR ~/.screenrc'
+
+# Disable "spell-correction" for this commands:
+  alias mv="nocorrect mv"
+  alias cp="nocorrect cp"
+  alias man="nocorrect man"
+  alias mkdir="nocorrect mkdir"
+  alias mcd="nocorrect mcd"
+  alias rm="nocorrect rm"
+  # Move Pics to ~D/Pics
+  alias picmv="mv *(#i).(jp{,e}g|gif|png|bmp) ~D/Pics/"
+
+# Nothing..
+  alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+
+# history mechanism
+   alias h='history'
+
+# /quick-stat/
+   alias atime="stat -c '%X - %x - %n'"
+   alias mtime="stat -c '%Y - %y - %n'"
+   alias owner="stat -c '%U - %u - %n'"
+   alias group="stat -c '%G - %g - %n'"
+
+# GIT
+  alias gl="git log --graph $GIT_PRETTY_FORMAT"
+  alias gll='gl --all'
+  alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
+  alias glla='gla --all'
+  #alias glog="git log --pretty=format:'%C(auto)%h %ad %C(green)%s%Creset %C(auto)%d [%an (%G? %GK)]' --graph --date=format:'%Y-%m-%d %H:%M' --all"
+
+#  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
+#  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
+#  Modifiers can be found in ``info -f zsh -n Modifiers''.
+   alias :{w,q,wq,qa,wqa,x}{,!}='echo "This is $SHELL:t and not Vi(m)"'
+   alias vi="${EDITOR}"
+   alias view="${EDITOR} -R"
+   alias ex="${EDITOR} -e"
+   alias pltags="${VIMRUNTIME}/tools/pltags.pl"
+
+# MPlayer on /dev/ttyN
+  alias fbmplayer='mplayer -vo fbdev2 -vf scale=1280:1024 "$@"'
+# quick&dirty mirror
+  alias mirror="noglob wget --mirror --no-parent --timestamping --continue --recursive $1"
+
+# access the database of ${HOME} (Note: This is for *OpenBSD*! Not for
+# Linux!
+  if [ "${OS}" = openbsd ]; then
+     alias hupdatedb="updatedb --searchpaths="$HOME" --prunepaths="/" --fcodes=$HOME/.locatedb"
+     alias hlocate="locate -d ${HOME}/.locatedb"
+  else
+     # Thats for CRUX because it have no ``updatedb'' because updatedb
+     # isn't available as "real" executable. updatedb is just a symlink
+     # again /usr/bin/{s,}locate
+     if [ -x /usr/bin/crux ] && [ -x $(which slocate) ]; then
+	alias hupdatedb="sudo slocate -U ${HOME} --output=${HOME}/.locatedb -e /home/dope/tmp,/home/dope/MuttMail,/home/dope/.cpan"
+	alias hlocate="slocate --database=${HOME}/.locatedb $@"
+  else
+     # That's for Linux (strictly speaking slocate under Slackware but
+     # it works with any distribution; slocate assumed). See
+     # <http://www.geekreview.org/slocate/> for details.
+     if [[ "${OS}" =  "linux-gnu" ]] && [[ -x $(which slocate) ]] ; then
+	alias hupdatedb="sudo updatedb -U ${HOME} --output=${HOME}/.locatedb -e /home/dope/tmp,/home/dope/MuttMail,/home/dope/.cpan"
+	alias hlocate="slocate --database=${HOME}/.locatedb $@"
+  else
+     # That's for GNU updatedb
+     alias hupdatedb="sudo updatedb --localpaths="$HOME" --output=$HOME/.locatedb --prunefs="/""
+     alias hlocate="locate -d ${HOME}/.locatedb"
+     fi
+    fi
+  fi
+
+# Only non-root need this aliases
+if (( EUID != 0 )); then
+	# some stuff for gentoo (i compelled to use it sometimes *narf*)
+	if [ -e "/etc/gentoo-release" ]; then
+		alias emerge="sudo emerge"
+		alias eupdatedb="sudo eupdatedb"
+		alias etc-update="sudo etc-update"
+		alias eix-sync="sudo eix-sync"
+		alias dispatch-conf="sudo dispatch-conf"
+	fi
+	# See <http://www.swaret.org/> and <http://software.jaos.org> for details
+	if [ -e "/etc/slackware-version" ]; then
+		alias slapt-get="sudo slapt-get"  
+		alias swaret="sudo swaret"
+		alias installpkg="sudo /sbin/installpkg"
+		alias upgradepkg="sudo /sbin/upgradepkg"
+		alias removepkg="sudo /sbin/removepkg"
+		alias pkgtool="sudo /sbin/pkgtool"
+		alias makepkg="sudo /sbin/makepkg"
+	fi
+	# CRUX 
+	if [ -x "/usr/bin/crux" ]; then
+		alias ports="sudo ports"
+		alias prt-get="sudo prt-get"
+		alias httpup="sudo httpup"
+		alias httpup-repgen="sudo httpup-repgen"
+		alias httpup-repgen2="sudo httpup-repgen2"
+		alias prt-cache="sudo prt-cache"
+		alias pkginfo="sudo pkginfo"
+		alias pkgadd="sudo pkgadd"
+		alias pkgmk="sudo pkgmk"
+		alias pkgrm="sudo pkgrm"
+	fi
+	# settings for NetBSD
+	if [[ `uname` == NetBSD ]]; then
+		export CVSROOT=":pserver:anoncvs@anoncvs.NetBSD.org:/cvsroot"
+		alias upsrc="cvs -d $CVSROOT update -PAd src"
+		alias uppkgsrc="cvs -d $CVSROOT update -PAd pkgsrc"
+	fi
+	if [[ `uname` == FreeBSD ]]; then
+		alias pkg='sudo pkg'
+		alias portsnap='sudo portsnap'
+		alias postmaster='sudo portmaster'
+		alias ls='gls --color=always'
+	fi
+	# setting for OpenBSD
+	if [[ `uname` == OpenBSD ]]; then
+		
+		alias pkg_add='sudo pkg_add'
+		alias pkg_delete='sudo pkg_delete'
+		alias upsrc="cd /usr/src && cvs -q up -Pd"
+		alias upports="cd /usr && cvs -q get -P ports"
+		# format a floppy (OpenBSD)
+		alias format="fdformat /dev/rfc0a"
+	fi
+	if [ -e "/etc/debian_version" ]; then
+		alias apt="sudo apt"
+		alias apt-get="sudo apt-get"
+		alias apt-cache="sudo apt-cache" # Needed for `apt-cache gencaches'
+		alias dpkg="sudo dpkg"
+		alias aptitude="sudo aptitude"
+		alias dpkg-reconfigure="sudo dpkg-reconfigure"
+	else
+		if [ -x "/bin/lsb_release" ]; then
+			if [[ `print ${$(/bin/lsb_release -sc)}` == "void" ]]; then
+			alias xbps-install="sudo xbps-install"
+			alias xbps-query="sudo xbps-query"
+			alias xbps-alternatives="sudo xbps-alternatives"
+			alias xbps-checkvers="sudo xbps-checkvers"
+			alias xbps-create="sudo xbps-create"
+			alias xbps-dgraph="sudo xbps-dgraph"
+			alias xbps-fbulk="sudo xbps-fbulk"
+			alias xbps-pkgdb="sudo xbps-pkgdb"
+			alias xbps-reconfigure="sudo xbps-reconfigure"
+			alias xbps-remove="sudo xbps-remove"
+			alias xbps-rindex="sudo xbps-rindex"
+			alias xbps-uchroot="sudo xbps-uchroot"
+			alias xbps-uhelper="sudo xbps-uhelper"
+			alias xbps-uunshare="sudo xbps-uunshare"
+		fi
+	fi
+		# Linux/Unix
+		alias ifconfig="sudo ifconfig"
+		alias shutdown="sudo shutdown"
+		alias tcpdump="sudo tcpdump"
+		alias nmap="sudo nmap"
+		# takes snapshot from /dev/ttyN
+		alias mkscreeny="cd ~/shots/ ; fbgrab -s 5 -w 1024 -h 768 -b 16 `date +"%F-%T"`.png"
+	fi
+fi
+
+# grep wrapper with search highlighting (<http://www.acme.com/software/hgrep/>)
+# Only for non-linux systems needed (see below)
+  if [[ ! "${OSTYPE}" = linux-gnu && -x  `which hgrep` ]]; then
+     alias grep='hgrep'
+  else
+      #  fi
+      # FIXME: ``${(MS)$(grep --version 2>/dev/null)#GNU}'' shows me ``GNU''
+      #        and export the variables correctly. But why (BY ZEUS FAT ASS)
+      #        become ``GREP_{COLOR,OPTIONS}'' exported if the string ``GNU''
+      #        unavailable?
+      # Note: ``--color'' is a feature from GNU grep >=2.5 and i do *not*
+      #       check for the available version, but only for ``GNU''!
+     #if  [ "${OS}" = "linux-gnu"  ${(MS)$(grep --version 2>/dev/null)#{GNU}} ] ; then
+     if [ "${OS}" = linux-gnu ${(MS)$(grep --version 1>/dev/null)#GNU} ]; then
+	 export GREP_COLOR='0;33'
+	 alias grep='grep --color=auto'
+	 # *DO* *NOT* *USE* *--color=always*! ;-)
+  	# export GREP_OPTIONS='--color=auto'
+#  	 alias hgrep='grep $GREP_OPTIONS $*'
+     fi
+      # use perl regular expression (it's evil. isn't it?)
+      if [ 0 -eq `echo $SHELL|grep --perl-regexp sh &>/dev/null; echo $?` ]; then
+	 GRP='--perl-regexp'
+      else
+	 GRP='--extended-regexp'
+      fi
+  fi
+
+# copy/move with a backup
+  #if [ ${OS} = "linux-gnu" -n ${(MS)$(mv --version 2>/dev/null)#GNU} ]; then
+     # GNU numbered backup files
+     # --verbose and --backup are GNUis *narf*
+     if [[ "${OSTYPE}" = linux-gnu ]]; then
+	     (( ${+VERSION_CONTROL} )) || export VERSION_CONTROL="numbered"
+	     alias mv="nocorrect mv --verbose --backup=numbered"
+	     alias cp="nocorrect cp --verbose --backup=numbered"
+     fi
+  #fi
+
+# ``choad'' is a small perlscript to ripp audio-cds (<http://www.ftso.org/choad/>)
+[[ -x $(whence -p choad) ]] && alias choad="sudo choad"
+
+# VimTip 121: Using vim as a syntax-highlighting pager
+# <http://vim.sourceforge.net/tip_view.php?tip_id=>
+  if [ -e ~/.vimrc.more ] && [ -x $(which vim) ]; then
+     alias vmore='vim -u ~/.vimrc.more'
+  fi
+
+# I use ``gls'' instead of ls because the standard 'ls' from OpenBSD
+# doesn't not support colors :/ GNU ls is part of fileutils-4.1 and
+# component of the portcollection ($PORTSDIR/misc/fileutils)
+[[ ${OS} = "linux" && -n ${(MS)$(ls --version 2>/dev/null)#GNU} ]] && ls_flags="--color"
+ (ls --help 2>/dev/null |grep -- --color=) >/dev/null && alias ls='ls -b -CF --color=auto'
+   if [[ "${OS}" = openbsd && -x `which gls` ]]; then
+           alias ls='gls --color=always'
+   fi
+# X11? Yes! A open port? Nope! 
+   alias sx='startx --  -deferglyphs 16 -dpi 100 -nolisten tcp >& $HOME/.startx-errors'
+# SSH to some hosts :>
+   alias router="telnet 192.168.1.1"
+   alias dreckskind="ssh dope@192.168.1.2"
+   alias hellfire="ssh dope@192.168.1.3"
+   alias fuckingtosh="ssh dope@192.168.1.4"
+   alias blitzkrieg="ssh bofh@192.168.1.5"
+   alias painless="ssh dope@192.168.1.6"
+   alias diehard="ssh lart@192.168.1.7"
+   alias goliath='ssh god@192.168.1.8'
+   alias vhost='ssh dope@80.190.98.198'
+   alias sourceforge="ssh strcat@shell.sf.net"
+   alias gohome="ssh dope@strcat.ath.cx"
+   alias vms="ssh strcat@dahmer.vistech.net"
+
+# "-" is the same as the -l option (deprecated).
+   alias su="su -"
+# Quick chmod ;-)
+  alias rw-='chmod 600'
+  alias rwx='chmod 700'
+  alias r--='chmod 644'
+  alias r-x='chmod 755'
+# stolen from a ~/.bashrc (IIRC RedHat(?))
+  alias ..='cd ..'
+  alias ...='cd ../..'
+  alias ....="cd ../../.."
+# Make/Create/Convert Pics/Thumbnails
+  alias _GIF='convert -verbose -interlace LINE' 
+  alias _thumb='convert -geometry 100x100 -interlace LINE -verbose' 
+  alias _thumb150='convert -geometry 150x150 -interlace LINE -verbose' 
+  alias _thumb200='convert -geometry 200x200 -interlace LINE -verbose' 
+# Use colors, do not check for new groups, specific my killfile an use
+# spool (needed for slrnpull)
+  alias news='slrn -C -n --kill-log ~/.slang/KILL --spool -f ~/.jnewsrc'
+  alias gnews='slrnpull -d ~/nslrn/slrnpull --logfile ~/nslrn/slrnpull/log -h news.eternal-september.org'
+
+# call mailfilter and start getmail after a positive return value
+# <http://mailfilter.sourceforge.net/> && <http://www.qcc.ca/~charlesc/software/getmail-3.0/>
+   alias gmail='getmail -v --rcfile /home/dope/.getmail/getmailrc-gmail --rcfile /home/dope/.getmail/getmailrc --rcfile /home/dope/.getmail/getmailrc-schneider'
+# the two above together..
+   alias gall="gmail ; gnews"
+# start mutt/vim/zsh/jed without any setup
+   alias null-mutt='mutt -n -f /dev/null -F /dev/null'
+   alias null-zsh='zsh -f'
+   alias null-vim='vim -u NONE'
+   alias null-jed='jed -n'
+   alias null-irssi='irssi --config=/dev/null'
+   alias null-screen="screen -c /dev/null"
+# *Very* often used!
+   alias lad='ls -d -- .*(/)'				# only show dot-directories
+   alias lsa='ls -a -- .*(.)'				# only show dot-files
+   alias lse='ls -ld -- *(/^F)'				# only show empty directories
+   alias lsen='ls -d *(/om[1])'				# newest directory
+   # FIXME: Replace the ``grep -v'', ``2&>/dev/null'' by zsh-only syntax
+   alias lsnew='=ls -rtlh -- *(.) | tail $@ 2&>/dev/null'  # only the newest files
+   alias lsold="=ls -rtl -- *(.) | head $@ 2&>/dev/null"   # display the oldest files
+   alias lssmall="=ls -Sl -- *(.) | tail $@ 2&>/dev/null"  # display the smallest files
+   alias lsx='ls -l -- *(*) | head $@ 2&>/dev/null'        # only show executables
+   alias lssuid='ls -l -- *(s,S) | head $@ 2&>/dev/null'   # only show suid-files
+   alias lsbig="ls -lSh -- *(.) | grep -v total | head $@ 2&>/dev/null"    # display the biggest files
+   # show sorted directory sizes for all directories
+   alias dua='du -s *(/DN) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+   # show sorted directory sizes for visible directories only
+   alias duv='du -s *(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+   # show sorted directory sizes for hidden directories only
+   alias duh='du -s .*(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+
+# check out/in RCS revisions
+   alias lci='ci -l'
+   alias lco='co -zLT'
+# convert from UPPER to lower (or back)
+   alias UP2low='for i in *(.); mv $i ${i:l}'
+   alias low2UP='for i in *(.); mv $i ${i:u}'
+# ctags are *very* useful!
+   alias mktags='for i in **/*(/); do (cd $i; eval '\''ctags-exuberant *'\''); done; ctags-exuberant --file-scope=no -R'
+# Make the source to be with you!!!11!
+   alias C='./configure'
+   alias CH='./configure --help | $PAGER'
+# zmv -- see ``less ${^fpath}/zmv(N)'' for more details.
+   alias zcp='zmv -C'
+   alias zln='zmv -L'
+# simple replacement for nmap (anywise .. :>)
+   alias pscan="nc -vz $1 1-1024"
+# Yup. I mount my CDROM manually!
+# **TODO**
+# I'll think i'll can do this with a wrapper.. maybe..
+   if [ "${OS}" = openbsd ]; then
+           alias _mcd='sudo mount /dev/cd0a /mnt && cd /mnt && ls'
+           alias _ucd='cd ~ && sudo umount /mnt'
+   else
+   if [[ -x $(which crux) ]]; then
+	   alias _mdvd='sudo mount /dev/cdroms/cdrom0 /mnt/cdrom && cd /mnt/cdrom && ls'
+	   alias _udvd='cd ~ && sudo umount /mnt/cdrom'
+	   alias _mcd='sudo mount /dev/cdroms/cdrom1 /mnt/dvd && cd /mnt/dvd && ls'
+	   alias _ucd='cd ~ && sudo umount /mnt/dvd'
+   else
+           alias _mcd='sudo mount /mnt/cdrom && cd /mnt/cdrom && ls'
+           alias _ucd='cd ~ && sudo umount /mnt/cdrom'
+	   alias _mdvd='sudo mount /mnt/dvd && cd /mnt/dvd && ls'
+	   alias _udvd='cd ~ && sudo umount /mnt/dvd'
+      fi
+   fi
+
+# GPG *sigh*
+   alias get.pgpkey='gpg --keyserver pgp.mit.edu --recv-key 0x"$@"'
+   alias mail.gpgkey='mail -s "GET keyid $@" pgp-public-keys@keys.pgp.net'
+   alias encrypt.gpg='echo "WARNING: plaintext is not deleted!"; gpg --quiet -ear 0xF678E1DA'
+   alias sign.gpg='gpg --sign $*'
+   alias    gpgh='gpg --help|$PAGER'
+   alias gsearch='gpg --search-keys'
+   alias   glist='gpg --list-keys --with-fingerprint'
+   alias   grecv='gpg --recv-keys'
+   alias   gsign='gpg --sign-key'
+   alias   gsigs='gpg --list-sigs'
+   alias gupload='gpg --send-keys'
+
+
+# Some aliases for the OpenBSD - Portcollection
+   if [ "${OS}" = openbsd ]; then
+           alias Svar='make show=FLAVORS'
+           alias Spversion='make show=VERSION'
+           alias Scomm='make show=COMMENT'
+           alias Swth='make show=DESCRIPTION'
+   fi
+# Ask stupid questions? In Boards/NGs? Yeah .. sure "Killing time.. the
+# end of .." --Metallica :>
+# I read this fuckings manuals *very* often *narf*
+   if [ -d "${HOME}/.Documentations/" ]; then
+	alias H-Slrn='less ${HOME}/.Documentations/slrn-manual.txt'
+	alias H-Mutt='less ${HOME}/.Documentations/mutt-manual.txt'
+	alias H-Irssi='less ${HOME}/.Documentations/irssi-manual.txt'
+	alias H-Getmail='less ${HOME}/.Documentations/getmail-manual.txt'
+	# The Open Group Base Specifications Issue 6 (IEEE Std 1003.1, 2003 Edition)
+	alias H-Susv3='${BROWSER:-lynx} ${HOME}/.Documentations/susv3/index.html'
+	# YES! Zsh _is_ evil :>
+	alias H-Zsh='${BROWSER:-lynx} ${HOME}/.Documentations/Zsh/Doc/zsh_toc.html'
+	alias H-ZshGuide='${BROWSER:-lynx}  ${HOME}/.Documentations/Zsh/guide/zshguide.html'
+	alias H-ZshFAQ='${BROWSER:-lynx} /home/dope/.Documentations/Zsh/faq/zshfaq.txt'
+	# The Linuxfibel (German). See <http://www.fibel.org/> for details.
+	alias H-Linux='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/lfo-0.6.0/index.html'
+	# Yup. I'm fucking lazy :>
+	alias H-OpenBSD='${BROWSER:-lynx} ${HOME}/.Documentations/OpenBSD/index.html'
+	alias H-FreeBSD='${BROWSER:-lynx} ${HOME}/.Documentations/FreeBSD/index.html'
+	alias H-NetBSD='${BROWSER:-lynx} ${HOME}/.Documentations/NetBSD/index.html'
+	# de.comp.os.unix.linux - FAQ
+	alias H-Dcoul='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/dcoul.txt'
+	# The editor of my choice! The one and only! J-E-H-O-V-A!!!11! 
+	alias H-Vim='${BROWSER:-lynx} ${HOME}/.Documentations/vim/usr_toc.html'
+	# THE SED FAQ (<http://sed.sourceforge.net/sedfaq.html>)
+	alias H-Sed="${BROWSER:-lynx} ${HOME}/.Documentations/Sed/sedfaq.txt"
+	# HTML .. *sigh* 
+	alias H-HTML='${BROWSER:-lynx} ${HOME}/.Documentations/Self-HTML/index.htm'
+	# The Jargon File (version 4.4.7)
+	alias H-Jargon='${BROWSER:-lynx} ${HOME}/.Documentations/Jargon/jargon-4.4.7/html/index.html'
+	# CSS .. Fuck me gently with a chainsaw
+	alias H-CSS='${BROWSER:-lynx} ${HOME}/.Documentations/CSS/about.html'
+	# Fucking FHS *gnarf*
+	alias H-FHS='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/fhs-2.3.txt'
+	# Extensible Markup Language
+	alias H-XML='${BROWSER:-lynx} ${HOME}/.Documentations/XML/index.html'
+	# German Manpages. <http://www.ibiblio.org/pub/Linux/docs/LDP/man-pages/manpages-de-0.4.tar.gz>
+	alias de-man="man -M ${HOME}/.Documentations/manpages.de '$1'"
+	# See http://svnbook.red-bean.com/
+	alias H-Svn="{BROWSER:-lynx} ${HOME}/.Documentations/svnbook-1.1/index.html"
+	# RFC-Index. Not really needed. See <http://strcat.neessen.net/hacks/rfc.zsh> 
+	# for details.
+	#  alias H-RFC='${BROWSER:-lynx} /backups/Documentations/RFCs/rfc-index.txt.gz'
+fi
+
+# fucking devices *narf*
+if [ "${OS}" = linux-gnu ]; then
+	alias H-Devices='${PAGER:-less} /usr/src/linux/Documentation/devices.txt'
+fi
+# Xterm specific stuff
+   alias VX="xterm -fg white -bg black -font '-*-terminus-medium-*-*-*-20-*-*-*-*-*-iso10646-*'"
+   alias mxterm-default='echo -e "\033]50;fixed\007"'
+   alias mxterm-normal=default
+   alias mxterm-hide='echo -en "\033]50;nil2\007"'
+   alias mxterm-tiny='echo -en "\033]50;5x7\007"'
+   alias mxterm-small='echo -en "\033]50;6x10\007"'
+   alias mxterm-medium='echo -en "\033]50;7x13\007"'
+   alias mxterm-large='echo -en "\033]50;9x15\007"'
+   alias mxterm-huge='echo -en "\033]50;10x20\007"'
+# Postscript, LaTeX and printing
+   alias pnm2ps='pnmtops -width 8.26 -height 11.69'
+   alias gif2ps='(giftopnm | pnm2ps)'
+   alias jpeg2ps='(djpeg    | pnm2ps)'
+   alias png2ps='(pngtopnm | pnm2ps)'
+   alias ps2psbook="(psbook | psnup -2 | tumble)"
+   alias ps2A5-haefte="(psbook -s8 | psnup -4 )"
+   alias sho='xdvi -s 2 -expert -geometry 1010x900+30+1030'
+   alias _dvishow='xdvi -s 3 -expert -geometry 990x990'
+# Change keyboard mapping on the fly (nice for programming)
+   if [[ -x $(which xmodmap) ]]; then
+      alias US-e="xmodmap ~/.keys-emacs-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
+      alias US-v="xmodmap ~/.keys-vi-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
+      alias US="xmodmap ~/.keys-vi-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
+   fi
+# suffix aliases (needs Zsh >= 4.*).  Suffix aliases allow the shell
+# to run a command on a file by suffix, e.g 'alias -s ps=gv' makes
+# 'foo.ps' execute 'gv foo.ps'.
+if [[ $ZSH_VERSION == 5.<->* ]]; then
+	# some "file aliases"
+	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mplayer -idx"
+	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mpv"
+	alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="mirage"
+	alias -s dvi=xdvi
+	alias -s pdf=xpdf
+	alias -s ps=gv
+	alias -s {htm,html,php,com,net,org,gov}="pick-web-browser"
+	alias -s tex=${EDITOR:-vi}
+	alias -s txt=${PAGER:-less}
+	# some global aliases for redirection
+	alias -g N="&>/dev/null"
+	alias -g 1N="1>/dev/null"
+	alias -g 2N="2>/dev/null"
+	alias -g DN="/dev/null"
+	alias -g PI="|"
+	# Paging with less / head / tail
+	alias -g LS='| less -S'
+	alias -g EL='|& less'
+	alias -g ELS='|& less -S'
+	alias -g TRIM='| cut -c 1-$COLUMNS'
+	alias -g H='| head'
+	alias -g HL='| head -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g EH='|& head'
+	alias -g EHL='|& head -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g TL='| tail -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g ET='|& tail'
+	alias -g ETL='|& tail -n $(( +LINES ? LINES - 4 : 20 ))'
+	# Sorting / counting
+	alias -g C='| wc -l'
+	alias -g Su='| sort -u'
+	alias -g Sn='| sort -n'
+	alias -g Snr='| sort -nr'
+	# grep(1)'ing
+	for switches in {,i}{,l,L}{,r}{,v}; do
+		eval "alias -g  GG$switches='| egrep ${switches:+-$switches}'"
+		eval "alias -g EG$switches='|& egrep ${switches:+-$switches}'"
+		eval "alias -g XG$switches='| xargs egrep ${switches:+-$switches}'"
+		eval "alias -g X0G$switches='| xargs -0 egrep ${switches:+-$switches}'"
+	done
+	# awk
+	alias -g A1="| awk '{print \$1}'"
+	alias -g A2="| awk '{print \$2}'"
+	alias -g A3="| awk '{print \$3}'"
+	alias -g A4="| awk '{print \$4}'"
+	alias -g A5="| awk '{print \$5}'"
+	alias -g A6="| awk '{print \$6}'"
+	alias -g A7="| awk '{print \$7}'"
+	alias -g A8="| awk '{print \$8}'"
+	alias -g A9="| awk '{print \$9}'"
+	alias -g EA='|& awk '
+	alias -g EA1="|& awk '{print \$1}'"
+	alias -g EA2="|& awk '{print \$2}'"
+	alias -g EA3="|& awk '{print \$3}'"
+	alias -g EA4="|& awk '{print \$4}'"
+	alias -g EA5="|& awk '{print \$5}'"
+	alias -g EA6="|& awk '{print \$6}'"
+	alias -g EA7="|& awk '{print \$7}'"
+	alias -g EA8="|& awk '{print \$8}'"
+	alias -g EA9="|& awk '{print \$9}'"
+fi

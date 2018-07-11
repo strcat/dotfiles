@@ -1,0 +1,74 @@
+# $Id: mutt.save-hooks,v 1.1 2003/10/21 02:17:53 dope Exp dope $
+# 
+#  ~A              all messages
+#  ~b EXPR         messages which contain EXPR in the message body
+#  ~B EXPR         messages which contain EXPR in the whole message
+#  ~c USER         messages carbon-copied to USER
+#  ~C EXPR         message is either to: or cc: EXPR
+#  ~D              deleted messages
+#  ~d [MIN]-[MAX]  messages with ``date-sent'' in a Date range
+#  ~E              expired messages
+#  ~e EXPR         message which contains EXPR in the ``Sender'' field
+#  ~F              flagged messages
+#  ~f USER         messages originating from USER
+#  ~g              cryptographically signed messages
+#  ~G              cryptographically encrypted messages
+#  ~h EXPR         messages which contain EXPR in the message header
+#  ~k              message contains PGP key material
+#  ~i ID           message which match ID in the ``Message-ID'' field
+#  ~L EXPR         message is either originated or received by EXPR
+#  ~l              message is addressed to a known mailing list
+#  ~m [MIN]-[MAX]  message in the range MIN to MAX *)
+#  ~n [MIN]-[MAX]  messages with a score in the range MIN to MAX *)
+#  ~N              new messages
+#  ~O              old messages
+#  ~p              message is addressed to you (consults $alternates)
+#  ~P              message is from you (consults $alternates)
+#  ~Q              messages which have been replied to
+#  ~R              read messages
+#  ~r [MIN]-[MAX]  messages with ``date-received'' in a Date range
+#  ~S              superseded messages
+#  ~s SUBJECT      messages having SUBJECT in the ``Subject'' field.
+#  ~T              tagged messages
+#  ~t USER         messages addressed to USER
+#  ~U              unread messages
+#  ~v              message is part of a collapsed thread.
+#  ~V              cryptographically verified messages
+#  ~x EXPR         messages which contain EXPR in the `References' field
+#  ~y EXPR         messages which contain EXPR in the `X-Label' field
+#  ~z [MIN]-[MAX]  messages with a size in the range MIN to MAX *)
+#  ~=              duplicated messages (see $duplicate_threads)
+
+unhook *
+
+# save messages to different folders. 
+#  Note: I use '%<%Y-%m>' for Mailfolders with high traffic. One month,
+#	 one folder.
+#  Yeah.. sure.. wont work with Mutt 1.7.0. Use '%{%Y-%m}' instead
+save-hook '(~h Welcome) | (~s Welcome)'					=Subscriptions
+save-hook '~C slrn-user@lists.sourceforge.net'				=/Slrn/Slrn-%{%Y-%m}
+save-hook '(~f ^.*@lists.debian.org) | (~C ^.*@lists.debian.org)'	=Debian/Debian-%{%Y-%m}
+save-hook '(~f @neomutt.org) | (~C @neomutt.org)'			=Mutt/Mutt-%{%Y-%m}
+save-hook '(~f tmux-users@) | (~C tmux-users@)'				=Tmux/tmux-%{%Y-%m}
+save-hook '~s "Backup - Report"'					=Cron/CRON-%{%Y-%m}
+save-hook '~C vim_use@googlegroups.com'					=/Vim/Vim-%{%Y-%m}
+save-hook '~f noreply@myfritz.net"'					=/FritzBox/Fritz-%{%Y-%m}
+save-hook '~f ^.*bahn.de'						=/Bahn/Bahn-%{%Y-%m}
+save-hook '~s "Internet-Adresse:"'					=/FritzBox/Fritz-%{%Y-%m}
+save-hook '~f googleplay-noreply@google.com'				=/Google/Playstore-%{%Y-%m}
+save-hook "(~h 'in-reply-to:.*@bofh.my-fqdn.de) | (~x bofh.my-fqdn.de)" =Usenet-Fups
+save-hook "~C mailfilter-users@lists.sourceforge.net$"			=/Mailfilter/Mailfilter-%{%Y-%m}
+save-hook "~C mailfilter-dev@lists.sourceforge.net$"			=/Mailfilter/Mailfilter-%{%Y-%m}
+save-hook "~C misc@openbsd.org$"					=OpenBSD/OpenBSD-%{%Y-%m}
+save-hook '(~f ^.*@linux-web.de) | (~f ^.*@bsdforen.de)'		=Boards
+save-hook '(~C ^.*dragoncat.net | ~C ^.*scripts.irssi.org)'		=/Irssi/Irssi-%{%Y-%m}
+save-hook '~f ^.*@ebay.com'						=eBay/eBay-%{%Y-%m}
+save-hook '~f ^.*@donnerwetter.de'					=/Wetter/Wetter-%{%Y-%m}
+save-hook '~t ^.*@zsh.org$'						=/Zsh/Zsh-%{%Y-%m}
+save-hook '~Czsh-users@sunsite.dk$'					=/Zsh/Zsh-%{%Y-%m}
+save-hook '~Czsh-workers@sunsite.dk$'					=/Zsh/Zsh-%{%Y-%m}
+save-hook '~h "^X-Spam-Flag: YES"'					+/SPAM/SPAM-%{%Y-%m}
+save-hook '~t ftp@strcat.de'						+/strcat/ftp
+save-hook '(~t blog@strcat.de) | (~f strcat.de*)'			+/Blog/blog-%{%Y-%m}
+save-hook '~t router@strcat.de'						+/strcat/logfiles
+save-hook '^.*$'							+/strcat/strcat-%{%Y-%m}

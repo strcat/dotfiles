@@ -1,0 +1,22 @@
+# $Id: mutt.mailboxes,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+# | :r !(cd ~/Mail && echo * | sed -e 's/msgid.cache//' -e 's/  / /' | tr " " "\n" | sed -e 's/^/mailboxes +/')
+# | ls -1 ~/Mail |grep -v 'sent'|grep -v 'postponed'|sed -n 's#^#=#p'
+# | cd ~/MuttMail && ls | egrep -v ' |spam' | sed -e 's/^/=/'
+# | for file in ~/MuttMail/*; do print -l -o "mailboxes +$(basename $file) "; done
+# Zsh only!
+# | $ FNORDS=(cur new tmp)
+# | $ cd ~/Maildir
+# | $ print -lo **/*~*(${~${(j/|/)FNORDS}})(/) > >(sed 's/^/mailboxes +/' >~/.mutt/mutt.mailboxes)
+
+mailboxes +Boards			# Notify from some boards
+mailboxes +eBay				# <http://www.ebay.{net,com,de}
+mailboxes +info				# /* No Comment */
+mailboxes +Mutt/Mutt-`date +%Y-%m`	# <http://www.mutt.org/>
+mailboxes +Outgone/`date +%Y-%m`	# /* No Comment */
+mailboxes +SPAM/SPAM-`date +%Y-%m`	# Is luscious. Isn't it?
+mailboxes +/strcat/blog			# Notifications by my blog
+mailboxes +strcat/strcat-`date +%Y-%m`	# The root of all evil :>
+mailboxes +Subscriptions		# "Welcome to the $foobar mailinglist!
+mailboxes +Wetter/Wetter-`date +%Y-%m`	# <http://www.donnerwetter.de/>
+mailboxes +/Zsh/Zsh-`date +%Y-%m`	# <http://www.zsh.org/>
