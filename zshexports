@@ -564,6 +564,14 @@ if [[ $SSH_CLIENT = *.* || $REMOTEHOST = *.* ]]; then
 	RPROMPT=$SSH_CLIENT
 	setopt TRANSIENT_RPROMPT
 fi
+
+autoload -Uz vcs_info
+precmd() {
+	psvar=()
+	vcs_info
+	[[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
 if (( EUID == 0 )); then
 	PS1=$'%{\e[0;33m%}%B[%b%{\e[0m%}%n%{\e[0;33m%}%B@%b%{\e[0m%}%m%{\e[0;33m%}:%{\e[0m%}%~%{\e[0;33m%}%B]%b%{\e[0m%}%# '
 else
@@ -576,6 +584,7 @@ else
 		PROMPT=$'%{\e[0;32m%}%B[%b%{\e[0m%}%n%{\e[0;32m%}@%{\e[0m%}%m%{\e[0;32m%}%B:%b%{\e[0m%}%~%{\e[0;32m%}%B]%b%{\e[0m%} %(?..%{\e[0;33m%}%B!%b%{\e[0m%})%# '
 		# On 'exit-Status != 0' display a ":(" on the right side.
 		#RPROMPT="%(?..:()%"
+		RPROMPT="%F{green}%1v%f"
 		;;
 		fuckingtosh*)
 		autoload promptinit; promptinit ; prompt adam2
@@ -611,7 +620,7 @@ if [ -z "$SSH_CONNECTION" ]; then
 		fi
 	}
 	# the "default" title
-	function precmd() { title zsh "$IDENTITY:$(print -P %~)" }
+	#function precmd() { title zsh "$IDENTITY:$(print -P %~)" }
 	function preexec()
 	{
 		emulate -L zsh
