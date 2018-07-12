@@ -1,5 +1,10 @@
 # Wetter
-alias wetter="curl -4 'wttr.in/Pfatter?lang=de'"
+# alias wetter="curl -4 'wttr.in/Pfatter?lang=de'"
+alias wetter='curl -s "wttr.in/Pfatter?lang=de" | head -37 | tail -30'
+
+# Yeah.. i watch p0rn..
+alias p0rn='mpv "http://www.pornhub.com/random"'
+
 # *I* *HATE* *OpenGL*!!!11!
    alias gl="gcc  -L/usr/X11R6/lib -L/usr/X11/lib -lglut  -lGL -lGLU -lXi -lXmu -lXt -lXext -lSM -lm -lX11"
    alias ogl="g++  -L/usr/X11R6/lib -lglut -lGLU -lGL  -lXi -lXmu"
