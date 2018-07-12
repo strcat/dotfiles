@@ -1031,10 +1031,6 @@ function! s:fzf_statusline()
 endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
-" check for dokuwiki syntax
-"--------------------------------------------------
-" autocmd BufWinEnter *.txt call IsDokuWiki()
-"-------------------------------------------------- 
 
 let g:lightline = {
       \ 'component_function': {
