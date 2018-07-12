@@ -622,9 +622,9 @@ filetype plugin on
 filetype indent on
 
 " Use my own colorscheme
-"colorscheme wargrey
+colorscheme wargrey
 " colorscheme cabin
-colorscheme burnttoast256
+" colorscheme burnttoast256
 
 
 " Let's be friendly :)
