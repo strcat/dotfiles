@@ -53,6 +53,9 @@ p-fpath() {
         for c in $fpath_array; do print "\t$c"; done
 }
 
+# sometimes..
+cheating() { curl cheat.sh/$1; }
+
 # often.. very often..
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto; }
 
