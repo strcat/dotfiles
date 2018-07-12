@@ -58,7 +58,7 @@
 % Save a copy of this file to "$HOME/.slrnrc" and check *all* values in this
 % file for your requisites.
 % 
-% Last modified: [ 2018-07-10 22:59:52 ]
+% Last modified: [ 2018-07-12 20:06:04 ]
 % }}}
 
 % Configuration commands initiating with »a« {{{
@@ -392,7 +392,7 @@ set new_subject_breaks_threads 2
 % nnrpaccess "HOSTNAME" ""         ""  % Prompt for username and password
 
 % following the URL's
-%set non_Xbrowser "w3m '%s'"
+% set non_Xbrowser "w3m '%s'"
 set non_Xbrowser "screen -t 'url' w3m %s"
 % }}}
 
