@@ -995,6 +995,7 @@ if has("persistent_undo")
 	set undodir=~/.undodir/
 	set undofile
 endif
+
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
   \ 'kinds': [
@@ -1058,8 +1059,8 @@ let g:lightline = {
       \ },
       \ }
 
-nnoremap <silent> <leader>gs :Gstatus<CR> nnoremap <silent> <leader>gd :Gdiff<CR> 
-nnoremap <silent> <leader>gc :Gcommit<CR> nnoremap <silent> <leader>gb :Gblame<CR> 
+nnoremap <silent> <leader>gs :Gstatus<CR> nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR> nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gl :Glog<CR> nnoremap <silent> <leader>gp :Git push<CR>
 
 
@@ -1089,8 +1090,8 @@ set showtabline=2  " Show tabline
 set guioptions-=e  " Don't use GUI tabline
 
 
-" Formatoptions 
-" Formatoptions for asciidoc (<http://www.methods.co.nz/asciidoc/>) 
+" Formatoptions
+" Formatoptions for asciidoc (<http://www.methods.co.nz/asciidoc/>)
 if has("autocmd")
 	augroup templates
 		autocmd BufNewFile *.adoc 0r ~/.vim/templates/asciidoc.adoc
@@ -1099,9 +1100,9 @@ endif
 autocmd BufNewFile,BufRead ~/scripts/Asciidoc/*.txt,*.adoc
 	\ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2
 	\ | setlocal tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
-	\ | set textwidth=70 wrap formatoptions=tcqn 
+	\ | set textwidth=70 wrap formatoptions=tcqn
 	\ | set formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
-	\ | set comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:> 
+	\ | set comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
 	\ | nnoremap Q gq}
 	\ | set ft=asciidoc
 	\ | source ~/.vim/macros/abbreviations.vim
@@ -1112,10 +1113,7 @@ autocmd BufNewFile,BufRead ~/scripts/Asciidoc/*.txt,*.adoc
 
 autocmd BufNewFile,BufRead ~/.tmux.conf set ft=tmux
 
-" To open each buffer in its own tabpage, add this to your vimrc:
-au BufAdd,BufNewFile * nested tab sball
-
-" C(++) 
+" C(++)
 function CInsert()
     let x = confirm("Which template?\n"," &Linux-Like \n &Unix-Like",1,1)
     if x == 1
@@ -1128,32 +1126,32 @@ autocmd BufRead *.c set tw=0
 augroup c
     autocmd!
     autocmd BufNewFile,BufRead *.c,*.h,*.cc,*.cpp so $VIMRUNTIME/syntax/c.vim
-    autocmd BufNewFile,BufRead *.c,*.h,*.cc,*.cpp set com=sr:/*,mb:*,ex:*/ 
+    autocmd BufNewFile,BufRead *.c,*.h,*.cc,*.cpp set com=sr:/*,mb:*,ex:*/
     autocmd BufRead,BufNewFile *.c,*.h,*.cc,*.cpp  setlocal cindent
     autocmd BufRead,BufNewFile *.c,*.h,*.cc,*.cpp  setlocal cinoptions=>4,e0,n0,f0,{0,}0,^0,:4,=4,p4,t4,c3,+4,(2s,u1s,)20,*30,g4,h4
     autocmd BufRead,BufNewFile *.c,*.h,*.cc,*.cpp  setlocal cinkeys=0{,0},:,0#,!<C-F>,o,O,e
     "autocmd BufNewFile *.c call CInsert()
     autocmd BufWritePre,FileWritePre *.c  exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-" 
-" LaTeX 
-"au BufNewFile *.tex :0r ~/.vim/templates/template.tex | 
+
+" LaTeX
+"au BufNewFile *.tex :0r ~/.vim/templates/template.tex |
 "--------------------------------------------------
 " au FileType tex so ~/.vim/ftplugin/latex.vim
-"-------------------------------------------------- 
+"--------------------------------------------------
 au FileType tex set dict+=~/.vim/dic/LaTeX.dic sw=2 sts=2 ai com=:% | syn sync maxlines=200 | syn sync minlines=50
 augroup tex
     " <F5>:  Comment/uncomment current line
 function! LaTeXCommentUncomment()
-        if getline('.') =~ '^%'
-                execute("normal |")
-                execute("normal x")
-                execute(line('.')+1)
-        else
-                execute("normal |")
-                execute("normal i%")
-                execute(line('.')+1)
-        endif
+	if getline('.') =~ '^%'
+		execute("normal |")
+		execute("normal x")
+		execute(line('.')+1)
+	else
+		execute("normal |")
+		execute("normal i%")
+		execute(line('.')+1)
+	endif
 endfunction " LaTeXCommentUncomment()
 
 " <S-F5>:  Make the target corresponding to the current file (strips off
@@ -1161,9 +1159,9 @@ endfunction " LaTeXCommentUncomment()
     autocmd FileType tex map  <S-F5> :execute(":make ".strpart(expand("%"), 0, match(expand("%"), ".tex")))<cr>
     autocmd FileType tex imap <S-F5> <Esc>:execute(":make ".strpart(expand("%"), 0, match(expand("%"), ".tex")))<cr>
 augroup END
-" 
+"
 
-" HTML 
+" HTML
 function HTMLInsert()
    let x = confirm("Which Template?\n"," &Light \n &Dark",1,1)
    if x == 1
@@ -1175,14 +1173,14 @@ endfunc
 augroup html
   autocmd!
   autocmd  BufNewFile,BufRead *.html,*.shtml hi htmlLink ctermfg=Black ctermbg=Cyan cterm=underline
-  autocmd  BufNewFile,BufRead *.html,*.shtml so $VIMRUNTIME/syntax/html.vim 
+  autocmd  BufNewFile,BufRead *.html,*.shtml so $VIMRUNTIME/syntax/html.vim
   autocmd  BufNewFile,BufRead *.html,*.shtml set tw=100 nowrap
   " autocmd  BufNewFile *.html,*.shtml,*.htm call HTMLInsert()
   autocmd  BufWritePre,FileWritePre *.html,*.shtml exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-" 
+"
 
-" XML 
+" XML
 map <Leader>x :set filetype=xml<CR>
   \:source $VIMRUNTIME/syntax/xml.vim<CR>
   \:set foldmethod=syntax<CR>
@@ -1199,16 +1197,16 @@ map <Leader>x :set filetype=xml<CR>
 " catalog should be set up
 nmap <Leader>l <Leader>cd:%w !xmllint --valid --noout -<CR>
 nmap <Leader>r <Leader>cd:%w !rxp -V -N -s -x<CR>
-nmap <Leader>d4 :%w !xmllint --dtdvalid 
+nmap <Leader>d4 :%w !xmllint --dtdvalid
  \"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" --noout -<CR>
 
 vmap <Leader>px !xmllint --format -<CR>
 nmap <Leader>px !!xmllint --format -<CR>
 nmap <Leader>pxa :%!xmllint --format -<CR>
 nmap <Leader>i :%!xsltlint<CR>
-" 
+"
 
-" CSS 
+" CSS
 function CSSInsert()
    let x = confirm("Which Template?\n"," &Light \n &Dark",1,1)
    if x == 1
@@ -1224,55 +1222,55 @@ augroup css
   " autocmd  BufNewFile         *.css call CSSInsert()
   autocmd  BufWritePre,FileWritePre *.css exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-" 
+"
 
-" For CRUX Pkgfiles 
+" For CRUX Pkgfiles
 autocmd BufNewFile Pkgfile 0r ~/.vim/templates/Pkgfile
 
-" Mail and News 
+" Mail and News
 au FileType mail so ~/.vim/macros/MailNews.vim
 if has("autocmd")
-        au BufRead ~/.followup so ~/.vim/macros/message-nowplaying.vim | set spell
-        au BufRead ~/tmp/neomutt-* so ~/.vim/macros/msgid.vim
+	au BufRead ~/.followup so ~/.vim/macros/message-nowplaying.vim | set spell
+	au BufRead ~/tmp/neomutt-* so ~/.vim/macros/msgid.vim
 	au BufRead ~/tmp/neomutt* set ft=mail | set spell | syntax on
 	au BufRead ~/.article* so ~/.vim/macros/message-nowplaying.vim | set spell | syntax on
 endif
 
-" Slang 
+" Slang
 augroup slang
-        autocmd BufRead *.sl,~/.slrnrc set ft=slang | set modeline
-        autocmd BufRead *.sl,~/.slrnrc set com=sr:%,mb:%,ex:%
-        autocmd BufRead ~/.slang/score set ft=slrnsc | set modeline
-        autocmd BufRead ~/.slang/score nmap ;as oSubject: ^\<\><ESC>F\i | nmap ;as oSubject: \<\><ESC>F\i
-        autocmd BufRead ~/.slang/score nmap ;af oFrom: ^\<\><ESC>F\i | nmap ;af oFrom: \<\><ESC>F\i
-        autocmd BufRead ~/.slang/score nmap ;au oUser-Agent: ^\<\><ESC>F\i | nmap ;au oUser-Agent: \<\><ESC>F\i
-        autocmd BufWritePre,FileWritePre *.sl,*.slrnrc  exec("normal ms")|call LastMod()|exec("normal `s")
+	autocmd BufRead *.sl,~/.slrnrc set ft=slang | set modeline
+	autocmd BufRead *.sl,~/.slrnrc set com=sr:%,mb:%,ex:%
+	autocmd BufRead ~/.slang/score set ft=slrnsc | set modeline
+	autocmd BufRead ~/.slang/score nmap ;as oSubject: ^\<\><ESC>F\i | nmap ;as oSubject: \<\><ESC>F\i
+	autocmd BufRead ~/.slang/score nmap ;af oFrom: ^\<\><ESC>F\i | nmap ;af oFrom: \<\><ESC>F\i
+	autocmd BufRead ~/.slang/score nmap ;au oUser-Agent: ^\<\><ESC>F\i | nmap ;au oUser-Agent: \<\><ESC>F\i
+	autocmd BufWritePre,FileWritePre *.sl,*.slrnrc  exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-" 
+"
 
-" Changelogs 
+" Changelogs
 augroup Changelog
   autocmd!
   autocmd BufNewFile,BufRead  Changelog     so ~/.vim/macros/Changelog.vim
   autocmd BufNewFile,BufRead  Changelog     set tw=72 nowrap
   autocmd BufNewFile,BufRead  Changelog     so $VIMRUNTIME/syntax/changelog.vim
 augroup END
-" 
+"
 
-" Perl 
+" Perl
 au FileType perl set cink=0{,0},!,o,O
-                \ | set cinw=if,else,elsif,while,do,foreach,switch,sub
-                \ | set com=b:#
-                \ | set kp=perldoc\ -f
-                \ | set smartindent
-                \ | set makeprg=$HOME/bin/vimparse.pl\ %\ $*
-                \ | set errorformat=%f:%l:%m
-augroup pl 
+		\ | set cinw=if,else,elsif,while,do,foreach,switch,sub
+		\ | set com=b:#
+		\ | set kp=perldoc\ -f
+		\ | set smartindent
+		\ | set makeprg=$HOME/bin/vimparse.pl\ %\ $*
+		\ | set errorformat=%f:%l:%m
+augroup pl
   autocmd!
   autocmd BufNewFile,BufRead *.pl,*.pm let perl_want_scope_in_variables=1
   autocmd BufNewFile,BufRead *.pl,*.pm let perl_extended_vars=1
   autocmd BufNewFile,BufRead *.pl,*.pm so $VIMRUNTIME/syntax/perl.vim
-  autocmd BufNewFile,BufRead *.pl,*.pm set tw=0 nowrap 
+  autocmd BufNewFile,BufRead *.pl,*.pm set tw=0 nowrap
   " autocmd BufNewFile         *.pl,*.pm 0r ~/.vim/templates/template.pl
   autocmd BufNewFile,BufRead *.pl,*.pm map <F1> :Perldoc<CR>
   autocmd BufNewFile,BufRead *.pl,*.pm setf perl
@@ -1281,8 +1279,8 @@ augroup pl
   autocmd BufWritePre,FileWritePre *.pl,*.pm  exec("normal ms")|call LastMod()|exec("normal `s")
   autocmd BufWrite           *.pl    !chmod +x %
   augroup END
-" 
+"
 
-" I use this to soon i edit my ~/.sigs/own-stuff 
+" I use this to soon i edit my ~/.sigs/own-stuff
 autocmd BufRead  ~/.sigs/own-stuff  set tw=80
 autocmd BufWrite ~/.sigs/own-stuff  call LastMod()
