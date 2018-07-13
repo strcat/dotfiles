@@ -58,7 +58,7 @@
 % Save a copy of this file to "$HOME/.slrnrc" and check *all* values in this
 % file for your requisites.
 % 
-% Last modified: [ 2018-07-12 20:06:04 ]
+% Last modified: [ 2018-07-13 20:13:33 ]
 % }}}
 
 % Configuration commands initiating with »a« {{{
@@ -121,12 +121,6 @@ set cc_followup 0
 % cc_post_string currently does not support any % escapes.
 set cc_post_string "[This message has also been posted.]"
 
-% Valid character sets: isolatin, ibm850
-% ibm850 is the default on OS/2 and isolatin on other systems.
-%--------------------------------------------------
-% set charset isolatin
-%-------------------------------------------------- 
-
 % Custom headers to add to *new* posts
 % For the feature X-Face check out Karl Voit's XFace-Mini-Howto:
 % <http://www.karl-voit.at/howtos/en/xface.txt>
@@ -135,6 +129,7 @@ set cc_post_string "[This message has also been posted.]"
 %  %  ->  %%
 % See http://strcat.de/slrn/slrn.png for an example
 set custom_headers "X-Face: ,>[:$oWa1d@rqX'u1(z8,QN\"Dhe-A0}47t;#s]ZpG^mBq$|LEXakL`e!P?)\\S%%(',/'8pn9WCYWRgO3wsW.r;Hac;(V_6T#S&5WrFoO"
+
 % If custom sorting is enabled by setting ``sorting_method'' to 12, this
 % variable defines the sort order you want to use. It is a comma-
 % separated list of the following keywords:
@@ -186,14 +181,6 @@ set emphasized_text_mask 3
 % If set to 2, write _ and * with spaces.
 % Otherwise, if non-zero, write _ and * characters.
 set emphasized_text_mode 3
-
-% This variable is only relevant if you're using `character
-% mapping'. In that case, it decides whether the necessary recoding is
-% done before (non-zero setting) or after (default; zero) the editor
-% is called.
-%--------------------------------------------------
-% set editor_uses_mime_charset 1
-%-------------------------------------------------- 
 
 % my favorite editor
 % Before start, add a new bofh excuse in ~/.sig, *then* start $EDITOR
@@ -500,9 +487,6 @@ set show_article 0
 % 11     thread, then sort by date with most recent last
 % 12     custom sorting
 set sorting_method 9
-%--------------------------------------------------
-% set sorting_method 5
-%-------------------------------------------------- 
 
 % If non-zero, slrn will draw the thread tree using simple ascii characters
 set simulate_graphic_chars 1
@@ -586,25 +570,6 @@ set top_status_line "  slrn %v (%d) .:{ %n }:.   **    Typo in the code"
 % that's the part before the '@' from your email-address
 set username "strcat"
 
-% Overwrite the default "User-Agent" - String: "slrn/0.9.8.0 (OpenBSD)"
-% Note: This "feature" need my patch against slrn 0.9.8.0 which can be found
-% under: <http://strcat.de/eigenes/slrn-0.9.8.0-useragent-patch>
-% Thx to Winfried Neessen for the webspace
-%--------------------------------------------------
-%--------------------------------------------------
-% set custom_os "OpenBSD"
-%-------------------------------------------------- 
-%-------------------------------------------------- 
-%--------------------------------------------------
-% set custom_os "slrn/pre0.9.9p1-2/co (OpenBSD)"
-%-------------------------------------------------- 
-%--------------------------------------------------
-% set useragent "slrn/0.9.8.1 (OpenBSD)"
-%-------------------------------------------------- 
-%--------------------------------------------------
-% set useragent "tin/1.9.2-20070201 (\"Dalaruan\") (UNIX) (OpenBSD/4.2 (i386))"
-%-------------------------------------------------- 
-
 % use my time
 set use_localtime 1
 
@@ -669,10 +634,6 @@ set macro_directory "/home/dope/.slang/"
  interpret "slrnpull.sl"
  %% "save as subject"
  interpret "saveex.sl"
- %% show raw message
-%--------------------------------------------------
-%  interpret "raw.sl"
-%-------------------------------------------------- 
  %% Search body of articles ('ESC e /')
  interpret "body_search.sl"
  %% die hard, Score fast
@@ -829,7 +790,6 @@ setkey article article_line_up          "\e\eOB"% Scroll article up one line
 setkey article article_page_down        " "     % Scroll article down one page
 setkey article article_page_up          "^H"    % Scroll article up one page
 setkey article article_page_up          "^?"    % Scroll article up one page
-%setkey article article_page_up          "b"     % Scroll article up one page
 setkey article article_right            "\eOC"  % Pan article to the right
 setkey article article_search           "/"     % Search forward in the article
 setkey article author_search_backward   "A"     % Author search backward
@@ -915,9 +875,6 @@ setkey group quit                       "Q"     % Quit slrn
 setkey group redraw                     "^L"    % Redraw the screen
 setkey group slrnp			"f"	% Get new news from server
 setkey group refresh_groups		"g"	
-%--------------------------------------------------
-% setkey group refresh_groups             "G"     % Get new news from server
-%-------------------------------------------------- 
 setkey group repeat_last_key            "."     % Repeat last key sequence
 setkey group save_newsrc                "X"     % Force a save of the newsrc file
 setkey group select_group               " "     % Enter the current newsgroup
