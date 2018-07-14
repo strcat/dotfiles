@@ -26,11 +26,6 @@ fi
 # web browsing (See ``less ${^fpath}/pick-web-browser(N)'' for details)
   autoload pick-web-browser
 
-# Search history with wildcards? No problem..
-  autoload -U history-pattern-search
-  zle -N history-pattern-search-backward history-pattern-search
-  bindkey '^Z' history-pattern-search-backward
-
 # This tries to find wordcode files and automatically re-compile them if
 # at least one of the original files is newer than the wordcode file.
   autoload zrecompile
@@ -290,6 +285,9 @@ setopt hist_no_store
 # zsh sessions will all have their history lists added to the
 # history file, in the order they are killed
 setopt appendhistory
+
+# Immediately append to the history file, not just when a term is killed
+setopt incappendhistory
 
 # If unset, the cursor is set to the end of the word if completion is
 # started. Otherwise it stays there and completion is done from both ends.
