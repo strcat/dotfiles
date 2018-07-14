@@ -13,8 +13,10 @@ export FZF_DEFAULT_COMMAND='tty'
 
 #export FZF_DEFAULT_COLORS='--color=dark,fg:7,fg+:7,bg:0,bg+:8,hl:4,hl+:4,info:8,border:8,prompt:4,pointer:3,marker:3,spinner:8,header:6'
 #export FZF_DEFAULT_COLORS='--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229,info:150,prompt:110,spinner:150,pointer:167,marker:174'
+
 #export FZF_DEFAULT_COLORS='--color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108,info:108,prompt:109,spinner:108,pointer:168,marker:168'
-export FZF_DEFAULT_COLORS='--color light,hl:124,fg+:242,bg+:230,hl+:33,info:52,prompt:245,spinner:245,pointer:245,marker:208'
+export FZF_DEFAULT_OPTS='--color=bg:233,bg:#002b36,spinner:#719e07,hl:#586e75,fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07'
+#export FZF_DEFAULT_COLORS='--color light,hl:124,fg+:242,bg+:230,hl+:33,info:52,prompt:245,spinner:245,pointer:245,marker:208'
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_COLORS \
 	--border \
 	--height 80% \
