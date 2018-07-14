@@ -343,6 +343,7 @@ TIMEFMT="\
 # duplicated history events.
 HISTSIZE=100000
 
+
 # Stop annoying MailChecks. I'm not using AOL
 unset MAILCHECK
 
@@ -361,7 +362,10 @@ if (( ! EUID )); then
 else
   HISTFILE=~/.zsh_history
 fi
+
+# Number of history entries to save to disk
 SAVEHIST=1000
+
 DIRSTACKSIZE=50
 
 # If nonnegative, commands whose combined user and system execution
