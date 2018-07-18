@@ -108,7 +108,7 @@
 "  for MS-DOS and Win32:  $VIM\_vimrc or $VIM/_vimrc
 "           for OpenVMS:  sys$login:.vimrc
 " 
-" There are many options for Vim - over 200:
+" There are many options for Vim - over 400:
 " »grep -c '{".*P_' src/option.c«
 "       Release dates given in format "yymmdd":
 "         - VIM-5.4   [990726] 218 options.
@@ -118,45 +118,66 @@
 "         - VIM-6.2f  [030323] 322 options.
 "         - VIM-6.3   [040607] 314 options.
 "         - VIM-7.0   [050120] 333 options.
+"         - VIM-8.1   [000000] 411 options.
 "
-" Powered by OpenBSD 3.4 / Slackware 9.1, VIM - Vi IMproved 6.3, RedBull, Samson Halfzware
-" Shag and Metallica.
-" 
-"  ,----[ $ vim --version ]
-"  | VIM - Vi IMproved 6.3 (2004 June 7, compiled Jun 19 2004 02:58:45)
-"  | Compiled by Christan Schneider <strcat@gmx.net>
-"  | Huge version without GUI.  Features included (+) or not (-):
-"  | +arabic +autocmd -balloon_eval -browse ++builtin_terms +byte_offset +cindent
-"  | -clientserver -clipboard +cmdline_compl +cmdline_hist +cmdline_info +comments
-"  | +cryptv +cscope +dialog_con +diff +digraphs -dnd -ebcdic +emacs_tags +eval
-"  | +ex_extra +extra_search +farsi +file_in_path +find_in_path +folding -footer
-"  | +fork() -gettext -hangul_input +iconv +insert_expand +jumplist +keymap +langmap
-"  |  +libcall +linebreak +lispindent +listcmds +localmap +menu +mksession
-"  | +modify_fname +mouse -mouseshape +mouse_dec +mouse_gpm -mouse_jsbterm
-"  | +mouse_netterm +mouse_xterm +multi_byte +multi_lang -netbeans_intg -osfiletype
-"  | +path_extra -perl +postscript +printer -python +quickfix +rightleft -ruby
-"  | +scrollbind +signs +smartindent -sniff +statusline -sun_workshop +syntax
-"  | +tag_binary +tag_old_static -tag_any_white -tcl +terminfo +termresponse
-"  | +textobjects +title -toolbar +user_commands +vertsplit +virtualedit +visual
-"  | +visualextra +viminfo +vreplace +wildignore +wildmenu +windows +writebackup
-"  | -X11 -xfontset -xim -xsmp -xterm_clipboard -xterm_save
-"  |    system vimrc file: "$VIM/vimrc"
-"  |      user vimrc file: "$HOME/.vimrc"
-"  |       user exrc file: "$HOME/.exrc"
-"  |   fall-back for $VIM: "/usr/local/share/vim"
-"  | Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H     -g -O2
-"  | Linking: gcc   -L/usr/local/lib -o vim       -lncurses -lgpm -ldl
-"  `----
+" Powered by OpenBSD 6.3, VIM - Vi IMproved 6.3, RedBull, Dunhill Navy
+" Rolls and Metallica.
+"
+" ,----[ vim --version ]
+" | VIM - Vi IMproved 8.1 (2018 May 18, compiled Jul  6 2018 18:48:37)
+" | Included patches: 1-155
+" | Compiled by Christian Schneider <strcat1974@gmail.com>
+" | Huge version without GUI.  Features included (+) or not (-):
+" | +acl               +farsi             +mouse_sgr         -tag_any_white
+" | +arabic            +file_in_path      -mouse_sysmouse    -tcl
+" | +autocmd           +find_in_path      +mouse_urxvt       +termguicolors
+" | -autoservername    +float             +mouse_xterm       +terminal
+" | -balloon_eval      +folding           +multi_byte        +terminfo
+" | +balloon_eval_term -footer            +multi_lang        +termresponse
+" | -browse            +fork()            -mzscheme          +textobjects
+" | ++builtin_terms    +gettext           +netbeans_intg     +timers
+" | +byte_offset       -hangul_input      +num64             +title
+" | +channel           +iconv             +packages          -toolbar
+" | +cindent           +insert_expand     +path_extra        +user_commands
+" | -clientserver      +job               +perl              +vartabs
+" | -clipboard         +jumplist          +persistent_undo   +vertsplit
+" | +cmdline_compl     +keymap            +postscript        +virtualedit
+" | +cmdline_hist      +lambda            +printer           +visual
+" | +cmdline_info      +langmap           +profile           +visualextra
+" | +comments          +libcall           +python/dyn        +viminfo
+" | +conceal           +linebreak         +python3/dyn       +vreplace
+" | +cryptv            +lispindent        +quickfix          +wildignore
+" | +cscope            +listcmds          +reltime           +wildmenu
+" | +cursorbind        +localmap          +rightleft         +windows
+" | +cursorshape       +lua               +ruby              +writebackup
+" | +dialog_con        +menu              +scrollbind        -X11
+" | +diff              +mksession         +signs             -xfontset
+" | +digraphs          +modify_fname      +smartindent       -xim
+" | -dnd               +mouse             +startuptime       -xpm
+" | -ebcdic            -mouseshape        +statusline        -xsmp
+" | +emacs_tags        +mouse_dec         -sun_workshop      -xterm_clipboard
+" | +eval              -mouse_gpm         +syntax            -xterm_save
+" | +ex_extra          -mouse_jsbterm     +tag_binary
+" | +extra_search      +mouse_netterm     +tag_old_static
+" |    system vimrc file: "$VIM/vimrc"
+" |      user vimrc file: "$HOME/.vimrc"
+" |  2nd user vimrc file: "~/.vim/vimrc"
+" |       user exrc file: "$HOME/.exrc"
+" |        defaults file: "$VIMRUNTIME/defaults.vim"
+" |   fall-back for $VIM: "/home/dope/dev-bin/share/vim"
+" | Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H     -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1
+" | Linking: gcc   -L. -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic
+" | -Wl,-export-dynamic -Wl,-E   -L/usr/local/lib -Wl,--as-needed -o vim
+" | -lm -ltinfo -lnsl    -ldl  -L/usr/lib -llua5.2 -Wl,-E
+" | -fstack-protector-strong -L/usr/local/lib
+" | -L/usr/lib/x86_64-linux-gnu/perl/5.24/CORE -lperl -ldl -lm -lpthread
+" | -lcrypt    -lruby-2.3 -lpthread -lgmp -ldl -lcrypt -lm
+" `----
+"
 "  It was also compiled with:
 "   | ./configure --without-x --with-compiledby='Christan Schneider <strcat@gmx.net>' \
 "   |             --with-features=huge
 "
-"  ,----[ Why Vim and not Emacs ]
-"  | $ time vim -c ":q"
-"  |  Real: 0.10s User: 0.03s System: 0.00s Percent: 29% Cmd: vim -c ":q"
-"  | $ time emacs -kill
-"  |  Real: 2.28s User: 0.21s System: 0.12s Percent: 14% Cmd: emacs -kill
-"  `----
 "
 "function! SourceIfExists(file)
 	"if filereadable(expand(a:file))
@@ -234,7 +255,7 @@ set dip=filler,context:4,iwhite
 " [global] |'display'| to display as much as possible of the last line in a window instead
 "                      of displaying the '@' symbols.
 set dy=lastline
-" 
+
 " [global] |'edcompatible'| toggle flags of ":substitute" command
 " set noed
 set encoding=utf-8
@@ -697,17 +718,9 @@ function TrimWhiteSpace()
 
 " ,u = update by reading this file
  map ,u :source ~/.vimrc<CR>
-" When .vimrc is edited, reload it
-"autocmd! bufwritepost .vimrc source ~/.vimrc
 
-" Toggle linenumbers with F5
-nmap <F5> :set invnumber number?<CR>
-
-" <http://www.michael-prokop.at/computer/config/.centericq/external>
-" 030511 log all messages arriving when online
-" -> then process them for example in vim [very usefull if receiving some source!]
-" put the following into your "~/.vimrc":
-map   ##i :e ~/.centericq/icq_log_<C-R>=strftime("%y%m%d")<CR>
+" Toggle linenumbers with F6
+nmap <F6> :set invnumber number?<CR>
 
 " This is mapping to uuencode and uudecode in BASE64: 
 " supports normal mode and visual mode. 
@@ -1040,14 +1053,6 @@ let g:lightline = {
       \ },
       \ }
 
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
@@ -1058,6 +1063,14 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
 
 nnoremap <silent> <leader>gs :Gstatus<CR> nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR> nnoremap <silent> <leader>gb :Gblame<CR>
