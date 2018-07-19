@@ -373,7 +373,8 @@ else
 fi
 
 # Number of history entries to save to disk
-SAVEHIST=1000
+SAVEHIST=1000000
+
 
 DIRSTACKSIZE=50
 

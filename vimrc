@@ -196,13 +196,6 @@ set aw
 
 " [glo-lo] |'autoread'| autom. read file when changed outside of Vim
 set ar
-" 
-
-" Options initiating with »b« 
-" [global] |'background'| "dark" or "light", used for highlight colors
-"--------------------------------------------------
-"  set bg=dark 
-"-------------------------------------------------- 
 
 " [global] |'backspace'| how backspace works at start of line
 set bs=2
@@ -307,9 +300,6 @@ set grepprg=grep\ -nH\ $*
 " 
 
 " Options initiating with »h« 
-" [global] |'helpfile'| name of this help file
-" set hf="$VIMRUNTIME/doc/help.txt.gz"
-
 " [global] |'helpheight'| the mindestheight for ':help'
 set hh=20
 
@@ -490,7 +480,6 @@ set sta
 " [buffer] |'softtabstop'| Number of spaces that a <Tab> counts for while performing editing
 "                          operations
 set sts=8
-"set stl=%<[%n]\ %F\ \ Filetype=\%Y\ \ %r\ %1*%m%*%w%=%(Line:\ %l%)%4(%)Column:\ %5(%c%V/%{strlen(getline(line('.')))}%)\ %4(%)%p%%
 
 " [global] |'switchbuf'| This option controls the behavior when switching between buffers. 
 set swb=useopen
@@ -524,12 +513,6 @@ set tbi
 " [global] |'ttyscroll'| Maximum number of lines to scroll the screen.
 set tsl=999
 
-" [global] |'ttytype'| Alias for 'term',
-"--------------------------------------------------
-" set tty=screen
-"-------------------------------------------------- 
-" 
-
 " Options initiating with »u« 
 " [global] |'undolevels'| undoing 1000 changes should be enough
 set ul=1000
@@ -542,8 +525,7 @@ set ut=5000
 " 
 
 " Options initiating with »v« 
-set viminfo=!,\"500,'50,/50,:500,@500,h
-"viminfo help:
+" viminfo help:
 " ! - Save and restore global variables that start with uppercase and does not have lower case characters.
 " " - Maximum number of lines saved for each register.
 " % - Save and restore buffer list.
@@ -556,6 +538,7 @@ set viminfo=!,\"500,'50,/50,:500,@500,h
 " h - Disable the effect of 'hlsearch' when loading viminfo file.
 " n - Name of the viminfo file.
 " r - Removable media. List of pathes for which no marks will be saved.
+set viminfo=!,\"500,'50,/50,:500,@500,h
 
 
 " [global] |'visualbell'| visual bell instead of beeping.. or nothing ;)
@@ -647,7 +630,6 @@ colorscheme wargrey
 " colorscheme cabin
 " colorscheme burnttoast256
 
-
 " Let's be friendly :)
 autocmd VimEnter * echo "Welcome back Chris :)"
 autocmd VimLeave * echo "Cya in Hell."
@@ -693,7 +675,6 @@ if version >= 700
 	au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
 	au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
 endif
-" 
 
 " Mappings 
 "
@@ -733,8 +714,6 @@ vnoremap <silent> <Leader>ud !uudecode -o /dev/stdout<CR>
   map ;LD :source ~/.vim/macros/vimdiff.vim<CR>
 " Load ~/.vim/macros/morse.vim
   map ;LM :source ~/.vim/macros/morse.vim<CR>
-" Load ~/.vim/macros/vimspell.vim
-  map ;LS :source ~/.vim/macros/vimspell.vim<CR>
 
 " Fix a diff, making it easier to review.
 " Add a blank line before each '@@ ... hunk line info ...@@' and each 'diff',
@@ -769,9 +748,6 @@ nmap ,cd :exe 'cd ' . expand ("%:p:h")<CR>:pwd<CR>
 map ZZ :"Sorry. no 'ZZ' today. Please stop cyring and piss off."<CR>
 
 " Delete lines in insert-mode.
-"--------------------------------------------------
-" map! <C-k> <Esc>ddi
-"-------------------------------------------------- 
 set <C-Right>=f
 set <C-Left>=[1;5D
 map <C-Left> b
@@ -817,10 +793,6 @@ nmap [24^ :clist!<CR>
 " Note: i use english keyboard layout, i mapped capslock to esc, this mapping
 "       is only for some fucking german keyboards in my network :/
 inoremap jj <esc>
-
-" Quick change buffers
-"imap <c-n> <ESC>:bNext<CR>
-"nmap <c-n> :bNext<CR>
 
 " Often used filenames - only needed these on the command line:
 " »:e _Mrc« == »:e /home/$USER/.muttrc«
@@ -870,7 +842,6 @@ fun RmCR()
     exe ':' . oldLine
 endfun
 
-
 " Function for changing folding method.
 if version >= 600
         function! ChangeFoldMethod() abort
@@ -889,8 +860,6 @@ if version >= 600
                 endif
         endfunction
 endif
-
-
 
 " For the lastmod augroup 
 function! LastMod()
@@ -912,7 +881,6 @@ function DamnedWQ()
         endif
 endfun
 iab wq <bs><esc>:call DamnedWQ()<CR>
-" 
 
 " Abbreviations 
 " date'n'time
@@ -1148,10 +1116,6 @@ augroup c
 augroup END
 
 " LaTeX
-"au BufNewFile *.tex :0r ~/.vim/templates/template.tex |
-"--------------------------------------------------
-" au FileType tex so ~/.vim/ftplugin/latex.vim
-"--------------------------------------------------
 au FileType tex set dict+=~/.vim/dic/LaTeX.dic sw=2 sts=2 ai com=:% | syn sync maxlines=200 | syn sync minlines=50
 augroup tex
     " <F5>:  Comment/uncomment current line
@@ -1197,14 +1161,11 @@ augroup END
 map <Leader>x :set filetype=xml<CR>
   \:source $VIMRUNTIME/syntax/xml.vim<CR>
   \:set foldmethod=syntax<CR>
-"  \:source $VIMRUNTIME/syntax/syntax.vim<CR>
   \:colors peachpuff<CR>
   \:source $ADDED/xml.vim<CR>
   \:iunmap <buffer> <Leader>.<CR>
   \:iunmap <buffer> <Leader>><CR>
   \:inoremap \> ><CR>
-  " no imaps for <Leader>
-  "\:inoremap \. ><CR>
 
 
 " catalog should be set up
