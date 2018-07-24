@@ -18,7 +18,7 @@
 export TERM=rxvt-unicode-256color
 
 # Git <http://git.or.cz/>
-if [[ -x `which git` ]]; then
+if (( $+commands[git] )); then
 	(( ${+GIT_AUTHOR_EMAIL} )) || export GIT_AUTHOR_EMAIL="strcat1974@gmail.com"
 	(( ${+GIT_AUTHOR_NAME} )) || export GIT_AUTHOR_NAME="Christian Schneider"
 	(( ${+GIT_COMMITTER_EMAIL} )) || export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
@@ -26,7 +26,7 @@ if [[ -x `which git` ]]; then
 	(( ${+GIT_PRETTY_FORMAT_AUTHOR} )) || export GIT_PRETTY_FORMAT_AUTHOR="--pretty=\"%C(bold green)%h%Creset %C(yellow)%an%Creset%C(auto)%d%Creset %s\""
 fi
 # Darcs <http://www.darcs.net/>
-if [[ -x `which darcs` ]]; then
+if (( $+commands[darcs] )); then
 	(( ${+DARCS_DONT_ESCAPE_EXTRA} )) || export DARCS_DONT_ESCAPE_EXTRA="áéíóúñÁÉÍÓÚÑ"
 	(( ${+DARCS_EDITOR} )) || export DARCS_EDITOR="vim"
 	(( ${DARCS_EMAIL} )) || export DARCS_EMAIL=darcs@strcat.de
@@ -115,11 +115,12 @@ esac
 # because it's not part of IEEE Std 1003.1, 2004 Edition!
   export HOSTNAME="`hostname`"
 # Some (useful) options for less
-  if [[ -x `which less` ]] ; then
-      export PAGER="less"
-      export PERLDOC_PAGER="less -+C -E"
-      export LESS="-R -C -i -j4 -M -e -PM?m(%i/%m) .?f%f:Standard input.\: ?bb%bb?B/%B. Bytes.?pb (%pb\%).?lb, Zeile\: %lb?e ?x(-> %x):(EOF).%t"
-      export LESSBINFMT='*u[%X]'
+  # if [[ -x `which less` ]] ; then
+if  (( $+commands[less] )); then
+	export PAGER="less"
+	export PERLDOC_PAGER="less -+C -E"
+	export LESS="-R -C -i -j4 -M -e -PM?m(%i/%m) .?f%f:Standard input.\: ?bb%bb?B/%B. Bytes.?pb (%pb\%).?lb, Zeile\: %lb?e ?x(-> %x):(EOF).%t"
+	export LESSBINFMT='*u[%X]'
       if [[ $terminfo[colors] -ge 8 ]] ; then
 	      # blue manpages
 	      export LESS_TERMCAP_mb=$'\E[01;31m'
