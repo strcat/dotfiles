@@ -16,7 +16,8 @@ alias p0rn='mpv "http://www.pornhub.com/random"'
 alias top10='print -l ? ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
 # grc - frontend for generic colouriser grcat(1)
-if [[ -x `which grc` ]]; then
+#if [[ -x `which grc` ]]; then
+if (( $+commands[grc] )); then
 	alias grc='grc --colour=auto'
 	alias ping='grc ping'
 	alias last='grc last'
@@ -48,11 +49,11 @@ alias esig="$EDITOR ~/.sigs/own-stuff"
 # Make a certificat
 alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 365"
 
-# Aterm
-  [[ -x `which aterm` ]] && alias aterm="aterm -bg black -fg AntiqueWhite +sb --geometry 110x48+112+32"
+# https://aria2.github.io/
+(( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M --dir=${HOME}/Downloads'"
 
 # Indent (according to GCS - Gnu Coding Standards)
-  [[ -x `which indent` ]] && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
+(( $+commands[indent] )) && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
 
 # Quick edit often used setup file
   alias Ez='$EDITOR ~/.zshrc'
