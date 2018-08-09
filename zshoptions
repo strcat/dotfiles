@@ -21,6 +21,9 @@ if [[ "$ZSH_VERSION" == 5.<0->* ]]; then
 	# But it only works on 4.2.0 and later.
 	autoload -Uz url-quote-magic
 	zle -N self-insert url-quote-magic
+	# https://github.com/zsh-users/zsh/blob/master/Functions/Zle/bracketed-paste-magic
+	autoload -Uz bracketed-paste-magic
+	zle -N bracketed-paste bracketed-paste-magic
 fi
 
 # web browsing (See ``less ${^fpath}/pick-web-browser(N)'' for details)
