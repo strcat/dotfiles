@@ -50,7 +50,7 @@ alias esig="$EDITOR ~/.sigs/own-stuff"
 alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 365"
 
 # https://aria2.github.io/
-(( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M --dir=${HOME}/Downloads'"
+(( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
 
 # Indent (according to GCS - Gnu Coding Standards)
 (( $+commands[indent] )) && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
@@ -186,6 +186,12 @@ if (( EUID != 0 )); then
 		alias upports="cd /usr && cvs -q get -P ports"
 		# format a floppy (OpenBSD)
 		alias format="fdformat /dev/rfc0a"
+	fi
+	if [ -e "/etc/arch-release" ]; then
+		alias pacman="sudo pacman"
+		alias trizen="sudo trizen"
+		alias yaconf="sudo yaconf"
+		alias yaourt="yaourt --export /home/dope/download/Sources/AUR"
 	fi
 	if [ -e "/etc/debian_version" ]; then
 		alias apt="sudo apt"
