@@ -159,7 +159,7 @@ zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 
 # filename suffixes to ignore during completion (except after rm
 # command)
-zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns  '*?.(o|c~|old|pro|zwc)' '*~'
+zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns  '*?.(o|c~|old|pro|zwc|part)' '*~'
 
 # Messages/warnings format
 zstyle ':completion:*:messages' format $'%{\e[0;31m%}%d%{\e[0m%}'
