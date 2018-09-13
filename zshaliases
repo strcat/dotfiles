@@ -89,6 +89,7 @@ alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 3
   alias gll='gl --all'
   alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
   alias glla='gla --all'
+  alias gfuck="git commit -am '`curl -s http://whatthecommit.com/index.txt`'"
   #alias glog="git log --pretty=format:'%C(auto)%h %ad %C(green)%s%Creset %C(auto)%d [%an (%G? %GK)]' --graph --date=format:'%Y-%m-%d %H:%M' --all"
 
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
@@ -191,7 +192,8 @@ if (( EUID != 0 )); then
 		alias pacman="sudo pacman"
 		alias trizen="sudo trizen"
 		alias yaconf="sudo yaconf"
-		alias yaourt="yaourt --export /home/dope/download/Sources/AUR"
+		alias pacinfo="pacman -Si $@"
+		alias pacfile="pacman -Fs $1"
 	fi
 	if [ -e "/etc/debian_version" ]; then
 		alias apt="sudo apt"
