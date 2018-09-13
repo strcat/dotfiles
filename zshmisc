@@ -107,7 +107,7 @@ fi
 hash -d SS=/mnt/Serien					# name it..
 hash -d SM=/mnt/Movies					# yep
 hash -d A=~/scripts/Asciidoc				# selfwritten documentation in asciidoc-format
-hash -d D=~/download/					# there are my downloads
+hash -d D=~/Downloads/					# there are my downloads
 hash -d F=/usr/local/share/zsh/$ZSH_VERSION/functions	# ZSH functions (OpenBSD)
 hash -d F=/usr/share/zsh/$ZSH_VERSION/functions/	# ZSH functions (Slackware) 
 hash -d F=/usr/share/zsh-beta/functions/		# ZSH functions (Debian)
