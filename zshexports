@@ -440,9 +440,7 @@ zstyle ':completion:*:*:(zfanon|ftp):*' hosts $hosts
           /usr/games \
 	  /opt/texlive/2017/bin/x86_64-linux/ \
 	  /usr/games/bin \
-	  /cygdrive/c/WINDOWS/system32 \
-	  /cygdrive/c/WINDOWS \
-	  /cygdrive/c/WINDOWS/System32/Wbem \
+	  /usr/bin/core_perl \
 	  /home/dope/perl5/bin
   do
           [ -d "${dir}" ] && PATH="${PATH}:${dir}"
