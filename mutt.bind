@@ -76,20 +76,22 @@
   #  macro	index	S	"|/usr/bin/spamassassin -D -r"						"report message to Vipul's Razor"
   #  macro	index	H	"|sudo /usr/bin/sa-learn --ham --no-sync --single"				"Add message to no-spam"
   #  According to notmuch-mutt(1)
-    macro	index	S	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
- 				<shell-escape>notmuch-mutt -r --prompt search<enter>\
-				<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
-				<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
-				"notmuch: search mail"
-    macro	index	H	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
-				<pipe-message>notmuch-mutt -r thread<enter>\
-				<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
-				<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
-				"notmuch: reconstruct thread"
-    macro 	index 	A 	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
-				<pipe-message>notmuch-mutt tag -- -inbox<enter>\
-				<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
-				"notmuch: remove message from inbox"
+  macro index S "<enter-command>unset wait_key<enter><shell-escape>read -p 'mu query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`mu find --fields i --quiet 2> /dev/null \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;s/\\+/\\\\+/g for@a;s/=/\\\\=/g for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a mu pattern"
+  macro index A "<limit>all\n" "show all messages"
+    # macro	index	S	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                              <shell-escape>notmuch-mutt -r --prompt search<enter>\
+    #                             <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: search mail"
+    # macro	index	H	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                             <pipe-message>notmuch-mutt -r thread<enter>\
+    #                             <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: reconstruct thread"
+    # macro 	index 	A 	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                             <pipe-message>notmuch-mutt tag -- -inbox<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: remove message from inbox"
 
   # View good/bad mails
     macro	index	"\em"	"<limit>~h \"X-Spam-Flag: YES\"<enter><last-entry>"			"Show only SPAM"
