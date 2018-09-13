@@ -59,7 +59,7 @@
 % Save a copy of this file to "$HOME/.slrnrc" and check *all* values in this
 % file for your requisites.
 % 
-% Last modified: [ 2018-08-18 12:54:55 ]
+% Last modified: [ 2018-09-01 12:40:18 ]
 % }}}
 
 % Configuration commands initiating with »a« {{{
@@ -672,8 +672,8 @@ set macro_directory "/home/dope/.slang/"
  %% sorted output of header lines
  interpret "sort-headers.sl"
  %% ToFu-Protection
- interpret "t-prot.sl"
- interpret "t-prot-cfg"
+ % interpret "t-prot.sl"
+ % interpret "t-prot-cfg"
 % }}}
 
 % Colors {{{
