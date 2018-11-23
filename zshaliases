@@ -194,6 +194,8 @@ if (( EUID != 0 )); then
 		alias yaconf="sudo yaconf"
 		alias pacinfo="pacman -Si $@"
 		alias pacfile="pacman -Fs $1"
+		alias pacman_new='find / -regextype posix-extended -regex ".+\.pac(new|save|orig)" 2> /dev/null'
+		alias pacman_remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
 	fi
 	if [ -e "/etc/debian_version" ]; then
 		alias apt="sudo apt"
