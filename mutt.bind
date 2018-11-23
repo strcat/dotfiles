@@ -1,4 +1,4 @@
-# $Id: mutt.bind,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+# $Id: mutt.bind,v 1.1 2003/06/19 03:1159 dope Exp dope $
 #
 # This file is mainly based upon »The ultimative Key-Bindings for Mutt«
 # (Version 1.35), written by Roland Rosenfeld. You can find the original
@@ -68,9 +68,9 @@
   # use getmail for multiple POP - Accounts
     macro	index	G	 "!echo 'Check for new Mails... ' ; gmail.sh 2>&1 > /dev/null &\n "	"Check for new mail via getmail"
   # SPAM..
-  macro index \ed "<enter-command>unset wait_key\n<pipe-entry>/usr/bin/vendor_perl/sa-learn --spam\n<enter-command>set wait_key\n<save-message>=SPAM/evilspam\n" "Tags as SPAM"
-  macro index \eu "<pipe-entry>/usr/bin/vendor_perl/sa-learn --ham\n<enter-command>set wait_key\n<save-message>=inbox\n" "Untags as SPAM"
-  macro index \et "<pipe-entry>/usr/bin/vendor_perl/spamassassin -t\n<enter-command>set wait_key\n" "Tests if it is SPAM"
+  macro index \ed "<enter-command>unset wait_key\n<pipe-entry>/usr/bin/sa-learn --spam\n<enter-command>set wait_key\n<save-message>=SPAM/evilspam\n" "Tags as SPAM"
+  macro index \eu "<pipe-entry>/usr/bin/sa-learn --ham\n<enter-command>set wait_key\n<save-message>=inbox\n" "Untags as SPAM"
+  macro index \et "<pipe-entry>/usr/bin/spamassassin -t\n<enter-command>set wait_key\n" "Tests if it is SPAM"
   # Saving the current message into SPAM folder: spamassassin report and classify as spam
   #  macro	index	S	"| sudo spamassassin --debug --report\n.<flag-message>"			"Submit message to spam-databases and train Bayes (and flag it)"
   #  macro	index	S	"|/usr/bin/spamassassin -D -r"						"report message to Vipul's Razor"
