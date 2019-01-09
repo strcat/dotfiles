@@ -17,6 +17,67 @@ function lr() {
 	find "$@" -printf "%M %2n %u %g %9s %TY-%Tm-%Td %TH:%TM /%p -> %l\n" | $=sort | $=numfmt | sed '/^[^l]/s/ -> $//; '$classify' '$long
 }
 
+if [ -e "/etc/arch-release" ]; then
+	function paclist() { pacman -Qei $(pacman -Qu|cut -d" " -f 1)|awk ' BEGIN {FS=":"}/^Name/{printf("\033[1;36m%s\033[1;37m", $2)}/^Description/{print $2}' }
+	# $ xdg-mime default chromium.desktop x-scheme-handler/http  # or "firefox" or opera or ..
+	# $ xdg-mime default chromium.desktop x-scheme-handler/https #
+	function pacweb() {
+		pkg="$1"
+		infos="$(pacman -Si "$pkg")"
+		if [[ -z "$infos" ]]
+		then
+			return
+		fi
+		repo="$(grep '^Repo' <<< "$infos" | grep -oP '[^ ]+$')"
+		arch="$(grep '^Arch' <<< "$infos" | grep -oP '[^ ]+$')"
+		xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &> /dev/null
+	}
+	# list last $@ installed packages
+	function lastpackages() { expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail $@ }
+function H-Pacman() {
+	print "
+		pacman -Syu		Fuehrt eine komplette System-Aktualisierung aus
+		pacman -S paket 	Eines oder mehrere Pakete installieren oder aktualisieren
+		pacman -Sy		Lokale Datenbank aktualisieren
+		pacman -Su		Alle installierten Pakete aktualisieren
+		pacman -Syy		Lokale Datenbank komplett neu aufbauen und aktualisieren
+		pacman -Syuu		Alle installierten Pakete downgraden (von Testing nach Core/Extra oder von Community-Testing nach Community)
+		pacman -S testing/Paket aus einem spezifischen Repo (hier: testing) installieren
+		pacman -Sw <Paket>	Paket herunterladen, ohne es zu installieren
+		pacman -Ss <Paket> 	Sucht nach installierbaren Paketen. Es reicht ein Teil des Paketnamens oder der Paketbeschreibung
+		pacman -Sg		Sucht nach installierbaren Paketgruppen
+		pacman -Sg Paketgruppe  Zeigt den Inhalt einer Paketgruppe
+		pacman -Si <Paket>	Informationen zu (noch) nicht installierten Paketen anzeigen
+		pacman -U Dateiname	Ein lokales Paket installieren (nicht aus einem Repo)
+		pacman -Scc		Leert das lokale Paketarchiv von Pacman vollständig (/var/cache/pacman/pkg)
+		pacman -Sc		Löscht veraltete Pakete aus /var/cache/pacman/pkg 
+		pacman -R Paketname 	Deinstallation eines oder mehrerer Pakete (aus AUR oder Repos)
+		pacman -Rs Paketname 	Wie oben, zusätzlich werden alle abhängige Pakete gesucht und mit entfernt, falls diese nicht von einer anderen Anwendung gebraucht werden
+		pacman -Rsc Paketname   Wie oben. Abhängigkeiten werden kaskadierend entfernt
+		pacman -Rscn Paketname  Wie oben. Die Konfigurationsdateien der Anwendung werden mit entfernt
+		pacman -Rdd <Paket> 	Deinstallation eines Paketes ohne Prüfung bestehender Paketabhängigkeiten.
+		pacman -Rss <Paket> 	Paket mit allen benötigten Abhängigkeiten und deren Abhängigkeiten entfernen
+		pacman -Q		Zeigt alle installierten Pakete inklusive Versionsnummer auf dem System an
+		pacman -Qi <Paket> 	Informationen zu bereits installiertem Paket anzeigen
+		pacman -Qs <Suchmuster> Installierte Pakete nach Name oder einem Begriff in der Beschreibung durchsuchen.
+		pacman -Qdt		Verwaiste Pakete anzeigen, die als Abhängigkeiten installiert wurden, aber nicht mehr von anderen Paketen benötigt werden
+		pacman -Qet		Pakete anzeigen, die ausdrücklich installiert wurden, aber nicht von anderen als Abhängigkeit benötigt werden
+		pacman -Ql <Paket> 	Zeigt alle installierten Dateien des Pakets im System
+		pacman -Qm		Pakete anzeigen, die sich in keinem aktivierten Repo laut /etc/pacman.conf befinden
+		pacman -Qo PfadzurDatei Zeigt das Paket an, welches die gesuchte Datei enthält
+		pacman -Sy &&pacman -Qu Aktualisiert die lokale Paketdatenbank und zeigt verfügbare Updates an
+		pacman -Qk|grep warning Überprüft alle Pakete auf fehlende Dateien und schränkt die Ausgabe auf Problempakete ein
+		pacman -Fy		Lokale Datenbank aktualisieren (wie -Sy)
+		pacman -Fyy		Lokale Datenbank neu aufbauen und aktualisieren (wie -Syy)
+		pacman -Fs <Datei> 	Paket suchen das die Datei enthält
+		pacman -Fsx <Regex> 	Wie -Fs, aber Suche mit regulären Ausdrücken (hilfreich, falls der vollständige Dateiname unbekannt ist)
+		pacman -Fl <Paket> 	Alle Dateien des Paketes anzeigen
+		pacman -Fo PfadzurDatei	Paketzugehörigkeit einer Datei abfragen
+		pacman -D --asexplicit Paket	Status eines installierten Paketes auf Ausdrücklich installiert setzen
+		pacman -D ---asdeps <Paket> 	Status eines installierten Paketes auf Installiert als Abhängigkeit setzen"
+	}
+fi
+
 # Create a data URL from a file
 dataurl() {
 	local mimeType
@@ -313,13 +374,6 @@ function helpme()
 
 # reverse-sorted du with nice output
 function sdu() {  du -sb $* | sort -rn | perl -ple 's|^(\d+)\s*(.*)$|sprintf qq(%9.2fM  $2),($1/1024/1024)|e' | less }
-# PROG: colorizing the output of make
-#--------------------------------------------------
-# if [[ -x ~/bin/makefilter ]]
-# then
-# 	make() { command make "$@" |& makefilter }
-# fi
-#-------------------------------------------------- 
 
 # SYS: /gitize/ $PWD
 function gitize() { git init && git add . && git commit -a -m"initial commit" && git gc } 
