@@ -49,6 +49,8 @@ alias esig="$EDITOR ~/.sigs/own-stuff"
 # Make a certificat
 alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 365"
 
+# https://projects.gw-computing.net/projects/dfc
+(( $+commands[dfc] )) && alias df=dfc
 # https://aria2.github.io/
 (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
 
@@ -192,8 +194,8 @@ if (( EUID != 0 )); then
 		alias pacman="sudo pacman"
 		alias trizen="sudo trizen"
 		alias yaconf="sudo yaconf"
-		alias pacinfo="pacman -Si $@"
-		alias pacfile="pacman -Fs $1"
+		alias pacinfo="sudo pacman -Si $@"
+		alias pacfile="sudo pacman -Fs $1"
 		alias pacman_new='find / -regextype posix-extended -regex ".+\.pac(new|save|orig)" 2> /dev/null'
 		alias pacman_remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
 	fi
