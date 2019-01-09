@@ -89,8 +89,9 @@ esac
 	bindkey "a" accept-and-hold		# ESC+a
 	bindkey "^B"  backward-word		# One word back
 	bindkey "^X"  forward-word		# One word forward
-	bindkey '^[[1;3D' backward-word
-	bindkey '^[[1;3C' forward-word
+	# Strg+arrors
+	bindkey '^[[1;5D' backward-word
+	bindkey '^[[1;5C' forward-word
 	# fzf (ALT+Up)
 	bindkey '^[[1;3A' fzf-history-widget
 	bindkey "^P" quote-line			# quote the whole line
@@ -99,6 +100,8 @@ esac
 	bindkey "^I" expand-or-complete		# assimilable to "ls<TAB>"
 	bindkey "^E" expand-cmd-path		# $ ls<STRG+E> == /bin/ls
 	bindkey " " my-expand-abbrev		# See ~/.zsh/zshmisc "/^myiabs" for details
+	# Ctrl+space: print Git status
+	bindkey -s '^ ' ' git status --short^M'
 	# caphusos Tip
 	run-with-sudo () { LBUFFER="sudo $LBUFFER" }
 	zle -N run-with-sudo
