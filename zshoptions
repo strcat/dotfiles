@@ -2,29 +2,17 @@
 # example, `allexport' is equivalent to `A__lleXP_ort'.
 
 # Initialisation for new style completion.
-if [[ $ZSH_VERSION  > '4.2' ]]; then
-	autoload -U compinit && compinit -d ${ZDOTDIR:-$HOME}/.zcompdump-$ZSH_VERSION ${${${ZSH_VERSION%%<4->*}:+-D}:--C}
-	#--------------------------------------------------
-	# autoload -U compinit
-	# compinit
-	#-------------------------------------------------- 
-else
-	print "Advanced completion system not found; ignoring zstyle settings."
-	function zstyle { }
-fi
-
-#--------------------------------------------------
-# if [[ "$ZSH_VERSION" == 4.2.<0->* ]]; then
-#-------------------------------------------------- 
-if [[ "$ZSH_VERSION" == 5.<0->* ]]; then
-	# If you now paste a url it will be magically quoted!
-	# But it only works on 4.2.0 and later.
-	autoload -Uz url-quote-magic
-	zle -N self-insert url-quote-magic
-	# https://github.com/zsh-users/zsh/blob/master/Functions/Zle/bracketed-paste-magic
-	autoload -Uz bracketed-paste-magic
-	zle -N bracketed-paste bracketed-paste-magic
-fi
+# "if $version 4.2"? Its 2019. Even Debian old..stable provides 5.3.*,
+# so..
+# if [[ $ZSH_VERSION  > '4.2' ]]; then
+  autoload -U compinit && compinit -d ${ZDOTDIR:-$HOME}/.zcompdump-$ZSH_VERSION ${${${ZSH_VERSION%%<4->*}:+-D}:--C}
+# If you now paste a url it will be magically quoted!
+# But it only works on 4.2.0 and later.
+  autoload -Uz url-quote-magic
+  zle -N self-insert url-quote-magic
+# https://github.com/zsh-users/zsh/blob/master/Functions/Zle/bracketed-paste-magic
+  autoload -Uz bracketed-paste-magic
+  zle -N bracketed-paste bracketed-paste-magic
 
 # web browsing (See ``less ${^fpath}/pick-web-browser(N)'' for details)
   autoload pick-web-browser
