@@ -594,10 +594,10 @@ syntax on
 " Note: The "expand" is necessary to evaluate ~dope
 "
 " File: VBlockquote.vim (Insert (Quote) stuff the way some emacs people do)
-let VBLOCK=expand("~/.vim/macros/VBlockquote.vim")
-if filereadable(VBLOCK)
-        exec "source " VBLOCK
-endif
+" let VBLOCK=expand("~/.vim/macros/VBlockquote.vim")
+" if filereadable(VBLOCK)
+"         exec "source " VBLOCK
+" endif
 
 " File: browser_launcher.vim (Vim script to launch/control browsers.)
 let BLAUNCH=expand("~/.vim/ftplugin/browser_launcher.vim")
@@ -936,6 +936,11 @@ iab wq <bs><esc>:call DamnedWQ()<CR>
 
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
+	" https://github.com/tpope/vim-surround
+	Plug 'tpope/vim-surround'
+	" https://github.com/xuhdev/vim-latex-live-preview
+	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'PotatoesMaster/i3-vim-syntax'
 	" Statusline
 	Plug 'itchyny/lightline.vim'
 	" A simple, easy-to-use Vim alignment plugin.
@@ -998,10 +1003,6 @@ let g:lightline = {
     \   'separator': '',
     \ },
     \ }
-
-" remap arrow keys
-nnoremap <Left> :bprev<CR>
-nnoremap <Right> :bnext<CR>
 
 " lightline-buffer ui settings
 " replace these symbols with ascii characters if your environment does not support unicode
@@ -1085,6 +1086,23 @@ function! s:fzf_statusline()
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 
+" \<Enter> == <ESC>:buffers<Enter>
+function! s:buflist()
+	redir => ls
+	silent ls
+	redir END
+	return split(ls, '\n')
+endfunction
+function! s:bufopen(e)
+	execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+nnoremap <silent> <Leader><Enter> :call fzf#run({
+	\   'source':  reverse(<sid>buflist()),
+	\   'sink':    function('<sid>bufopen'),
+	\   'options': '+m',
+	\   'down':    len(<sid>buflist()) + 2
+	\ })<CR>
+
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 let g:lightline = {
@@ -1098,7 +1116,7 @@ let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head'
@@ -1279,6 +1297,7 @@ au FileType mail so ~/.vim/macros/MailNews.vim
 if has("autocmd")
 	au BufRead ~/.followup so ~/.vim/macros/message-nowplaying.vim | set spell
 	au BufRead ~/tmp/neomutt-* so ~/.vim/macros/msgid.vim
+	au BufRead ~/tmp/neomutt-* so ~/.vim/macros/VBlockquote.vim
 	au BufRead ~/tmp/neomutt* set ft=mail | set spell | syntax on
 	au BufRead ~/.article* so ~/.vim/macros/message-nowplaying.vim | set spell | syntax on
 endif
