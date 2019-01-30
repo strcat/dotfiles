@@ -58,7 +58,7 @@
 	  ZFTP_TRANSFER=yes
 	  # Default is a reverse progressbar but its very ugly *narf*
 	  # Valid options are ``none'', ``bar'' and ``percent''.
-	  zstyle ':zftp:*' progress percent 
+	  zstyle ':zftp:*' progress percent
 	  # Specifies the minimum time interval between updates of the
 	  # progress meters in seconds
 	  zstyle ':zftp:*' update true
@@ -88,7 +88,7 @@ watch=(notme)
 # extra backslash.
 #  $ ls *.[\!ch]
 # works though and that, in fact, would NOT work in a shell script,
-# because the history  mechanism in the interactive line editor is 
+# because the history  mechanism in the interactive line editor is
 # what removes the backslash.
 unsetopt banghist
 
@@ -99,7 +99,7 @@ unsetopt banghist
 #
 # Report the status of background jobs immediately, rather than
 # waiting until just before printing a prompt.
-setopt notify 
+setopt notify
 
 # Allow comments even in interactive shells i. e.
 #   $ uname # This command prints system informations
@@ -132,7 +132,7 @@ setopt nullglob
 #  $ echo =ls
 #  /bin/ls
 #  $ unsetopt EQUALS
-#  $ echo =ls 
+#  $ echo =ls
 #  =ls
 # NOTE:Its not really needed because zsh sets this per default (since 3.N)
 setopt equals
@@ -172,31 +172,31 @@ setopt cdablevars
 # with job control; a second attempt to exit the shell will succeed.
 setopt checkjobs
 
-# Make cd push the old directory onto the directory stack. 
-setopt autopushd 
+# Make cd push the old directory onto the directory stack.
+setopt autopushd
 
 # change to directory without "cd"
 setopt autocd
 
-# Exchanges the meanings of `+' and `-' when used with a number to 
-# specify a directory in the stack.      
+# Exchanges the meanings of `+' and `-' when used with a number to
+# specify a directory in the stack.
 setopt pushdminus
 
-# If set, parameter expansion, command substitution and arithmetic 
-# expansion are performed in prompts.   
+# If set, parameter expansion, command substitution and arithmetic
+# expansion are performed in prompts.
 setopt pushdsilent
 
-# Treat the '#', '~' and '^' characters as part of patterns 
+# Treat the '#', '~' and '^' characters as part of patterns
 # for filename generation, etc. (An initial unquoted '~'
 # always produces named directory expansion.)
 # | $ grep word *~(*.gz|*.bz|*.bz2|*.zip|*.Z)
 # searches for word not in compressed files
-setopt extendedglob 
+setopt extendedglob
 
 # Do query the user before executing 'rm *' or 'rm path/*'
 # $ rm -rf *
 # zsh: sure you want to delete all the files in /home/dope/foo [yn]?
-setopt normstarsilent 
+setopt normstarsilent
 
 # If querying the user before executing `rm *' or `rm path/*',
 # first wait ten seconds and ignore anything typed in that time.
@@ -206,7 +206,7 @@ setopt normstarsilent
 setopt no_rm_star_wait
 
 # Shut up ;)
-setopt nobeep 
+setopt nobeep
 
 # Beep when an attempt is made to access a history entry which
 # isn't there.
@@ -218,7 +218,7 @@ setopt HISTSAVENODUPS
 
 # When searching for history entries in the line editor, do not display
 # duplicates of a line previously found, even if the duplicates are not
-# contiguous.                       
+# contiguous.
 setopt HISTFINDNODUPS
 
 # If the internal history needs to be trimmed to add the current command line,
@@ -282,7 +282,7 @@ setopt incappendhistory
 
 # If unset, the cursor is set to the end of the word if completion is
 # started. Otherwise it stays there and completion is done from both ends.
-setopt completeinword 
+setopt completeinword
 
 #  When listing files that are possible completions, show the
 # type of each file with a trailing identifying mark.
@@ -291,11 +291,8 @@ setopt list_types
 #  Do not require a leading '.' in a filename to be matched explicitly.
 setopt globdots
 
-# Try to correct the spelling of all arguments in a line.
-setopt correctall
-
 # List jobs in the long format by default.
-setopt longlistjobs 
+setopt longlistjobs
 
 # Print eight bit characters literally in completion lists, etc.
 # This option is not necessary if your system correctly returns the
@@ -304,7 +301,7 @@ setopt printeightbit
 
 # Don't push multiple copies of the same directory onto the directory
 # stack
-setopt pushdignoredups 
+setopt pushdignoredups
 
 # This option both imports new commands from the history file, and also
 # causes your typed commands to be appended to the history file (the
@@ -312,7 +309,7 @@ setopt pushdignoredups
 # The history lines are also output with timestamps ala
 # EXTENDED_HISTORY (which makes it easier to find the spot where
 # we left off reading the file after it gets re-written).
-setopt sharehistory 
+setopt sharehistory
 
 # Try to correct the spelling of all arguments in a line.
 # No .. not really .. it's make me crazy *g*
@@ -331,7 +328,7 @@ unsetopt extendedhistory
 setopt shortloops
 
 # Do *not* run all background jobs at a lower priority
-unsetopt bgnice 
+unsetopt bgnice
 
 # If this option is unset, output flow control via start/stop characters
 # (usually assigned to ^S/^Q) disabled in the shell's editor.
