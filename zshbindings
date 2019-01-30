@@ -1,34 +1,8 @@
 # To find out the keynames you can use
-#  | cat > /dev/null 
+#  | cat > /dev/null
 #  or
 #  | od -c
 #
-# Some useful keybindings
-#  | $ xterm -version
-#  |   XFree86 4.3/OpenBSD 3.3(174)
-#  | $ echo $TERM
-#  |   xterm
-#
-#  bindkey "^Y"    yank                                # <STRG>-Y
-#  bindkey "\e[3~" delete-char                         # Delete
-#  bindkey '^[[7~' beginning-of-line                   # Home (xterm)
-#  bindkey '^[[8~'  end-of-line                        # End (xterm)
-#  bindkey '^[[5~'  history-beginning-search-backward  # Page Up
-#  bindkey '^[[6~'  history-beginning-search-forward   # Page Down
-#  bindkey '^[[2~' overwrite-mode                      # Insert
-#  bindkey "^[[A"  up-line-or-search                   # <ESC>-N
-#  bindkey "^[[B"  down-line-or-search                 # <ESC>-
-#  bindkey "^Q"  edit-command-line                     # <STRG>-Q
-#  bindkey " "     magic-space                         # ' ' (Space>
-#  bindkey "^B"    backward-word                       # <STRG>-B
-#  bindkey "^E"    expand-cmd-path                     # <STRG>-E
-#  bindkey "^N"    forward-word                        # <STRG>-N
-#  bindkey "^R"    history-incremental-search-backward # <STRG>-R
-#  bindkey "^P"    quote-line                          # <STRG>-P
-#  bindkey "^K"    run-help                            # <STRG>-K
-#  bindkey "^Z"    which-command                       # <STRG>-Z
-#  bindkey "^X"    what-cursor-position                # <STRG>-X
-#  bindkey -v
 
 case $TERM in
 	xterm*)
@@ -38,13 +12,6 @@ case $TERM in
 	zle -N down-line-or-beginning-search
 	[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-beginning-search
 	[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
-	# Pos1 && End
-	#--------------------------------------------------
-	# bindkey "^[[H" beginning-of-line
-	# bindkey "^[[F" end-of-line
-	# bindkey "^[[A" up-line-or-history
-	# bindkey "^[[B" down-line-or-search
-	#-------------------------------------------------- 
 	;;
 	screen*)
 	autoload -U up-line-or-beginning-search
@@ -82,10 +49,9 @@ esac
 	bindkey "[D" backward-char		# <-
 	bindkey "q" push-line			# Kill the *complete* line! (ESC+q)
 	bindkey "^R" history-incremental-search-backward # Search in my $HISTFILE (STRG+R)
-	bindkey '^Q' history-beginning-search-backward   # 
+	bindkey '^Q' history-beginning-search-backward   #
 	bindkey '^F' history-beginning-search-forward    #
 	bindkey "^[[2;5~" insert-last-word	# STRG+Einfg
-#	bindkey '^[[2' insert-last-word 	# STRG+Einfg
 	bindkey "a" accept-and-hold		# ESC+a
 	bindkey "^B"  backward-word		# One word back
 	bindkey "^X"  forward-word		# One word forward
@@ -94,14 +60,16 @@ esac
 	bindkey '^[[1;5C' forward-word
 	# fzf (ALT+Up)
 	bindkey '^[[1;3A' fzf-history-widget
-	bindkey "^P" quote-line			# quote the whole line
 	bindkey "^K" run-help			#  i. e. "run-help foo" == "man foo"
 	bindkey -s "\C-t" "dirs -v\rcd ~"	# STRG+t
-	bindkey "^I" expand-or-complete		# assimilable to "ls<TAB>"
 	bindkey "^E" expand-cmd-path		# $ ls<STRG+E> == /bin/ls
 	bindkey " " my-expand-abbrev		# See ~/.zsh/zshmisc "/^myiabs" for details
 	# Ctrl+space: print Git status
 	bindkey -s '^ ' ' git status --short^M'
+	# Ctrl+p: print version
+	bindkey -s "^P" ' --version^M'
+	# Ctrl+i: print help and pipe it to $PAGER
+	bindkey -s "^G" ' --help | $PAGER^M'
 	# caphusos Tip
 	run-with-sudo () { LBUFFER="sudo $LBUFFER" }
 	zle -N run-with-sudo
@@ -124,5 +92,3 @@ esac
 	# Fügt die Completion auf der Kommandozeile ein und zeigt dann ein
 	# Menü mit weiterhin möglichen Completions. "Engere Auswahl"
 	bindkey -M menuselect 'o' accept-and-infer-next-history
-#;;
-#esac
