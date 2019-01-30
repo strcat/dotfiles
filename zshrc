@@ -20,7 +20,7 @@
 #  | [dope@painless:~ :) ]% man -k zsh
 #  | zsh                  (1)  - the Z shell (384 lines)
 #  | zshall               (1)  - the Z shell meta-man page (19841 lines)
-#  | zshbuiltins          (1)  - zsh built-in commands (1756 lines) 
+#  | zshbuiltins          (1)  - zsh built-in commands (1756 lines)
 #  | zshcompctl           (1)  - zsh programmable completion (593 lines)
 #  | zshcompsys           (1)  - zsh completion system (4095 lines)
 #  | zshcompwid           (1)  - zsh completion widgets (1026 lines)
@@ -35,7 +35,7 @@
 #  | zshzle               (1)  - zsh command line editor (1575 lines)
 #  | [dope@painless:~ :) ]%
 #  `----
-#  
+#
 # Zsh start up sequence:
 #  1) /etc/zshenv   -> Always run for every zsh.   (login + interactive + other)
 #  2)   ~/.zshenv   -> Usually run for every zsh.  (login + interactive + other)
@@ -66,7 +66,7 @@
 # if [[ ! -o login ]]; then
 #         print "Warning: It is *not* a login-Shell\!"
 # fi
-#-------------------------------------------------- 
+#--------------------------------------------------
 
 # -f true if file exists and is a regular file. See
 #  | man zshmisc | less -p "^CONDITIONAL EXPRESSIONS"
@@ -128,7 +128,7 @@ else
         print "Note: ~/.zsh/zshstyle is unavailable."
 fi
 
-# Test and then source the wretched rest 
+# Test and then source the wretched rest
 if [ -f ~/.zsh/zshmisc ]; then
         source ~/.zsh/zshmisc
 else
