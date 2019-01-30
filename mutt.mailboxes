@@ -20,3 +20,4 @@ mailboxes +strcat/strcat-`date +%Y-%m`	# The root of all evil :>
 mailboxes +Subscriptions		# "Welcome to the $foobar mailinglist!
 mailboxes +Wetter/Wetter-`date +%Y-%m`	# <http://www.donnerwetter.de/>
 mailboxes +/Zsh/Zsh-`date +%Y-%m`	# <http://www.zsh.org/>
+mailboxes +/i3/i3-`date +%Y-%m`		# I3-Windowmanager
