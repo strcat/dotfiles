@@ -1,12 +1,11 @@
 # (( ${+*} )) = if variable is set don't set it anymore
-#  Note: Do *not* use '$PORTSDIR'! This variable is defined in 
+#  Note: Do *not* use '$PORTSDIR'! This variable is defined in
 #        '/path/to/ports/Makefile'.
 (( ${+IRCNAME} )) || export IRCNAME="Christian 'strcat' Schneider"  # **EDIT**
 (( ${+IRCNICK} )) || export IRCNICK="strcat"                        # **EDIT**
 (( ${+IRCSERVER} )) || export IRCSERVER="irc.freenode.net"          # **EDIT**
 (( ${+EDITOR} )) || export EDITOR="vim"                             # **EDIT**
 (( ${+VISUAL} )) || export VISUAL="vim"                             # **EDIT**
-# (( ${+BROWSER} )) || export BROWSER="xdg-open"                      # **EDIT**
 (( ${+OS} )) || export OS="${OSTYPE%%[0-9.]*}"                      # **FIXME**
 (( ${+OSMAJOR} )) || export OSMAJOR="${OSVERSION%%.*}"              # **FIXME**
 (( ${+ORGANIZATION} )) || export ORGANIZATION="Guerrilla UNIX Development (Venimus, Vidimus, Dolavimus)" # **EDIT**
@@ -14,9 +13,6 @@
 (( ${+SHITDIR} )) || export SHITDIR="$HOME/Trash"
 (( ${+LESSCHARSET} )) || export LESSCHARSET=utf-8
 (( ${+TERMINAL} )) || export TERMINAL=st
-
-# Set $TERM
-#export TERM=rxvt-unicode-256color
 
 # Git <http://git.or.cz/>
 if (( $+commands[git] )); then
@@ -38,7 +34,6 @@ if [[ -x `which tidy` ]]; then
 fi
 
 # Needed for Perl.. i think so!?
-#export PERL_UTF8_LOCALE=1 PERL_UNICODE=AS
 # To stop Perl interpreters not configured to expect a Unicode locale:
 export PERL_BADLANG=0
 
@@ -54,10 +49,7 @@ if [[ -d "~/local" ]]; then
 fi
 
 # Available or not?
-if [[ -x `which lesspipe.sh` ]]; then
-	
-	export LESSOPEN='|lesspipe.sh %s'             # **EDIT**
-fi
+(( $+commands[lesspipe.sh] )) && export LESSOPEN='|lesspipe.sh %s'             # **EDIT**
 
 # This one is needed for FreeBSD because OSVERSION is defined in
 # /usr/ports/Mk/bsd.port.mk. Thx to Christian Mondabon for this "bugreport".
@@ -79,19 +71,6 @@ if [ -d "/usr/pkgsrc" ]; then
 fi
 if [ -d "/usr/portage" ]; then
 	(( ${+PORTS_DIR} )) || export PORTS_DIR="/usr/portage" # My LFS
-fi
-
-# use tor (<http://tor.eff.org>) to aonymizing overlay network for TCP
-# in combination with privoxy (<http://www.privoxy.org>) for a web proxy
-# with advanced filtering capabilities for protecting privacy against
-# internet junk.
-if [ -x $(which tor 1&>/dev/null) ] && [ -e /usr/sbin/privoxy ]; then
-	# The most commandline-applications (w3m, ssh, ftp, ..) use the
-	# variable ``HTTP_PROXY'' to connect with a proxy
-	(( ${+HTTP_PROXY} )) || export HTTP_PROXY="http://127.0.0.1:8118/" 
-	# The *most*(!) but not all .. lynx .. the default-browser on
-	# OpenBSD (Yes! I use lynx very often on my workstations)
-	(( ${+http_proxy} )) || http_proxy="http://127.0.0.1:8118/"
 fi
 
 # some variables for specific systems. I *don't* use FreeBSD so i've no
@@ -116,7 +95,6 @@ esac
 # because it's not part of IEEE Std 1003.1, 2004 Edition!
   export HOSTNAME="`hostname`"
 # Some (useful) options for less
-  # if [[ -x `which less` ]] ; then
 if  (( $+commands[less] )); then
 	export PAGER="less"
 	export PERLDOC_PAGER="less -+C -E"
@@ -131,7 +109,6 @@ if  (( $+commands[less] )); then
 	      # export LESS_TERMCAP_so=$'\E[38;5;246m'
 	      # export LESS_TERMCAP_ue=$'\E[0m'
 	      # export LESS_TERMCAP_us=$'\E[04;38;5;146m'
-	      export LESS=-R
 	      export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
 	      export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
 	      export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
@@ -161,11 +138,6 @@ if  (( $+commands[less] )); then
   export NNTPSERVER='news.eternal-september.org'
 # just for fun ..
   export ZVERSION=${VERSION:-"zsh $ZSH_VERSION"}
-# the default homepage for lynx
-  export WWW_HOME="http://www.google.com"
-  export HTTP_HOME="http://www.google.com"
-# The ultimate old-school single player dungeon exploration game!!!111!
-  export NETHACKOPTIONS='gender:male,noautopickup,color,lit_corridor,showrace,showexp,showdmg,showweight,time,toptenwin,catname:Prowl,msg_window:f,!legacy'
 # this value is optional because CRUX has no info-pages
   typeset -U infopath # no duplicates
   export INFOPATH="/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.16.1/info:/usr/share/gcc-data/i686-pc-linux-gnu/3.4.5/info/"
@@ -177,11 +149,6 @@ if  (( $+commands[less] )); then
   export CVSUMASK=003
 # use ``CVSEDITOR=emacs'' if u want to use a complete OS :>
   export CVSEDITOR=vim
-# Needed for some functions (bm, bmls, bmadd, ..)
-  if [ ! -e ${HOME}/.bmrc ]; then
-	  export BMRC=~/.bmrc
-	  touch $BMRC
-  fi
 
 # Some settings for the manpages
   # set the width to 80. Its enough
@@ -200,9 +167,9 @@ if  (( $+commands[less] )); then
 # Dont ask me why. Use it or not.
 if [ -e "/etc/debian_version" ]; then
         export LANG="en_US.UTF-8"
-	export DEBCHANGE_AUTO_NMU=no 
-	export DEBCHANGE_RELEASE_HEURISTIC=changelog 
-	export DEBCOMMIT_SIGN_TAGS=yes 
+	export DEBCHANGE_AUTO_NMU=no
+	export DEBCHANGE_RELEASE_HEURISTIC=changelog
+	export DEBCOMMIT_SIGN_TAGS=yes
 	export DEBFULLNAME="Christian (strcat) Schneider"
 	export DEBEMAIL="debian@strcat.de"
 	export DEBSIGN_KEYID="0xF678E1DA"
@@ -272,7 +239,7 @@ if [[ -e $HOME/.dircolors ]]; then
 	#--------------------------------------------------
 else
 	LS_COLORS=''
-	LS_COLORS=$LS_COLORS:'no=0'           # Normal text       = Default foreground  
+	LS_COLORS=$LS_COLORS:'no=0'           # Normal text       = Default foreground
 	LS_COLORS=$LS_COLORS:'fi=0'           # Regular file      = Default foreground
 	LS_COLORS=$LS_COLORS:'di=32'          # Directory         = Bold, Yellow
 	LS_COLORS=$LS_COLORS:'ln=01;36'       # Symbolic link     = Bold, Cyan
@@ -348,7 +315,7 @@ WATCHFMT="%B->%b %n has just %a %(l:tty%l:%U-Ghost-%u)%(m: from %m:)"
 #  %E     Elapsed time in seconds.
 #  %P     The CPU percentage, computed as  (%U+%S)/%E.
 #  %J     The name of this job.
-# Default is: 
+# Default is:
 #       %E real  %U user  %S system   %P  %J
 TIMEFMT="\
     The name of this job.             : %J
@@ -363,7 +330,6 @@ TIMEFMT="\
 # duplicated history events.
 HISTSIZE=100000
 
-
 # Stop annoying MailChecks. I'm not using AOL
 unset MAILCHECK
 
@@ -374,9 +340,9 @@ unset MAILCHECK
 # i have finally discovered the difference between `SAVEHIST' and `HISTSIZE'
 # thanks to the FAQ. `HISTSIZE' is the number of lines of history that is
 # kept within any given, running zsh. `SAVEHIST' is the number of lines of
-# history that is written out to a file at the magic, mysterious moment 
+# history that is written out to a file at the magic, mysterious moment
 # when that event occurs. so cat-ing `HISTFILE' into wc -l should enumerate
-# the number of history events 
+# the number of history events
 if (( ! EUID )); then
   HISTFILE=~/.root_histfile
 else
@@ -413,9 +379,6 @@ hosts=( ftp.{free,open,net}bsd.org
         ftp.strcat.neessen.net
 	ftp.strcat.de
         ftp.revier.com
-        strcat.isa-geek.org
-        shell.sf.net
-        127.0.0.1
         192.168.1.{1..9}
 	192.168.178.{1..99}
       )
@@ -430,7 +393,7 @@ zstyle ':completion:*:*:(zfanon|ftp):*' hosts $hosts
 # ..)
   [ -d "${HOME}/dev-bin" ] && PATH="${PATH}:${HOME}/dev-bin/bin"
   [ -d "${HOME}/dev-bin" ] && PATH="${PATH}:${HOME}/dev-bin/sbin"
-  
+
   # Check some directories and add existing to $PATH
   for dir in \
           /usr/local/bin \
@@ -452,7 +415,8 @@ zstyle ':completion:*:*:(zfanon|ftp):*' hosts $hosts
 	  /usr/games/bin \
 	  /usr/bin/core_perl \
 	  /home/dope/perl5/bin \
-	  /home/dope/.gem/ruby/2.5.0/bin
+	  /home/dope/.gem/ruby/2.5.0/bin \
+	  /home/dope/.gem/ruby/2.6.0/bin
   do
           [ -d "${dir}" ] && PATH="${PATH}:${dir}"
   done
@@ -488,18 +452,6 @@ if autoload +X -U _accept_line_with_url > /dev/null 2>&1 ; then
 	export DOWNLOADER="wget -S -c"
 fi
 
-# Using a /X11-Browser/ when X11 is up
-if [ $DISPLAY ]; then
-	export WWW_BROWSER="/home/dope/bin/url_handler.sh %s"
-	export RAGGLE_BROWSER="/home/dope/bin/url_handler.sh"
-else
-	export WWW_BROWSER=${BROWSER:-lynx}
-fi
-
-if [ "$DISPLAY" = "screen" ]; then
-	stty erase '^?'
-fi
-
 # automatically remove duplicates from these arrays
 typeset -gU path cdpath manpath fpath
 
@@ -521,10 +473,10 @@ do
 done
 
 
-# PS{1,2,3}, RPOMPT, .. 
+# PS{1,2,3}, RPOMPT, ..
 # The "prompt" of the shell.
 #  See zshmisc(1) (/PROMPT EXPANSION) for details.
-# 
+#
 # %n         $USERNAME.
 # @          literal '@'
 # %m         machine name.
@@ -627,37 +579,6 @@ else
 fi
 
 
-# Show/Set the active command as title in Xterm/GNU Screen
-# Needed for ssh-connections (i want ``user@hostname'' as title)
-if [ -z "$SSH_CONNECTION" ]; then
-	# Change the title in xterm
-	function title()
-	{
-		# screen.linux, screen.unix, ..
-		if [[ $TERM == screen* ]]; then
-			print -nR $'\033k'$1$'\033'\\\
-
-			print -nR $'\033]0;'$2$'\a'
-		elif if [[ $TERM == "xterm" || $TERM == "rxvt" ]]; then
-			#precmd () { print -Pn "\e]0;[ %n@%m: %~ ] \a" }
-			print -nR $'\033]0;'$*$'\a'
-		fi
-	}
-	# the "default" title
-	#function precmd() { title zsh "$IDENTITY:$(print -P %~)" }
-	function preexec()
-	{
-		emulate -L zsh
-		local -a cmd; cmd=(${(z)1})
-		# show ``vim ~/.zshrc'' instead of ``vim'' in the title.
-		if [[ $cmd[1] == "vim" || $cmd[1] == "man" || $cmd[1] == "cmus" ]] ; then
-			title "${cmd}"
-		else
-			title $cmd[1]:t "$cmd[2,-1]"
-		fi
-	}
-fi
-
 # Executed whenever a command has a non-zero exit status:
 #--------------------------------------------------
 # if fortune bofh-excuses > /dev/null 2>&1 ;then
@@ -665,7 +586,7 @@ fi
 # else
 # 	TRAPZERR() { echo 'AAAAAAAARRRRGHHHHH!!'; }
 # fi
-#-------------------------------------------------- 
+#--------------------------------------------------
 
 # The prompt used for spelling correction. The sequence `%R' expands to
 # the string which presumably needs spelling correction, and `%r' expands
