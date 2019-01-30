@@ -361,10 +361,6 @@ inoremap <C-Y> <C-X><C-Y>
 " Undo in insert mode.
 imap <c-z> <c-o>u
 
-" Switch between buffers
-map <F9> :bprevious<CR>
-map <F10> :bnext<CR>
-
 " Esc is too hard to reach, so remap it.
 " Note: i use english keyboard layout, i mapped capslock to esc, this mapping
 "       is only for some fucking german keyboards in my network :/
