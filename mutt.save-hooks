@@ -1,5 +1,5 @@
 # $Id: mutt.save-hooks,v 1.1 2003/10/21 02:17:53 dope Exp dope $
-# 
+#
 #  ~A              all messages
 #  ~b EXPR         messages which contain EXPR in the message body
 #  ~B EXPR         messages which contain EXPR in the whole message
@@ -41,7 +41,7 @@
 
 unhook *
 
-# save messages to different folders. 
+# save messages to different folders.
 #  Note: I use '%<%Y-%m>' for Mailfolders with high traffic. One month,
 #	 one folder.
 #  Yeah.. sure.. wont work with Mutt 1.7.0. Use '%{%Y-%m}' instead
@@ -71,4 +71,5 @@ save-hook '~h "^X-Spam-Flag: YES"'					+/SPAM/SPAM-%{%Y-%m}
 save-hook '~t ftp@strcat.de'						+/strcat/ftp
 save-hook '(~t blog@strcat.de) | (~f strcat.de*)'			+/Blog/blog-%{%Y-%m}
 save-hook '~t router@strcat.de'						+/strcat/logfiles
+save-hook '~t i3-discuss@freelists.org'					+/i3/i3-%{%Y-%m}
 save-hook '^.*$'							+/strcat/strcat-%{%Y-%m}
