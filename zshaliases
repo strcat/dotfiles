@@ -1,5 +1,4 @@
 # Wetter
-# alias wetter="curl -4 'wttr.in/Pfatter?lang=de'"
 alias wetter='curl -s "wttr.in/Pfatter?lang=de" | head -37 | tail -30'
 
 # Yeah.. i watch p0rn..
@@ -10,13 +9,12 @@ alias p0rn='mpv "http://www.pornhub.com/random"'
    alias ogl="g++  -L/usr/X11R6/lib -lglut -lGLU -lGL  -lXi -lXmu"
 
 # needed for some sources from CVS (fucking autohell *narf*)
-   alias autofuck='aclocal && autoheader && libtoolize --copy --automake && automake --copy --add-missing && autoconf'
+alias autofuck='aclocal && autoheader && libtoolize --copy --automake && automake --copy --add-missing && autoconf'
 
 # get top 10 shell commands:
 alias top10='print -l ? ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
 # grc - frontend for generic colouriser grcat(1)
-#if [[ -x `which grc` ]]; then
 if (( $+commands[grc] )); then
 	alias grc='grc --colour=auto'
 	alias ping='grc ping'
@@ -36,7 +34,7 @@ fi
 alias cal="gcal --highlighting='\e[41m:\e[0m:\e[33m:\e[0m' --pager --starting-day=1 --cc-holidays=TR \$(date +'%Y')"
 
 # ripgrep - https://github.com/BurntSushi/ripgrep
-alias search="rg --color='always' --heading --line-number --no-messages --no-ignore --hidden --follow --smart-case --glob '!{.git/*,node_modules/*}' --regexp"
+(( $+commands[rg] )) && alias search="rg --color='always' --heading --line-number --no-messages --no-ignore --hidden --follow --smart-case --glob '!{.git/*,node_modules/*}' --regexp"
 
 # See <http://strcat.neessen.net/hacks/rand-useragent.pl> ;-)
 if [[ -x ~/bin/rand-useragent.pl ]] && [[ -x `which w3m` ]]; then
@@ -62,7 +60,7 @@ alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 3
   alias Es='$EDITOR ~/.slrnrc'
   alias Ev='$EDITOR ~/.vimrc'
   alias Em='$EDITOR ~/.muttrc'
-  alias Esc='$EDITOR ~/.screenrc'
+  alias Et='$EDITOR ~/.tmux.conf'
 
 # Disable "spell-correction" for this commands:
   alias mv="nocorrect mv"
@@ -73,9 +71,6 @@ alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 3
   alias rm="nocorrect rm"
   # Move Pics to ~D/Pics
   alias picmv="mv *(#i).(jp{,e}g|gif|png|bmp) ~D/Pics/"
-
-# Nothing..
-  alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 
 # history mechanism
    alias h='history'
@@ -92,19 +87,12 @@ alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 3
   alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
   alias glla='gla --all'
   alias gfuck="git commit -am '`curl -s http://whatthecommit.com/index.txt`'"
-  #alias glog="git log --pretty=format:'%C(auto)%h %ad %C(green)%s%Creset %C(auto)%d [%an (%G? %GK)]' --graph --date=format:'%Y-%m-%d %H:%M' --all"
 
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
 #  Modifiers can be found in ``info -f zsh -n Modifiers''.
    alias :{w,q,wq,qa,wqa,x}{,!}='echo "This is $SHELL:t and not Vi(m)"'
-   alias vi="${EDITOR}"
-   alias view="${EDITOR} -R"
-   alias ex="${EDITOR} -e"
-   alias pltags="${VIMRUNTIME}/tools/pltags.pl"
 
-# MPlayer on /dev/ttyN
-  alias fbmplayer='mplayer -vo fbdev2 -vf scale=1280:1024 "$@"'
 # quick&dirty mirror
   alias mirror="noglob wget --mirror --no-parent --timestamping --continue --recursive $1"
 
@@ -147,7 +135,7 @@ if (( EUID != 0 )); then
 	fi
 	# See <http://www.swaret.org/> and <http://software.jaos.org> for details
 	if [ -e "/etc/slackware-version" ]; then
-		alias slapt-get="sudo slapt-get"  
+		alias slapt-get="sudo slapt-get"
 		alias swaret="sudo swaret"
 		alias installpkg="sudo /sbin/installpkg"
 		alias upgradepkg="sudo /sbin/upgradepkg"
@@ -155,7 +143,7 @@ if (( EUID != 0 )); then
 		alias pkgtool="sudo /sbin/pkgtool"
 		alias makepkg="sudo /sbin/makepkg"
 	fi
-	# CRUX 
+	# CRUX
 	if [ -x "/usr/bin/crux" ]; then
 		alias ports="sudo ports"
 		alias prt-get="sudo prt-get"
@@ -182,7 +170,7 @@ if (( EUID != 0 )); then
 	fi
 	# setting for OpenBSD
 	if [[ `uname` == OpenBSD ]]; then
-		
+
 		alias pkg_add='sudo pkg_add'
 		alias pkg_delete='sudo pkg_delete'
 		alias upsrc="cd /usr/src && cvs -q up -Pd"
@@ -247,21 +235,17 @@ fi
       #        unavailable?
       # Note: ``--color'' is a feature from GNU grep >=2.5 and i do *not*
       #       check for the available version, but only for ``GNU''!
-     #if  [ "${OS}" = "linux-gnu"  ${(MS)$(grep --version 2>/dev/null)#{GNU}} ] ; then
-     if [ "${OS}" = linux-gnu ${(MS)$(grep --version 1>/dev/null)#GNU} ]; then
-	 export GREP_COLOR='0;33'
-	 alias grep='grep --color=auto'
-	 # *DO* *NOT* *USE* *--color=always*! ;-)
-  	# export GREP_OPTIONS='--color=auto'
-#  	 alias hgrep='grep $GREP_OPTIONS $*'
-     fi
+      if [ "${OS}" = linux-gnu ${(MS)$(grep --version 1>/dev/null)#GNU} ]; then
+	      export GREP_COLOR='0;33'
+	      alias grep='grep --color=auto'
+      fi
       # use perl regular expression (it's evil. isn't it?)
       if [ 0 -eq `echo $SHELL|grep --perl-regexp sh &>/dev/null; echo $?` ]; then
-	 GRP='--perl-regexp'
+	      GRP='--perl-regexp'
       else
-	 GRP='--extended-regexp'
+	      GRP='--extended-regexp'
       fi
-  fi
+fi
 
 # copy/move with a backup
   #if [ ${OS} = "linux-gnu" -n ${(MS)$(mv --version 2>/dev/null)#GNU} ]; then
@@ -277,12 +261,6 @@ fi
 # ``choad'' is a small perlscript to ripp audio-cds (<http://www.ftso.org/choad/>)
 [[ -x $(whence -p choad) ]] && alias choad="sudo choad"
 
-# VimTip 121: Using vim as a syntax-highlighting pager
-# <http://vim.sourceforge.net/tip_view.php?tip_id=>
-  if [ -e ~/.vimrc.more ] && [ -x $(which vim) ]; then
-     alias vmore='vim -u ~/.vimrc.more'
-  fi
-
 # I use ``gls'' instead of ls because the standard 'ls' from OpenBSD
 # doesn't not support colors :/ GNU ls is part of fileutils-4.1 and
 # component of the portcollection ($PORTSDIR/misc/fileutils)
@@ -291,8 +269,7 @@ fi
    if [[ "${OS}" = openbsd && -x `which gls` ]]; then
            alias ls='gls --color=always'
    fi
-# X11? Yes! A open port? Nope! 
-   alias sx='startx --  -deferglyphs 16 -dpi 100 -nolisten tcp >& $HOME/.startx-errors'
+
 # SSH to some hosts :>
    alias router="telnet 192.168.1.1"
    alias dreckskind="ssh dope@192.168.1.2"
@@ -319,10 +296,11 @@ fi
   alias ...='cd ../..'
   alias ....="cd ../../.."
 # Make/Create/Convert Pics/Thumbnails
-  alias _GIF='convert -verbose -interlace LINE' 
-  alias _thumb='convert -geometry 100x100 -interlace LINE -verbose' 
-  alias _thumb150='convert -geometry 150x150 -interlace LINE -verbose' 
-  alias _thumb200='convert -geometry 200x200 -interlace LINE -verbose' 
+  alias _GIF='convert -verbose -interlace LINE'
+  alias _thumb='convert -geometry 100x100 -interlace LINE -verbose'
+  alias _thumb150='convert -geometry 150x150 -interlace LINE -verbose'
+  alias _thumb200='convert -geometry 200x200 -interlace LINE -verbose'
+
 # Use colors, do not check for new groups, specific my killfile an use
 # spool (needed for slrnpull)
   alias news='slrn -C -n --kill-log ~/.slang/KILL --spool -f ~/.jnewsrc'
@@ -333,6 +311,7 @@ fi
    alias gmail='getmail -v --rcfile /home/dope/.getmail/getmailrc-gmail --rcfile /home/dope/.getmail/getmailrc --rcfile /home/dope/.getmail/getmailrc-schneider'
 # the two above together..
    alias gall="gmail ; gnews"
+
 # start mutt/vim/zsh/jed without any setup
    alias null-mutt='mutt -n -f /dev/null -F /dev/null'
    alias null-zsh='zsh -f'
@@ -340,6 +319,7 @@ fi
    alias null-jed='jed -n'
    alias null-irssi='irssi --config=/dev/null'
    alias null-screen="screen -c /dev/null"
+
 # *Very* often used!
    alias lad='ls -d -- .*(/)'				# only show dot-directories
    alias lsa='ls -a -- .*(.)'				# only show dot-files
@@ -359,41 +339,12 @@ fi
    # show sorted directory sizes for hidden directories only
    alias duh='du -s .*(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
 
-# check out/in RCS revisions
-   alias lci='ci -l'
-   alias lco='co -zLT'
-# convert from UPPER to lower (or back)
-   alias UP2low='for i in *(.); mv $i ${i:l}'
-   alias low2UP='for i in *(.); mv $i ${i:u}'
-# ctags are *very* useful!
-   alias mktags='for i in **/*(/); do (cd $i; eval '\''ctags-exuberant *'\''); done; ctags-exuberant --file-scope=no -R'
 # Make the source to be with you!!!11!
    alias C='./configure'
    alias CH='./configure --help | $PAGER'
 # zmv -- see ``less ${^fpath}/zmv(N)'' for more details.
    alias zcp='zmv -C'
    alias zln='zmv -L'
-# simple replacement for nmap (anywise .. :>)
-   alias pscan="nc -vz $1 1-1024"
-# Yup. I mount my CDROM manually!
-# **TODO**
-# I'll think i'll can do this with a wrapper.. maybe..
-   if [ "${OS}" = openbsd ]; then
-           alias _mcd='sudo mount /dev/cd0a /mnt && cd /mnt && ls'
-           alias _ucd='cd ~ && sudo umount /mnt'
-   else
-   if [[ -x $(which crux) ]]; then
-	   alias _mdvd='sudo mount /dev/cdroms/cdrom0 /mnt/cdrom && cd /mnt/cdrom && ls'
-	   alias _udvd='cd ~ && sudo umount /mnt/cdrom'
-	   alias _mcd='sudo mount /dev/cdroms/cdrom1 /mnt/dvd && cd /mnt/dvd && ls'
-	   alias _ucd='cd ~ && sudo umount /mnt/dvd'
-   else
-           alias _mcd='sudo mount /mnt/cdrom && cd /mnt/cdrom && ls'
-           alias _ucd='cd ~ && sudo umount /mnt/cdrom'
-	   alias _mdvd='sudo mount /mnt/dvd && cd /mnt/dvd && ls'
-	   alias _udvd='cd ~ && sudo umount /mnt/dvd'
-      fi
-   fi
 
 # GPG *sigh*
    alias get.pgpkey='gpg --keyserver pgp.mit.edu --recv-key 0x"$@"'
@@ -408,7 +359,6 @@ fi
    alias   gsigs='gpg --list-sigs'
    alias gupload='gpg --send-keys'
 
-
 # Some aliases for the OpenBSD - Portcollection
    if [ "${OS}" = openbsd ]; then
            alias Svar='make show=FLAVORS'
@@ -416,6 +366,7 @@ fi
            alias Scomm='make show=COMMENT'
            alias Swth='make show=DESCRIPTION'
    fi
+
 # Ask stupid questions? In Boards/NGs? Yeah .. sure "Killing time.. the
 # end of .." --Metallica :>
 # I read this fuckings manuals *very* often *narf*
@@ -438,11 +389,11 @@ fi
 	alias H-NetBSD='${BROWSER:-lynx} ${HOME}/.Documentations/NetBSD/index.html'
 	# de.comp.os.unix.linux - FAQ
 	alias H-Dcoul='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/dcoul.txt'
-	# The editor of my choice! The one and only! J-E-H-O-V-A!!!11! 
+	# The editor of my choice! The one and only! J-E-H-O-V-A!!!11!
 	alias H-Vim='${BROWSER:-lynx} ${HOME}/.Documentations/vim/usr_toc.html'
 	# THE SED FAQ (<http://sed.sourceforge.net/sedfaq.html>)
 	alias H-Sed="${BROWSER:-lynx} ${HOME}/.Documentations/Sed/sedfaq.txt"
-	# HTML .. *sigh* 
+	# HTML .. *sigh*
 	alias H-HTML='${BROWSER:-lynx} ${HOME}/.Documentations/Self-HTML/index.htm'
 	# The Jargon File (version 4.4.7)
 	alias H-Jargon='${BROWSER:-lynx} ${HOME}/.Documentations/Jargon/jargon-4.4.7/html/index.html'
@@ -456,7 +407,7 @@ fi
 	alias de-man="man -M ${HOME}/.Documentations/manpages.de '$1'"
 	# See http://svnbook.red-bean.com/
 	alias H-Svn="{BROWSER:-lynx} ${HOME}/.Documentations/svnbook-1.1/index.html"
-	# RFC-Index. Not really needed. See <http://strcat.neessen.net/hacks/rfc.zsh> 
+	# RFC-Index. Not really needed. See <http://strcat.neessen.net/hacks/rfc.zsh>
 	# for details.
 	#  alias H-RFC='${BROWSER:-lynx} /backups/Documentations/RFCs/rfc-index.txt.gz'
 fi
@@ -465,31 +416,7 @@ fi
 if [ "${OS}" = linux-gnu ]; then
 	alias H-Devices='${PAGER:-less} /usr/src/linux/Documentation/devices.txt'
 fi
-# Xterm specific stuff
-   alias VX="xterm -fg white -bg black -font '-*-terminus-medium-*-*-*-20-*-*-*-*-*-iso10646-*'"
-   alias mxterm-default='echo -e "\033]50;fixed\007"'
-   alias mxterm-normal=default
-   alias mxterm-hide='echo -en "\033]50;nil2\007"'
-   alias mxterm-tiny='echo -en "\033]50;5x7\007"'
-   alias mxterm-small='echo -en "\033]50;6x10\007"'
-   alias mxterm-medium='echo -en "\033]50;7x13\007"'
-   alias mxterm-large='echo -en "\033]50;9x15\007"'
-   alias mxterm-huge='echo -en "\033]50;10x20\007"'
-# Postscript, LaTeX and printing
-   alias pnm2ps='pnmtops -width 8.26 -height 11.69'
-   alias gif2ps='(giftopnm | pnm2ps)'
-   alias jpeg2ps='(djpeg    | pnm2ps)'
-   alias png2ps='(pngtopnm | pnm2ps)'
-   alias ps2psbook="(psbook | psnup -2 | tumble)"
-   alias ps2A5-haefte="(psbook -s8 | psnup -4 )"
-   alias sho='xdvi -s 2 -expert -geometry 1010x900+30+1030'
-   alias _dvishow='xdvi -s 3 -expert -geometry 990x990'
-# Change keyboard mapping on the fly (nice for programming)
-   if [[ -x $(which xmodmap) ]]; then
-      alias US-e="xmodmap ~/.keys-emacs-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
-      alias US-v="xmodmap ~/.keys-vi-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
-      alias US="xmodmap ~/.keys-vi-us; xmodmap -e 'keysym Alt_L = Meta_L Alt_L'"
-   fi
+
 # suffix aliases (needs Zsh >= 4.*).  Suffix aliases allow the shell
 # to run a command on a file by suffix, e.g 'alias -s ps=gv' makes
 # 'foo.ps' execute 'gv foo.ps'.
