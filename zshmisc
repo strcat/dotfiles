@@ -64,34 +64,17 @@ my-expand-abbrev() {
     LBUFFER+=${myiabs[$MATCH]:-$MATCH}
     zle self-insert
 }
-
 #--------------------------------------------------
 # Now in ~/.zsh/zshbindings
-# bindkey     " "        my-expand-abbrev 
-#-------------------------------------------------- 
-
-# Set the "umask" (see "man umask"):
-# ie read and write for the owner only.
-# umask 002 # relaxed   -rwxrwxr-x
-# umask 022 # cautious  -rwxr-xr-x
-# umask 027 # uptight   -rwxr-x---
-# umask 077 # paranoid  -rwx------
-# umask 066 # bofh-like -rw-------
+# bindkey     " "        my-expand-abbrev
 #--------------------------------------------------
-# umask 066
-# 
-# # If root set unmask to 022 to prevent new files being created group and world writable
-# if (( EUID == 0 )); then
-#     umask 022
-# fi
-#-------------------------------------------------- 
 
 # fucking "dead.letter" *narf*
 if [ -e ~/dead.letter ]; then
          mv ~/dead.letter ~/.dead_letter.`date +%Y%m%d-%R`
 fi
 
-#-------------------------------------------------- 
+#--------------------------------------------------
 # 'hash' often visited directorys
 #   Note: That's *not* variables or aliase!
 #    ,----
@@ -102,14 +85,14 @@ fi
 #    |
 #    | $ pwd
 #    | /home/dope/.mutt
-#    | $ 
+#    | $
 #    `----
 hash -d SS=/mnt/Serien					# name it..
 hash -d SM=/mnt/Movies					# yep
 hash -d A=~/scripts/Asciidoc				# selfwritten documentation in asciidoc-format
 hash -d D=~/Downloads/					# there are my downloads
 hash -d F=/usr/local/share/zsh/$ZSH_VERSION/functions	# ZSH functions (OpenBSD)
-hash -d F=/usr/share/zsh/$ZSH_VERSION/functions/	# ZSH functions (Slackware) 
+hash -d F=/usr/share/zsh/$ZSH_VERSION/functions/	# ZSH functions (Slackware)
 hash -d F=/usr/share/zsh-beta/functions/		# ZSH functions (Debian)
 hash -d FD=~/.Documentations				# usefull documentations
 hash -d FF=/Sounds					# MP3s
@@ -138,31 +121,3 @@ hash -d VL=/var/log					# often visited ;)
 hash -d XL=~/.xchat2/xchatlogs/				# Sometimes..
 hash -d Z=~/.zsh/					# "setupfiles" for ZSH
 hash -d _S=~/.sigs/					# My signature collection
-
-
-#--------------------------------------------------
-# source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-# ZSH_HIGHLIGHT_STYLES[default]='none'
-# typeset -A ZSH_HIGHLIGHT_STYLES
-# ZSH_HIGHLIGHT_STYLES=(
-#         'alias'                  'fg=cyan'
-#         'builtin'                'fg=yellow'
-#         'function'               'fg=blue,bold'
-#         'command'                'fg=green'
-#         'hashed-commands'        'fg=green,underline'
-#         'precommand'             'fg=cyan,bold'
-#         'commandseparator'       'fg=yellow'
-#         'assign'                 'fg=magenta'
-#         'path'                   'underline'
-#         'double-hyphen-option'   'fg=blue,bold'
-#         'single-hyphen-option'   'fg=blue,bold'
-#         'unknown-token'          'fg=red'
-# )
-# ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=blue,bold'
-# ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=red,bold'
-# ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=yellow,bold'
-# ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=magenta,bold'
-# ZSH_HIGHLIGHT_PATTERNS+=('sudo' 'fg=red,bold')
-# ZSH_HIGHLIGHT_STYLES[root]='bg=red'
-#-------------------------------------------------- 
