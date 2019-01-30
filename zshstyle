@@ -1,4 +1,4 @@
-# 'zstyle' (Defines the given style for the pattern) 
+# 'zstyle' (Defines the given style for the pattern)
 # Normally, the completion code will not produce the directory names
 # '.' and '..' as possible completions. If this style is set to
 # 'true', it will add both '.' and '..' as possible completions; if it
@@ -14,22 +14,7 @@ zstyle ':completion:*' rehash true
 function zrc_info {
 	print -P "%F{red}>>%F{default} $*"
 }
-
-#--------------------------------------------------
-# if [[ -d ~/var/cache/zsh ]] {
-# 	ZCACHEDIR=~/var/cache/zsh
-# } else {
-# 	zrc_info "~/var/cache/zsh does not exist, using ~/.zsh-cache instead"
-# 	mkdir -p ~/.zsh-cache
-# 	ZCACHEDIR=~/.zsh-cache
-# }
-# zstyle ':completion:*' cache-path $ZCACHEDIR
-#-------------------------------------------------- 
 zstyle ':completion:*' use-cache true
-#--------------------------------------------------
-# zstyle ':completion::complete:*' use-cache 1
-# compinit -C -d $ZCACHEDIR/compdump
-#-------------------------------------------------- 
 
 # This way you tell zsh comp to take the first part of the path to be
 # exact, and to avoid partial globs. Now path completions became nearly
@@ -61,23 +46,10 @@ zstyle ':completion:*:history-words' menu yes
 
 # add colors to completions
 # general completion
-#--------------------------------------------------
  zstyle ':completion:*:descriptions' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
-#-------------------------------------------------- 
-#--------------------------------------------------
-# zstyle ':completion:*:corrections' format $'%{\e[0;32m%}%d (errors: %e)%}'
-#-------------------------------------------------- 
 zstyle ':completion:*:messages' format '%d'
-#--------------------------------------------------
  zstyle ':completion:*:warnings' format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
-#-------------------------------------------------- 
-#--------------------------------------------------
-# zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
-# zstyle ':completion:*' format 'completing %d'
-#-------------------------------------------------- 
-#--------------------------------------------------
  zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
-#-------------------------------------------------- 
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 
@@ -97,23 +69,30 @@ zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-va
 zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 
 # ignore completion functions for commands you don't have
- zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %P Lines: %m
+zstyle ':completion:*:corrections' format $'%{\e[0;31m%}%d (errors: %e)%}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:*:*:hosts' list-colors '=*=30;41'
 
+# Don't complete uninteresting users
+zstyle ':completion:*:*:*:users' ignored-patterns \
+        adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
+        clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
+        gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm \
+        ldap lp mail mailman mailnull man messagebus  mldonkey mysql nagios \
+        named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn \
+        operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
+        rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
+        usbmux uucp vcsa wwwrun xfs '_*'
 
-  zstyle ':completion:*' select-prompt %SScrolling active: current selection at %P Lines: %m
-  zstyle ':completion:*:corrections' format $'%{\e[0;31m%}%d (errors: %e)%}'
-  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# hosts (background = red, foreground = black)
-  zstyle ':completion:*:*:*:*:hosts' list-colors '=*=30;41'
-# usernames (background = white, foreground = blue)
-  zstyle ':completion:*:*:*:*:users' list-colors '=*=34;47'
+#  zstyle ':completion:*:*:*:*:users' list-colors '=*=34;47'
 # If the zsh/complist module is loaded, this style can be used to set
 # color specifications. This mechanism replaces the use of the
 # ZLS_COLORS and ZLS_COLOURS parameters.
 # PIDs (bold red)
   zstyle ':completion:*:processes' command ps --forest -A -o pid,cmd
   zstyle ':completion:*:processes' list-colors '=(#b)( #[0-9]#)[^[/0-9a-zA-Z]#(*)=34=37;1=30;1'
-  #zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
   zstyle ':completion:*:(killall|pkill|kill):*' menu yes select
   zstyle ':completion:*:(killall|pkill|kill):*' force-list always
 
@@ -123,23 +102,17 @@ zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directori
 zstyle ':completion:*:(ssh|scp|ftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp):*' users $users
 
-# Not realy needed.
-#  $ cd <TAB>
-#  Komplettiere local directory
-#  <list existing directorys>
-# zstyle ':completion:*' format 'Komplettiere %d'
-
 # Don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 
 # determine in which order the names (files) should be
 # listed and completed when using menu completion.
-# `size' to sort them by the size of the file
-# `links' to sort them by the number of links to the file
-# `modification' or `time' or `date' to sort them by the last modification time
-# `access' to sort them by the last access time
-# `inode' or `change' to sort them by the last inode change time
-# `reverse' to sort in decreasing order
+#   `size' to sort them by the size of the file
+#   `links' to sort them by the number of links to the file
+#   `modification' or `time' or `date' to sort them by the last modification time
+#   `access' to sort them by the last access time
+#   `inode' or `change' to sort them by the last inode change time
+#   `reverse' to sort in decreasing order
 # If the style is set to any other value, or is unset, files will be
 # sorted alphabetically by name.
 zstyle ':completion:*' file-sort name
@@ -164,9 +137,6 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns  '*?.(o|c~|old|pro|zwc|
 # Messages/warnings format
 zstyle ':completion:*:messages' format $'%{\e[0;31m%}%d%{\e[0m%}'
 zstyle ':completion:*:warnings' format $'%{\e[0;31m%}No matches for: %d%{\e[0m%}'
-#--------------------------------------------------
-# zstyle ':completion:*:corrections' format $'%{[0;31m%}%d (errors: %e)%{[0m%}'
-#-------------------------------------------------- 
 zstyle ':completion:*' group-name ''
 
 # completions for some progs. not in default completion system
@@ -184,9 +154,7 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 # completer
 zstyle ':completion:::::' completer _complete _approximate
 zstyle ':completion:*:approximate:*' max-errors 2
-#--------------------------------------------------
  zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
-#-------------------------------------------------- 
 
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
