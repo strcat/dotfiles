@@ -39,7 +39,6 @@ source ~/.mutt/mutt.ignores             # boring headers
 source ~/.mutt/mutt.unignore            # visible headers
 source ~/.mutt/mutt.various             # some baubles
 source ~/.mutt/mutt.ssl                 # YES. I run Mutt over SSH .. sometimes ;)
-source ~/.mutt/mutt.smime               # S/MIME support
 source ~/.mutt/mutt.misc-hooks          # Change settings based upon message recipients
 source ~/.mutt/mutt.mlists              # Mailinglists
 source ~/.mutt/mutt.neo                 # For NeoMutt only <https://www.neomutt.org/>
