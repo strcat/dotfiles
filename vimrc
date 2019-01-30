@@ -1,25 +1,16 @@
 " $Id: .vimrc,v 1.1 2002/09/27 02:13:02 dope Exp dope $
-"
-" Informations 
+
+" Informations {{{
 "    File: $HOME/.vimrc
 "  Author: Christian Schneider <strcat(at)gmx.net>
 " Purpose: setup file for the editor "vim"
-"     URL: <http://strcat.de/vimrc> || <http://www.vim.org/>
-"    Size: This file is about 50K in size and has 1,600+ lines.
-" Notices: This file is based on Sven Guckes http://www.guckes.net/vimrc.forall
+"     URL: See https://github.com/strcat/dotfiles
 "    Note: If your read this then please send me an email! I welcome all
 "          feedback on this file - especially with new ideas such as abbreviations
 "          and mappings.
 "     Tip: Open this file with 'vim -c 'set foldmethod=marker' this-file' or -
 "          if Vim already runnig - type ':set foldmethod=marker' for a /better/
 "          oversight ;)
-" Version: This setup file uses a lot of features of Vim-6. If you are still
-"          using Vim-5 (or an even older version) then you should upgrade - it
-"          is really worth the effort!
-" Warning: Download instead view+save! So if you are viewing this file with a
-"          web browser then do *not* "save" this file because the contents 
-"          have already been interpreted - including the control characters. 
-"          Instead, you must *download* this file to preserve them.
 "
 " Structure of this file:
 "       First up is the settings that I use. They are ordered alphabetically
@@ -31,7 +22,7 @@
 "       Mappings ("map"), settings ("set"), and abbreviations ("ab").
 "               - Settings affect the behaviour of commands.
 "               - Mappings maps a key sequence to a command.
-"               - Abbreviations define words which are replaced right 
+"               - Abbreviations define words which are replaced right
 "                 *after* they are typed in.
 "       Here is an overview of map commands and in which mode they work:
 "         ,----
@@ -56,14 +47,8 @@
 "               - <C-n> for control-n (i. e. strg-a, strg-k, ..)
 "       $VIMRUNTIME == /usr/local/share/vim/vim61f
 "
-" setting description:
-" [global] ... global setting
-" [buffer] ... local to a buffer
-" [window] ... settings for a window
-" [glo-lo] ... global or local (buffer) setting. :setlocal for local value
-" 
 " Some mappings and options are commented out. Remove the comment to enable them.
-" 
+"
 " All control characters have been replaced to use the angle notation
 " so you should be able to read this filw without problems.
 " (OK, I left some tabs [control-i] in the file. ;-)
@@ -91,7 +76,7 @@
 "       * <http://www.rayninfo.co.uk/vimtips.html> - Best of Vim Tips
 "       * <news:de.comp.editoren>                  - german newsgroup with topic editors
 "       * <news:comp.editors>                      - international newsgroup with topic editors
-"   -> Try the documentation ª:help your_keyword´
+"   -> Try the documentation ¬ª:help your_keyword¬´
 "               WHAT                   PREPEND    EXAMPLE
 "               Normal mode commands  (nothing)   :help x
 "               Visual mode commands      v_      :help v_u
@@ -107,9 +92,9 @@
 "             for Amiga:  s:.vimrc or $VIM/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc or $VIM/_vimrc
 "           for OpenVMS:  sys$login:.vimrc
-" 
+"
 " There are many options for Vim - over 400:
-" ªgrep -c '{".*P_' src/option.c´
+" ¬ªgrep -c '{".*P_' src/option.c¬´
 "       Release dates given in format "yymmdd":
 "         - VIM-5.4   [990726] 218 options.
 "         - VIM-5.7   [000624] 219 options.
@@ -124,537 +109,179 @@
 " Rolls and Metallica.
 "
 " ,----[ vim --version ]
-" | VIM - Vi IMproved 8.1 (2018 May 18, compiled Jul  6 2018 18:48:37)
-" | Included patches: 1-155
-" | Compiled by Christian Schneider <strcat1974@gmail.com>
+" | VIM - Vi IMproved 8.1 (2018 May 18, compiled Jan 21 2019 12:57:28)
+" | Included patches: 1-772
+" | Compiled by Christian Schneider <strcat@gmx.net>
 " | Huge version without GUI.  Features included (+) or not (-):
-" | +acl               +farsi             +mouse_sgr         -tag_any_white
-" | +arabic            +file_in_path      -mouse_sysmouse    -tcl
-" | +autocmd           +find_in_path      +mouse_urxvt       +termguicolors
+" | +acl               +extra_search      +mouse_netterm     +tag_old_static
+" | +arabic            +farsi             +mouse_sgr         -tag_any_white
+" | +autocmd           +file_in_path      -mouse_sysmouse    -tcl
+" | +autochdir         +find_in_path      +mouse_urxvt       +termguicolors
 " | -autoservername    +float             +mouse_xterm       +terminal
 " | -balloon_eval      +folding           +multi_byte        +terminfo
 " | +balloon_eval_term -footer            +multi_lang        +termresponse
 " | -browse            +fork()            -mzscheme          +textobjects
-" | ++builtin_terms    +gettext           +netbeans_intg     +timers
-" | +byte_offset       -hangul_input      +num64             +title
-" | +channel           +iconv             +packages          -toolbar
-" | +cindent           +insert_expand     +path_extra        +user_commands
-" | -clientserver      +job               +perl              +vartabs
-" | -clipboard         +jumplist          +persistent_undo   +vertsplit
-" | +cmdline_compl     +keymap            +postscript        +virtualedit
-" | +cmdline_hist      +lambda            +printer           +visual
-" | +cmdline_info      +langmap           +profile           +visualextra
-" | +comments          +libcall           +python/dyn        +viminfo
-" | +conceal           +linebreak         +python3/dyn       +vreplace
-" | +cryptv            +lispindent        +quickfix          +wildignore
-" | +cscope            +listcmds          +reltime           +wildmenu
-" | +cursorbind        +localmap          +rightleft         +windows
-" | +cursorshape       +lua               +ruby              +writebackup
-" | +dialog_con        +menu              +scrollbind        -X11
-" | +diff              +mksession         +signs             -xfontset
-" | +digraphs          +modify_fname      +smartindent       -xim
-" | -dnd               +mouse             +startuptime       -xpm
-" | -ebcdic            -mouseshape        +statusline        -xsmp
-" | +emacs_tags        +mouse_dec         -sun_workshop      -xterm_clipboard
-" | +eval              -mouse_gpm         +syntax            -xterm_save
-" | +ex_extra          -mouse_jsbterm     +tag_binary
-" | +extra_search      +mouse_netterm     +tag_old_static
+" | ++builtin_terms    +gettext           +netbeans_intg     +textprop
+" | +byte_offset       -hangul_input      +num64             +timers
+" | +channel           +iconv             +packages          +title
+" | +cindent           +insert_expand     +path_extra        -toolbar
+" | -clientserver      +job               +perl              +user_commands
+" | -clipboard         +jumplist          +persistent_undo   +vartabs
+" | +cmdline_compl     +keymap            +postscript        +vertsplit
+" | +cmdline_hist      +lambda            +printer           +virtualedit
+" | +cmdline_info      +langmap           +profile           +visual
+" | +comments          +libcall           -python            +visualextra
+" | +conceal           +linebreak         -python3           +viminfo
+" | +cryptv            +lispindent        +quickfix          +vreplace
+" | +cscope            +listcmds          +reltime           +wildignore
+" | +cursorbind        +localmap          +rightleft         +wildmenu
+" | +cursorshape       -lua               -ruby              +windows
+" | +dialog_con        +menu              +scrollbind        +writebackup
+" | +diff              +mksession         +signs             -X11
+" | +digraphs          +modify_fname      +smartindent       -xfontset
+" | -dnd               +mouse             +startuptime       -xim
+" | -ebcdic            -mouseshape        +statusline        -xpm
+" | +emacs_tags        +mouse_dec         -sun_workshop      -xsmp
+" | +eval              -mouse_gpm         +syntax            -xterm_clipboard
+" | +ex_extra          -mouse_jsbterm     +tag_binary        -xterm_save
 " |    system vimrc file: "$VIM/vimrc"
 " |      user vimrc file: "$HOME/.vimrc"
 " |  2nd user vimrc file: "~/.vim/vimrc"
 " |       user exrc file: "$HOME/.exrc"
 " |        defaults file: "$VIMRUNTIME/defaults.vim"
-" |   fall-back for $VIM: "/home/dope/dev-bin/share/vim"
+" |   fall-back for $VIM: "/usr/local/share/vim"
 " | Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H     -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1
-" | Linking: gcc   -L. -Wl,-z,relro -Wl,-z,now -fstack-protector -rdynamic
-" | -Wl,-export-dynamic -Wl,-E   -L/usr/local/lib -Wl,--as-needed -o vim
-" | -lm -ltinfo -lnsl    -ldl  -L/usr/lib -llua5.2 -Wl,-E
-" | -fstack-protector-strong -L/usr/local/lib
-" | -L/usr/lib/x86_64-linux-gnu/perl/5.24/CORE -lperl -ldl -lm -lpthread
-" | -lcrypt    -lruby-2.3 -lpthread -lgmp -ldl -lcrypt -lm
+" | Linking: gcc   -Wl,-E -Wl,-rpath,/usr/lib/perl5/5.28/core_perl/CORE
+" | 		-L/usr/local/lib -Wl,--as-needed -o vim        -lm -ltinfo -lnsl  -ldl
+" | 		-Wl,-E -Wl,-rpath,/usr/lib/perl5/5.28/core_perl/CORE
+" | 		-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
+" | 		-fstack-protector-strong -L/usr/local/lib
+" | 		-L/usr/lib/perl5/5.28/core_perl/CORE -lperl -lpthread -ldl -lm -lcrypt
+" | 		-lutil -lc
 " `----
-"
+
 "  It was also compiled with:
 "   | ./configure --without-x --with-compiledby='Christan Schneider <strcat@gmx.net>' \
 "   |             --with-features=huge
-"
-"
-"function! SourceIfExists(file)
-	"if filereadable(expand(a:file))
-		"exe 'source' a:file
-	"endif
-"endfunction
-"call SourceIfExists("~/.vim/vimoptions")
+" }}}
 
-" Options initiating with ªa´ 
-
-" [buffer] |'autoindent'| off as I usually do not write code 
-set ai
-
-" [global] |'autowrite'| on saves a lot of trouble
-set aw
-
-" [glo-lo] |'autoread'| autom. read file when changed outside of Vim
-set ar
-
-" [global] |'backspace'| how backspace works at start of line
-set bs=2
-
-" [global] |'backup'| Make a backup (i. e. 'file~') and save it.
-set bk
-
-" [global] |'backupdir'| write backup into special directory if it exists, otherwise create 
-"          it.
-if has("unix")
-        if !isdirectory(expand("~/tmp/."))
-                !mkdir -p ~/tmp/
-        endif
-endif
-set bdir=~/tmp
-
-" [global] |'backupskip'| no backup for files that match these patterns
-set bsk=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
-
-" [buffer] |'comments'| comments default: sr:/*,mb:*,el:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-" set comments=b:#,:%,fb:-,n:>,n:)
+" Settings {{{
 "                       b:\" repeats " , requires blank
 "   Strings that        b:#  repeats # , requires blank after #.
 "   start a             :%   repeats %
 "   comment line        fb:- first line only , requires blank
 "                       fbn:* first line only , requires blank, nests
 "                       n:>  repeats > , nesting allowed   eg "> > >"
-"                       n:)  repeats ) , nesting allowed   eg ") > )"  
+"                       n:)  repeats ) , nesting allowed   eg ") > )"
 "                                               Note the >     ^^^^^
-set com=b:\",b:#,:%,fbn:-,fb:*,n:>,n:),:\[---\ snip,:--\
-
-" [global] |'cpo'|  flags for Vi-compatible behavior
-set cpoptions=aABceFsJWy
-
-" [global] |'cp'| compatible to vi? Hey. If i want Vi, i'm *using* Vi and not Vim.
-set nocompatible
-
-" [global] |'cmdheight'| Disable the 'Press RETURN...' - Messages
-set ch=2
-
-" [global] |'digraph'| required for those umlauts
-set dg
-
-" [glo-lo] |'dictionary'| list of file names used for keyword completion
-set dict=/usr/share/dict/words
-
-" [global] |'diffopt'| options for using diff mode
-set dip=filler,context:4,iwhite
-
-" [global] |'display'| to display as much as possible of the last line in a window instead
-"                      of displaying the '@' symbols.
-set dy=lastline
-
-" [global] |'edcompatible'| toggle flags of ":substitute" command
-" set noed
-set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,latin1
-
-" [global] |'esckeys'| allows cursor keys within insert mode only on SunOS
-if has("unix") && system('uname')=='SunOS'
-    set ek
-endif
-
-" [global] |'errorfile'| name of the errorfile for the QuickFix mode
-set ef=error.err
-
-" [glo-lo] |'errorformat'| description of the lines in the error file
-set efm+=%f:%l:\ %m,%Dmake[%*\\d]:\ Entering\ directory\ `%f',%Dmake[%*\\d]:\ Leaving\ directory\ `%f'
-
-" [global] |'errorbells'|  be quiet
-set noeb
-
-" [buffer] |'expandtab'| Expand Tabs? Rather not.
-set noet
-" 
-
-" Options initiating with ªf´ 
-" [window] |'foldmethod'| Folding is evil ;)
-if has("folding")
-        set fdm=manual
-endif
-
-" [global] |'fillchars'| characters to use for displaying special items
-" set fcs=vert:\|,fold:-
-set fillchars=vert:\ ,fold:\ " 
-
-" [global] |'fileformat'| The Right Way(tm)
-set ff=unix
-
-" [buffer] |'formatoptions'| Options for text format
-"               - ªc´: autowrap coments _with_ leader
-"               - ªq´: use leader when formatting (gq or mapped Q)
-"               - ªr´: insert the current comment leader automatically
-"               - ªt´: use textwidth
-"               - ª2´: use 2nd line's indentation for rest of paragraph
-set fo=cqrtc2
-" 
-
-" [glo-lo] |'grepprg'| program to use for ":grep"
-" set gp=grep\ -n\ $*\ /dev/null
-set grepprg=grep\ -nH\ $*
-" 
-
-" Options initiating with ªh´ 
-" [global] |'helpheight'| the mindestheight for ':help'
-set hh=20
-
-" [global] |'hid'| dont close changed window
-set hidden
-
-" [global] |'hi'| make the history longer
-set history=500
-
-" [global] |'hlsearch'| Stop the highlighting for the 'hlsearch' option (simple press <F4> instead).
-set nohls
-" 
-
-" Options initiating with ªi´ 
-" [global] |'incsearch'| dont highlight searchresults
-set is
-
-" [global] |ignorecase'| ignore the case in search patterns? Nope.
-"          Note: If you want to ignore case for one specific pattern, you can do this 
-"                by prepending the "\c" string.  Using "\C" will make the pattern to 
-"                match case.
-set noic
-
-" [global] |'icon'| let Vim set the text of the window icon? icon? *rofl*
-set noicon
-
-" When started as "evim", evim.vim will already have done these settings.
-" Note: If you want to go to Normal mode to be able to type a sequence of
-"       commands, use CTRL-L.
-if v:progname =~? "evim"
-       finish 
-endif
-
-
-" [buffer] |'iskeyword'| enable the search for @, ., _ and -
-set isk=@,48-57,_,192-255,-,.,@-@
-
-" Options initiating with ªk´ 
-
-" [global] |'keywordprg'| program to use for the "K" command
-set kp=man
-
-" 
-
-" Options initiating with ªl´ 
-" [global] |'laststatus'| show statusline
-set ls=2
-
-" [global] |'lazyredraw'| no screenupdate during macro
-set nolz
-
-" [window] |'linebreak'| If on Vim will wrap long lines at a character in 'breakat' rather 
-"                        than at the last character that fits on the screen.      
-set lbr
-
-" [window] |'list'| show <Tab> and <EOL>
-set list
-
-" This tells Vim which characters to show for expanded TABs, trailing whitespace, 
-" end-of-lines, ...
-" [window] |'listchars'| Strings to use in 'list' mode
-:set lcs=tab:>-,trail:-
-
-" Options initiating with ªm´ 
-" [global] |'magic'| Set 'magic' patterns ;)
-" Examples:
-"  \v       \m       \M       \V         matches ~
-"  $        $        $        \$         matches end-of-line
-"  .        .        \.       \.         matches any character
-"  *        *        \*       \*         any number of the previous atom
-"  ()       \(\)     \(\)     \(\)       grouping into an atom
-"  |        \|       \|       \|         separating alternatives
-"  \a       \a       \a       \a         alphabetic character
-"  \\       \\       \\       \\         literal backslash
-"  \.       \.       .        .          literal dot
-"  \{       {        {        {          literal '{'
-"  a        a        a        a          literal 'a'
-set magic
-
-" [global] |'makeef'| name of the errorfile for ":make"
-set mef="~/tmp/vim##.err"
-
-" [buffer] |'modeline'| disable modeline
-set ml
-
-" [buffer] |'matchpairs'| pairs of characters that "%" can match
-set mps=(:),[:],{:},<:>
-" 
-
-" Options initiating with ªn´ 
-" [buffer] |'nrformats'| number formats recognized for CTRL-A command
-set nf=hex
-
-" Options initiating with ªo´ 
-
-" [global] |'pastetoggle'| exit paste-mode (<F7>)
-set pt=<F2>
-
-" [glo-lo] |'path'| The list of directories to search when you specify a file with an edit
-"                   command (~/new is my dir with www pages)
-set pa=.,,/usr/include,~/new/*/,$VIM/syntax,~/.vim/*
-
-" [global] |'printoptions'| controls the format of :hardcopy output
-set popt=paper:letter,number:y,portrait:y
-
-" [global] |'printheader'| format of the header used for :hardcopy
-set pheader=%<%f%=Christian\ Schneider\ (strcat@gmx.net)\ %N
-" 
-
-" Options initiating with ªr´ 
-
-" [global] |'report'| always report changes
-set report=0
-
-" [global] |'runtimepath'| This is a list of directories which will be searched for runtime files:
-set rtp=~/.vim,$VIMRUNTIME
-" 
-
-" Options initiating with ªs´ 
-" [global] |'scrolloff'| minimum nr. of lines above and below cursor
-  set so=1
-
-" [global] |'suffixes'| ignore this suffixes while ':edit'
-set su=.aux,.bak,.dvi,.gz,.idx,.log,.ps,.swp,.tar,.tgz,.tar,.zip
-
-" [global] |'splitbelow'| splitting a window will put the new window below the current one
-set nosb
-
-" [global] |'startofline'| commands listed below move the cursor to the first blank of the line
-set nosol
-
-" [global] |'shell'| Execute ':!<command>' with Zsh. I use Zsh, Ksh and Sh. In this
-"                    order! No Bash, no Tcsh and no other toys. -l is equivalent to 
-"                    --login (See zsh --help for details)
-" start the zsh as a login shell:
-if has("unix")
-        let &sh="zsh \-l"
-endif
-
-" [global] |'secure'| trust this current file, but no other
-set secure
-
-" [buffer] |'shiftwidth'| eight spaces are one TAB
-set sw=8 
-
-" [global] |'shortmess'| list of flags, reduce length of messages
-set shm=atIT
-
-" [global] |'shiftround'| round indent to multiple of shiftwidth
-set sr
-
-" [global] |'showbreak'| String to put at the start of lines that have been wrapped
-set sbr=+
-
-" [global] |'showcmd'| Show (partial) command in status line
-set sc
-
-" [global] |'showmatch'|  when a bracket is inserted, briefly jump to the matching one 
-set sm
-
-" [global] |'showmode'| display current mode
-set smd
-
-" [global] |'sidescroll'| minimum number of columns to scroll horizontal
-" set ss=0
-
-" [global] |'sidescrolloff'| min. nr. of columns to left and right of cursor
-set siso=4
-
-" [global] |'smartcase'| Override the 'ignorecase' option if the search pattern contains
-"                        upper case characters.
-set scs
-
-" [global] |'smarttab'| When on, a <Tab> in front of a line inserts blanks according to 
-"                       'shiftwidth'.  'tabstop' is used in other places.
-set sta
-
-" [buffer] |'softtabstop'| Number of spaces that a <Tab> counts for while performing editing
-"                          operations
-set sts=8
-
-" [global] |'switchbuf'| This option controls the behavior when switching between buffers. 
-set swb=useopen
-" 
-
-" Options initiating with ªt´ 
-" [glo-lo] |'tags'| :help tags Read it + understand it = add it!
-set tag=./tags,tags
-
-" Vim will open up as many tabs as you like on startup, up to the maximum
-" number of tabs set in the .vimrc file. The default maximum is 10 tabs,
-" but you can change this by setting the tabpagemax option
-set tabpagemax=100
-
-" [buffer] |'textwidth'| maximum width of text that is being inserted
-set tw=72
-
-" [global] |'ttyfast'| are we using a fast terminal? Yeppa!!!!11
-set tf
-
-" [buffer] |'tabstop'| number of spaces that a <Tab> in the file counts for
-set ts=8
-
-" [global] |'title'| When on, the title of the window will be set to the value of
-"                    'titlestring' (if it is not empty)
-set notitle
-
-" [global] |'ttybuiltin'| When on, the builtin termcaps are searched before the external ones.
-set tbi
-
-" [global] |'ttyscroll'| Maximum number of lines to scroll the screen.
-set tsl=999
-
-" Options initiating with ªu´ 
-" [global] |'undolevels'| undoing 1000 changes should be enough
-set ul=1000
-
-" [global] |'updatecount'| write swap file to disk after each 150 characters
-set uc=150
-
-" [global] |'updatetime'| write swap file to disk after 5 inactive seconds
-set ut=5000
-" 
-
-" Options initiating with ªv´ 
-" viminfo help:
-" ! - Save and restore global variables that start with uppercase and does not have lower case characters.
-" " - Maximum number of lines saved for each register.
-" % - Save and restore buffer list.
-" ' - Maximum number of edited files for which the marks are remembered.
-" / - Maximum number of items in search pattern history.
-" : - Maximum number of items in command-line history.
-" @ - Maximum number of items in input-line history.
-" c - Convert viminfo text from/to 'encoding'.
-" f - Whether file marks need to be stored.
-" h - Disable the effect of 'hlsearch' when loading viminfo file.
-" n - Name of the viminfo file.
-" r - Removable media. List of pathes for which no marks will be saved.
-set viminfo=!,\"500,'50,/50,:500,@500,h
-
-
-" [global] |'visualbell'| visual bell instead of beeping.. or nothing ;)
-set novisualbell
-
-" [global] |'virtualedit'| when to use virtual editing
-set ve=block
-
-" YES. I've a OpenVMS VAX V7.2 :-)
-" | VIM - Vi IMproved 6.2 (2003 Jun 1, compiled Jan 15 2004 11:53:14)
-" | OpenVMS version
-" | Included patches: 1-181
-if has("unix")
-        let vimrc='~/.vimrc'
-else
-        " for my VMS-Box (i. e. ªif has("vms")´):
-        let vimrc='sys$login:.vimrc'
-endif
-" 
-
-" Options initiating with ªw´ 
-" [global] |'wildchar'| type to start wildcard expansion in the command-line
-set wc=<TAB>
-
-" [global] |'writebackup'| make a backup before overwriting a file? no... thats for weenies ;)
-set nowb
-
-
-" [window] |'wrap'| this option changes how text is displayed
-set nowrap
-
-
-" [global] |'wildmenu'| When 'wildmenu' is on, command-line completion operates in an
-"                       enhanced mode. 
-set wmnu
-
-" [global] |'wildmode'| have command-line completion <Tab> (for filenames, help topics, option
-"                       names) first list the available options and complete the longest common 
-"                       part, then have further <Tab>s cycle through the possibilities:
-set wim=list:longest,full
-
-" [global] |'whichwrap'| specified keys that move the cursor left/right to wrap
-set ww=<,>,h,l
-
-" [global] |'whichwrap'| minimum number of lines for the current window
-set wh=5
-
-" Misc Options 
-" [buffer] ":syntax enable" will keep your current color settings.
-syntax on
-
-" Source some Files 
+set comments=b:\",b:#,:%,fbn:-,fb:*,n:>,n:),:\[---\ snip,:--\
+set autoindent					" off as I usually do not write code
+set autowrite					" on saves a lot of trouble
+set autoread					" autom. read file when changed outside of Vim
+set backspace=2					" how backspace works at start of line
+set backup					" Make a backup (i. e. 'file~') and save it.
+set cpoptions=aABceFsJWy			" flags for Vi-compatible behavior
+set nocompatible				" compatible to vi? Hey. If i want Vi, i'm *using* Vi and not Vim.
+set cmdheight=2					" Disable the 'Press RETURN...' - Messages
+set digraph					" required for those umlauts
+set dict=/usr/share/dict/words			" list of file names used for keyword completion
+set diffopt=filler,context:4,iwhite		" options for using diff mode
+set display=lastline				" to display as much as possible of the last line in a window
+						" instead of displaying the '@' symbols.
+set fillchars=vert:\ ,fold:\ "			" characters to use for displaying special items
+set formatoptions=cqrtc2			" Options for text format
+set hidden					" dont close changed window
+set history=500					" make the history longer
+set incsearch					" dont highlight searchresults
+set iskeyword=@,48-57,_,192-255,-,.,@-@		" enable the search for @, ., _ and -
+set laststatus=2				" show statusline
+set linebreak					" If on Vim will wrap long lines at a character in 'breakat' rather than at the
+						" last character that fits on the screen.
+set list					" show <Tab> and <EOL>
+set listchars=tab:>-,trail:-			" This tells Vim which characters to show for expanded TABs, ...
+set makeef="~/tmp/vim##.err"			" name of the errorfile for ":make"
+set matchpairs=(:),[:],{:},<:>			" pairs of characters that "%" can match
+set mouse=a					" enable mouse (selection, resizing windows, copy without linenumbers,
+set nu relativenumber				" Numbers && relativenumbers
+set pastetoggle=<F2>				" exit paste-mode (<F7>)
+set report=0					" always report changes
+set runtimepath=~/.vim,$VIMRUNTIME		" This is a list of directories which will be searched for runtime files:
+scriptencoding utf-8				" set the right scriptencoding
+set scrolloff=1					" minimum nr. of lines above and below cursor
+set showtabline=2				" Show tabline
+set splitbelow splitright			" splitting a window will put the new window below the current one
+set nostartofline				" commands listed below move the cursor to the first blank of the line
+set secure					" trust this current file, but no other
+set shortmess=atIT				" list of flags, reduce length of messages
+set shiftround					" round indent to multiple of shiftwidth
+set showbreak=+					" String to put at the start of lines that have been wrapped
+set showcmd					" Show (partial) command in status line
+set showmatch					" when a bracket is inserted, briefly jump to the matching one
+set showmode					" display current mode
+set sidescrolloff=4				" min. nr. of columns to left and right of cursor
+set smartcase					" Override the 'ignorecase' option if the search pattern contains upper
+						" case characters.
+set smarttab					" When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
+set softtabstop=8				" Number of spaces that a <Tab> counts for while performing editing operations
+set switchbuf=useopen				" This option controls the behavior when switching between buffers.
+syntax on					" :syntax enable will keep your current color settings.
+set tabpagemax=100				" Vim will open up as many tabs as you like on startup, up to the maximum number
+						" of tabs set in the .vimrc file.
+set textwidth=72				" maximum width of text that is being inserted
+set viminfo=!,\"500,'50,/50,:500,@500,h		" See ¬ª:h viminfo¬´ for more details
+set virtualedit=block				" when to use virtual editing
+set wildchar=<TAB>				" type to start wildcard expansion in the command-line
+set nowritebackup				" make a backup before overwriting a file? no... thats for weenies ;)
+set nowrap					" this option changes how text is displayed
+set wildmenu					" When 'wildmenu' is on, command-line completion operates in an enhanced mode.
+set wildmode=list:longest,full			" have command-line completion <Tab> (for filenames, help topics, ...)
+set whichwrap=<,>,h,l				" specified keys that move the cursor left/right to wrap
+" }}}
+
+" Source some Files {{{
 " Note: The "expand" is necessary to evaluate ~dope
-"
-" File: VBlockquote.vim (Insert (Quote) stuff the way some emacs people do)
-" let VBLOCK=expand("~/.vim/macros/VBlockquote.vim")
-" if filereadable(VBLOCK)
-"         exec "source " VBLOCK
-" endif
-
-" File: browser_launcher.vim (Vim script to launch/control browsers.)
-let BLAUNCH=expand("~/.vim/ftplugin/browser_launcher.vim")
-if filereadable(BLAUNCH)
-        exec "source " BLAUNCH
+" https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/plugin/betterdigraphs_utf8.vim
+let BETTERDIGRAPHS=expand("~/.vim/plugin/betterdigraphs_utf8.vim")
+if filereadable(BETTERDIGRAPHS)
+	exec "source " BETTERDIGRAPHS
+	inoremap <expr>  <C-K>   BDG_GetDigraph()
 endif
+" }}}
 
-" File: a.vim (foo.c -> foo.h)
-" :A switches to the header file corresponding to the current file being edited (or vise versa)
-" :AS splits and switches
-" :AV vertical splits and switches
-let AFILE=expand("~/.vim/macros/a.vim")
-if filereadable(AFILE)
-        exe "source " AFILE
-endif
-
-" File: tetris.vim ;-)
-" Start a new game with ª\te´ (see ª:h <Leader>´ for details).
-let TETRIS=expand("~/.vim/macros/tetris.vim")
-if filereadable(TETRIS)
-        exec "source " TETRIS
-endif
-
-" [buffer] type of file, used for autocommands
+" Misc stuff {{{
+" type of file, used for autocommands
 filetype plugin on
 filetype indent on
-
-" Use my own colorscheme
-colorscheme wargrey
-" colorscheme cabin
-" colorscheme burnttoast256
-
-" Let's be friendly :)
-autocmd VimEnter * echo "Welcome back Chris :)"
-autocmd VimLeave * echo "Cya in Hell."
 
 " When editing a file, always jump to the last cursor position.
 "autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
 autocmd BufReadPost *
-			\ if expand("<afile>:p:h") !=? $TEMP | 
-			\ if line("'\"") > 0 && line("'\"") <= line("$") | 
-			\ exe "normal g`\"" | 
-			\ let b:doopenfold = 1 | 
-			\ endif | 
-			\ endif 
-" Need to postpone using "zv" until after reading the modelines. 
-autocmd BufWinEnter *
-			\ if exists("b:doopenfold") | 
-			\ unlet b:doopenfold | 
-			\ exe "normal zv" | 
+			\ if expand("<afile>:p:h") !=? $TEMP |
+			\ if line("'\"") > 0 && line("'\"") <= line("$") |
+			\ exe "normal g`\"" |
+			\ let b:doopenfold = 1 |
+			\ endif |
 			\ endif
-" 
+" Need to postpone using "zv" until after reading the modelines.
+autocmd BufWinEnter *
+			\ if exists("b:doopenfold") |
+			\ unlet b:doopenfold |
+			\ exe "normal zv" |
+			\ endif
+" }}}
 
-" terminal stuff 
+" Colors, colorscheme, .. {{{
+" terminal stuff
 set t_Co=256
 
-" Options for Vim 7.0 
+" Enable True Color in Vim in combination with st(-term)
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+colorscheme znake
+" }}}
+
+" Options for Vim 7.0 {{{
 if version >= 700
 	let loaded_matchparen = 1
 	" turn spelling on by default
@@ -675,45 +302,20 @@ if version >= 700
 	au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
 	au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
 endif
+" }}}
 
-" Mappings 
-"
-" /* shameless stolen from Sven Guckes */
-" 2005-03-10 coloring whitespace,
-" ie trailing spaces and tabs:
-  highlight TrailSpace cterm=inverse ctermfg=magenta
-  syn match TrailSpace /  *$/
-" substitute the less-than and greater-than characters
-" with their HTML equivalents in the current line:
-" vmap ,,< :s/</\&lt;/g<CR>gv:s/>/\&gt;/g<CR>
+" Mappings {{{
 " 2006-10-26 fadenkreuz an/aus
   map <esc><esc> :set cul! cuc!<cr>
-hi cursorline    term=none ctermbg=blue
-hi cursorcolumn  term=none ctermbg=red
 
 " Fix trailing spaces <http://vim.wikia.com/wiki/VimTip878>
-function TrimWhiteSpace() 
-	: %s/\s*$// 
-	: '' 
-:endfunction 
+function TrimWhiteSpace()
+	: %s/\s*$//
+	: ''
+:endfunction
 
 " ,u = update by reading this file
  map ,u :source ~/.vimrc<CR>
-
-" Toggle linenumbers with F6
-nmap <F6> :set invnumber number?<CR>
-
-" This is mapping to uuencode and uudecode in BASE64: 
-" supports normal mode and visual mode. 
-nnoremap <silent> <Leader>ue :%!uuencode -m /dev/stdout<CR> 
-nnoremap <silent> <Leader>ud :%!uudecode -o /dev/stdout<CR> 
-vnoremap <silent> <Leader>ue !uuencode -m /dev/stdout<CR> 
-vnoremap <silent> <Leader>ud !uudecode -o /dev/stdout<CR>
-
-" Load ~/.vim/macros/vimdiff.vim
-  map ;LD :source ~/.vim/macros/vimdiff.vim<CR>
-" Load ~/.vim/macros/morse.vim
-  map ;LM :source ~/.vim/macros/morse.vim<CR>
 
 " Fix a diff, making it easier to review.
 " Add a blank line before each '@@ ... hunk line info ...@@' and each 'diff',
@@ -738,20 +340,11 @@ nmap <CR> o<ESC>
 " trim blanks
 map ,tr :%s/\s\+$//gic<CR>
 
-" list files in current directory.
-map ,ls :!/bin/ls<CR>
-
 " Change into directory of current file
 nmap ,cd :exe 'cd ' . expand ("%:p:h")<CR>:pwd<CR>
 
 " Disable ZZ (too dangerous, might be typed when all I meant was zz)
 map ZZ :"Sorry. no 'ZZ' today. Please stop cyring and piss off."<CR>
-
-" Delete lines in insert-mode.
-set <C-Right>=f
-set <C-Left>=[1;5D
-map <C-Left> b
-map <C-Right> w
 
 " Fxx Keys
 " <F3> saves current buffer
@@ -768,34 +361,17 @@ inoremap <C-Y> <C-X><C-Y>
 " Undo in insert mode.
 imap <c-z> <c-o>u
 
-" Nice Feature ;)
-" Type (in the insert-mode) 4+4<C-B> and you will get the result.
-"  Note: '<C-A>' won't work under screen because C-A C-A is a default
-"        Keybinding of screen *g*
-" '*' == sum            |       '+' == product
-" '-' == difference     |       '/' == quotient
-" '%' == remainder      |       '^' == scale(a^b) = min(scale(a)*b
-inoremap <C-B> <C-O>yiW<End>=<C-R>=<C-R>0<CR>
+" Switch between buffers
+map <F9> :bprevious<CR>
+map <F10> :bnext<CR>
 
-" Press <Strg>_ and it will tell you the word under the cursor, and how long
-" it is.
-nmap <C-_> :echo 'word' expand("<cword>") '  wordlen =' strlen(expand("<cword>"))<CR>
-vmap <C-_> "-y:echo 'word' @- '  wordlen =' strlen(@-)<CR>
-
-" <F10>: quit buffer but prompt if changes have been made
-nmap <F10> :confirm q<CR>
-imap <F10> <Esc>:confirm q<CR>
-
-" <C-F12> list all errors
-nmap [24^ :clist!<CR>
-
-" Esc is too hard to reach, so remap it. 
+" Esc is too hard to reach, so remap it.
 " Note: i use english keyboard layout, i mapped capslock to esc, this mapping
 "       is only for some fucking german keyboards in my network :/
 inoremap jj <esc>
 
 " Often used filenames - only needed these on the command line:
-" ª:e _Mrc´ == ª:e /home/$USER/.muttrc´
+" ¬ª:e _Mrc¬´ == ¬ª:e /home/$USER/.muttrc¬´
 cab Mrc ~/.muttrc
 cab Src ~/.slrnrc
 cab Zrc ~/.zshrc
@@ -806,19 +382,9 @@ cab Irc ~/.irssi/config
 cab SRc ~/.screenrc
 cab Nrc ~/.vim/macros/MailNews.vim
 cab Spe ~/.vim/macros/vimspell.vim
-" 
+" }}}
 
-" Some function()'s 
-func! Umlaute()
-        exec "%s/‰/ae/gic"
-        exec "%s/ˆ/oe/gic"
-        exec "%s/¸/ue/gic"
-        exec "%s/ﬂ/ss/gic"
-        exec "%s/ƒ/Ae/gic"
-        exec "%s/÷/Oe/gic"
-        exec "%s/‹/Ue/gic"
-endfunc
-
+" Some function()'s {{{
 " VimTip 70: running a command on all buffers
 " :call AllBuffers("%s/string1/string2/g")
 " :call AllBuffers("%s/foo/bar/ge|update")
@@ -842,26 +408,7 @@ fun RmCR()
     exe ':' . oldLine
 endfun
 
-" Function for changing folding method.
-if version >= 600
-        function! ChangeFoldMethod() abort
-                let choice = confirm("Which fold method?", "&manual\n&indent\n&expr\nma&rker\n&syntax", 2)
-                if choice == 1
-                        set foldmethod=manual
-                elseif choice == 2
-                        set foldmethod=indent
-                elseif choice == 3
-                        set foldmethod=expr
-                elseif choice == 4
-                        set foldmethod=marker
-                elseif choice == 5
-                        set foldmethod=syntax
-                else
-                endif
-        endfunction
-endif
-
-" For the lastmod augroup 
+" For the lastmod augroup
 function! LastMod()
         if line("$") > 1000
                 let l = 1000
@@ -881,28 +428,29 @@ function DamnedWQ()
         endif
 endfun
 iab wq <bs><esc>:call DamnedWQ()<CR>
+" }}}
 
-" Abbreviations 
+" Abbreviations {{{
 " date'n'time
 " See strftime(3), date(1), printf(1), ctime(3),  getenv(3),
 " printf(3), strptime(3) and so on for details.
-" 22:28 
+" 22:28
   iab Ytime <C-R>=strftime("%H:%M")<CR>
-" 2003-09-25 22:28:38 
+" 2003-09-25 22:28:38
   iab _YDT   <C-R>=strftime("%Y-%m-%d %T")<CR>
-" Thu 25 Sep 2003, 22:28:46 CEST 
+" Thu 25 Sep 2003, 22:28:46 CEST
   iab YDATe <C-R>=strftime("%a %d %b %Y, %T %Z")<CR>
-" 2003-09-25 22:28:53 CEST 
+" 2003-09-25 22:28:53 CEST
   iab YDATE <C-R>=strftime("%Y-%m-%d %T %Z")<CR>
-" 030925 
+" 030925
   iab Ydate <C-R>=strftime("%y%m%d")<CR>
-" 030925 22:29:03  
-  iab YDT   <C-R>=strftime("%y%m%d %T")<CR> 
-" Saturday - July 12th 
+" 030925 22:29:03
+  iab YDT   <C-R>=strftime("%y%m%d %T")<CR>
+" Saturday - July 12th
   iab MDATE <C-R>=strftime("%A - %B %dth")<CR>
-" [2003-07-12] 
+" [2003-07-12]
   iab TST   <C-R>=strftime("[%Y-%m-%d]")<CR>
-" July 12, 2003 (Saturday, 21:26h) 
+" July 12, 2003 (Saturday, 21:26h)
   iab Y_DAT <C-R>=strftime("%B %d, %Y (%A, %H:%Mh)")<CR>
 " I use this format in <http://strcat.de/papers.html>
   iab YHP <C-R>=strftime("%D")<CR>
@@ -928,58 +476,77 @@ iab wq <bs><esc>:call DamnedWQ()<CR>
   iab HPrtfm      http://strcat.de/images/google.png
 
 " Some simple example of the "expand modifiers":
-" insert the current filename *with* path: ª/home/dope/.vimrc´
+" insert the current filename *with* path: ¬ª/home/dope/.vimrc¬´
   iab Ypathfile <C-R>=expand("%:p")<cr>
-" insert the current filename *without* path: ª.vimrc´
+" insert the current filename *without* path: ¬ª.vimrc¬´
   iab Yfile <C-R>=expand("%:t:r")<cr>
-" 
+" }}}
 
+" Plugins {{{
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
-	" https://github.com/tpope/vim-surround
+	Plug 'mattn/emmet-vim'
+	Plug 'junegunn/goyo.vim'
 	Plug 'tpope/vim-surround'
-	" https://github.com/xuhdev/vim-latex-live-preview
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 	Plug 'PotatoesMaster/i3-vim-syntax'
-	" Statusline
 	Plug 'itchyny/lightline.vim'
-	" A simple, easy-to-use Vim alignment plugin.
 	Plug 'junegunn/vim-easy-align'
-	" jump around documents
-	Plug 'Lokaltog/vim-easymotion'
-	" https://github.com/junegunn/fzf
 	Plug '~/.fzf'
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
-	" https://github.com/tpope/vim-fugitive
+	Plug 'junegunn/limelight.vim'
 	Plug 'tpope/vim-fugitive'
-	" https://github.com/Valloric/YouCompleteMe
-	Plug 'Valloric/YouCompleteMe'
 	Plug 'majutsushi/tagbar'
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'mbbill/undotree'
-	Plug 'mgee/lightline-bufferline'
+	Plug 'mattn/webapi-vim'
+	Plug 'prettier/vim-prettier'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'scrooloose/nerdtree'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'taohexxx/lightline-buffer'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'airblade/vim-gitgutter'
+	Plug 'Yggdroot/indentLine'
+	Plug 'SirVer/ultisnips'
+	Plug 'honza/vim-snippets'
+	Plug 'ervandew/supertab'
+	Plug 'w0rp/ale'
+	Plug 'neomake/neomake'
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
-" NERD Commenter
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
+" vim-latex-live-preview
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'zathura'
 
+let g:ale_fixers = {
+	                    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+		\ 'html': ['htmllint'],
+                    \ 'javascript': ['eslint', 'prettier'],
+                    \ 'css' : ['stylelint', 'prettier'],
+                    \ 'python' : ['yapf', 'isort', 'autopep8']
+                    \ }
 
-" use lightline-buffer in lightline
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsSnippetDirectories = ['~/.vim/bundle/vim-snippets/']
+
+let g:UltiSnipsEditSplit="vertical"
+
+" Lightline, Bufferline, vim-devicons, .. {{{
 let g:lightline = {
+    \ 'colorscheme': 'deepspace',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ], ],
+      \ },
     \ 'tabline': {
     \   'left': [ [ 'bufferinfo' ],
     \             [ 'separator' ],
@@ -995,62 +562,140 @@ let g:lightline = {
     \   'buffercurrent': 'tabsel',
     \   'bufferbefore': 'raw',
     \   'bufferafter': 'raw',
+    \   'readonly': 'error',
     \ },
     \ 'component_function': {
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
     \   'bufferinfo': 'lightline#buffer#bufferinfo',
+    \ 'gitbranch': 'fugitive#head'
     \ },
     \ 'component': {
     \   'separator': '',
     \ },
     \ }
+let g:gitgutter_sign_added = '‚úö'
+let g:gitgutter_sign_modified = '‚ûú'
+let g:gitgutter_sign_removed = '‚úò'
 
-" lightline-buffer ui settings
-" replace these symbols with ascii characters if your environment does not support unicode
-let g:lightline_buffer_logo = 'ø '
-let g:lightline_buffer_readonly_icon = 'ø'
-let g:lightline_buffer_modified_icon = 'ø'
-let g:lightline_buffer_git_icon = 'ø '
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+" Icons for my bufferline
+let g:lightline_buffer_logo = 'Ô£ø '
+let g:lightline_buffer_readonly_icon = 'ÓÇ¢'
+let g:lightline_buffer_modified_icon = '‚ú≠'
+let g:lightline_buffer_git_icon = 'ÓÇ† '
 let g:lightline_buffer_ellipsis_icon = '..'
-let g:lightline_buffer_expand_left_icon = 'ø '
-let g:lightline_buffer_expand_right_icon = ' ø'
+let g:lightline_buffer_expand_left_icon = '‚óÄ '
+let g:lightline_buffer_expand_right_icon = ' ‚ñ∂'
 let g:lightline_buffer_active_buffer_left_icon = ''
 let g:lightline_buffer_active_buffer_right_icon = ''
 let g:lightline_buffer_separator_icon = '  '
 
+" Press \1, \2, .. for buffer 1, 2, .. or just press \ and Return for a
+" bufferlist (see FZF)
+nmap <Leader>1 :buffer 1<CR>
+nmap <Leader>2 :buffer 2<CR>
+nmap <Leader>3 :buffer 3<CR>
+nmap <Leader>4 :buffer 4<CR>
+nmap <Leader>5 :buffer 5<CR>
+
 " enable devicons, only support utf-8
 " require <https://github.com/ryanoasis/vim-devicons>
 let g:lightline_buffer_enable_devicons = 1
-
 " lightline-buffer function settings
 let g:lightline_buffer_show_bufnr = 1
-
 " :help filename-modifiers
 let g:lightline_buffer_fname_mod = ':t'
-
 " hide buffer list
 let g:lightline_buffer_excludes = ['vimfiler']
-
 " max file name length
 let g:lightline_buffer_maxflen = 30
-
 " max file extension length
 let g:lightline_buffer_maxfextlen = 3
-
 " min file name length
 let g:lightline_buffer_minflen = 16
-
 " min file extension length
 let g:lightline_buffer_minfextlen = 3
-
-" reserve length for other component (e.g. info, close)
+" reserve length for other component (e.g. info, close, ..)
 let g:lightline_buffer_reservelen = 20
+" }}}
 
+" Nerdtree.. {{{
+nmap <F6> :NERDTreeToggle<CR>
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "‚úπ",
+    \ "Staged"    : "‚úö",
+    \ "Untracked" : "‚ú≠",
+    \ "Renamed"   : "‚ûú",
+    \ "Unmerged"  : "‚ïê",
+    \ "Deleted"   : "‚úñ",
+    \ "Dirty"     : "‚úó",
+    \ "Clean"     : "‚úîÔ∏é",
+    \ 'Ignored'   : '‚òí',
+    \ "Unknown"   : "?"
+    \ }
+" }}}
+
+" Mappings for Limelight and GoYo {{{
+map <leader>l :Limelight!!0.9<CR>
+map <leader>g :Goyo \| set linebreak<CR>
+" }}}
+
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-i>"
+" }}}
+
+" Emmet {{{
+" Enable emmet just for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+" Redefine trigger key. Default is CTRL+y followed by `,` (comma), which
+" is.. doh'. So now is the triggerkey also a ","; simple press ,, (two
+" commas)
+let g:user_emmet_leader_key=','
+"let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
+let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
+" }}}
+
+" NERD Commenter {{{
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" }}}
+
+" UndotreeToggle {{{
 map <F5> :UndotreeToggle<CR>
+let g:undotree_SplitWidth = 40
+let g:undotree_DiffpanelHeight = 15
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 3
 if has("persistent_undo")
 	set undodir=~/.undodir/
 	set undofile
 endif
+" }}}
 
+" Tagbar {{{
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
   \ 'kinds': [
@@ -1064,6 +709,9 @@ let g:tagbar_type_typescript = {
     \ 'e:enums',
   \ ]
 \ }
+" }}}
+
+" FZF {{{
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -1102,65 +750,72 @@ nnoremap <silent> <Leader><Enter> :call fzf#run({
 	\   'options': '+m',
 	\   'down':    len(<sid>buflist()) + 2
 	\ })<CR>
-
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
+" }}}
 
-let g:lightline = {
-      \ 'component_function': {
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \ },
-      \ }
-
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-
-nnoremap <silent> <leader>gs :Gstatus<CR> nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR> nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gl :Glog<CR> nnoremap <silent> <leader>gp :Git push<CR>
-
-
-" Some plugin related stuff
-" https://github.com/junegunn/vim-easy-align
+" https://github.com/junegunn/vim-easy-align {{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+" }}}
 
-" https://github.com/easymotion/vim-easymotion
-" EasyMotion provides a much simpler way to use some motions in vim
-map <Leader> <Plug>(easymotion-prefix)
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-" s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+" autocommandos.. {{{
+" Automatically deletes all trailing whitespace on save¬ø because no one
+" need whitespaces!
+autocmd BufWritePre * %s/\s\+$//e
 
-set showtabline=2  " Show tabline
-set guioptions-=e  " Don't use GUI tabline
+" Go
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+augroup go
+	autocmd!
+	" Show by default 4 spaces for a tab
+	autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+	" :GoBuild and :GoTestCompile
+	autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+	" :GoTest
+	autocmd FileType go nmap <leader>t  <Plug>(go-test)
+	" :GoRun
+	autocmd FileType go nmap <leader>r  <Plug>(go-run)
+	" :GoDoc
+	autocmd FileType go nmap <Leader>d <Plug>(go-doc)
+	" :GoCoverageToggle
+	autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+	" :GoInfo
+	autocmd FileType go nmap <Leader>i <Plug>(go-info)
+	" :GoMetaLinter
+	autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
+	" :GoDef but opens in a vertical split
+	autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+	" :GoDef but opens in a horizontal split
+	autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
+	" :GoAlternate  commands :A, :AV, :AS and :AT
+	autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+	autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+	autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+	autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+augroup END
+" build_go_files is a custom function that builds or compiles the test file.
+" It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
 
+" Run xrdb whenever Xdefaults or Xresources are updated.
+autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
 " Formatoptions
 " Formatoptions for asciidoc (<http://www.methods.co.nz/asciidoc/>)
@@ -1178,10 +833,8 @@ autocmd BufNewFile,BufRead ~/scripts/Asciidoc/*.txt,*.adoc
 	\ | nnoremap Q gq}
 	\ | set ft=asciidoc
 	\ | source ~/.vim/macros/abbreviations.vim
-	\ | nmap <F4> :make<CR>
-	\ | inoremap <F4> <ESC>:make<CR><CR>a
-	\ | set makeprg=asciidoctor\ -r\ asciidoctor-diagram\ %
-	"\ | set makeprg=asciidoc\ -b\ xhtml11\ -d\ book\ -v\ -a\ data-uri\ --unsafe\ -a\ toc\ -a\ icons\ -a\ badges\ -f\ ~/.asciidoc/asciidoc.conf\ %
+	\ | map <Leader>c :!asciidoctor %<CR>
+	\ | map <Leader>b :!asciidoctor-pdf %<CR>
 
 autocmd BufNewFile,BufRead ~/.tmux.conf set ft=tmux
 
@@ -1206,38 +859,7 @@ augroup c
     autocmd BufWritePre,FileWritePre *.c  exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
 
-" LaTeX
-au FileType tex set dict+=~/.vim/dic/LaTeX.dic sw=2 sts=2 ai com=:% | syn sync maxlines=200 | syn sync minlines=50
-augroup tex
-    " <F5>:  Comment/uncomment current line
-function! LaTeXCommentUncomment()
-	if getline('.') =~ '^%'
-		execute("normal |")
-		execute("normal x")
-		execute(line('.')+1)
-	else
-		execute("normal |")
-		execute("normal i%")
-		execute(line('.')+1)
-	endif
-endfunction " LaTeXCommentUncomment()
-
-" <S-F5>:  Make the target corresponding to the current file (strips off
-" the .tex extension;  if editing video.tex, will call make video
-    autocmd FileType tex map  <S-F5> :execute(":make ".strpart(expand("%"), 0, match(expand("%"), ".tex")))<cr>
-    autocmd FileType tex imap <S-F5> <Esc>:execute(":make ".strpart(expand("%"), 0, match(expand("%"), ".tex")))<cr>
-augroup END
-"
-
 " HTML
-function HTMLInsert()
-   let x = confirm("Which Template?\n"," &Light \n &Dark",1,1)
-   if x == 1
-   silent! 0r ~/.vim/templates/template-light.html
-   else
-   0r ~/.vim/templates/template-dark.html
-   endif
-endfunc
 augroup html
   autocmd!
   autocmd  BufNewFile,BufRead *.html,*.shtml hi htmlLink ctermfg=Black ctermbg=Cyan cterm=underline
@@ -1246,40 +868,8 @@ augroup html
   " autocmd  BufNewFile *.html,*.shtml,*.htm call HTMLInsert()
   autocmd  BufWritePre,FileWritePre *.html,*.shtml exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-"
-
-" XML
-map <Leader>x :set filetype=xml<CR>
-  \:source $VIMRUNTIME/syntax/xml.vim<CR>
-  \:set foldmethod=syntax<CR>
-  \:colors peachpuff<CR>
-  \:source $ADDED/xml.vim<CR>
-  \:iunmap <buffer> <Leader>.<CR>
-  \:iunmap <buffer> <Leader>><CR>
-  \:inoremap \> ><CR>
-
-
-" catalog should be set up
-nmap <Leader>l <Leader>cd:%w !xmllint --valid --noout -<CR>
-nmap <Leader>r <Leader>cd:%w !rxp -V -N -s -x<CR>
-nmap <Leader>d4 :%w !xmllint --dtdvalid
- \"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" --noout -<CR>
-
-vmap <Leader>px !xmllint --format -<CR>
-nmap <Leader>px !!xmllint --format -<CR>
-nmap <Leader>pxa :%!xmllint --format -<CR>
-nmap <Leader>i :%!xsltlint<CR>
-"
 
 " CSS
-function CSSInsert()
-   let x = confirm("Which Template?\n"," &Light \n &Dark",1,1)
-   if x == 1
-   silent! 0r ~/.vim/templates/template-light.css
-   else
-   silent 0r ~/.vim/templates/template-dark.css
-   endif
-endfunc
 augroup css
   autocmd!
   autocmd  BufNewFile,BufRead *.css so $VIMRUNTIME/syntax/css.vim
@@ -1287,18 +877,14 @@ augroup css
   " autocmd  BufNewFile         *.css call CSSInsert()
   autocmd  BufWritePre,FileWritePre *.css exec("normal ms")|call LastMod()|exec("normal `s")
 augroup END
-"
-
-" For CRUX Pkgfiles
-autocmd BufNewFile Pkgfile 0r ~/.vim/templates/Pkgfile
 
 " Mail and News
 au FileType mail so ~/.vim/macros/MailNews.vim
 if has("autocmd")
-	au BufRead ~/.followup so ~/.vim/macros/message-nowplaying.vim | set spell
+	au BufRead ~/.followup so ~/.vim/macros/message-nowplaying.vim | set spell | set nonu nornu
 	au BufRead ~/tmp/neomutt-* so ~/.vim/macros/msgid.vim
 	au BufRead ~/tmp/neomutt-* so ~/.vim/macros/VBlockquote.vim
-	au BufRead ~/tmp/neomutt* set ft=mail | set spell | syntax on
+	au BufRead ~/tmp/neomutt* set ft=mail | set spell | syntax on | set nonu nornu
 	au BufRead ~/.article* so ~/.vim/macros/message-nowplaying.vim | set spell | syntax on
 endif
 
@@ -1321,7 +907,10 @@ augroup Changelog
   autocmd BufNewFile,BufRead  Changelog     set tw=72 nowrap
   autocmd BufNewFile,BufRead  Changelog     so $VIMRUNTIME/syntax/changelog.vim
 augroup END
-"
+
+" Automatically wrap at 72 characters and spell check git commit messages
+autocmd FileType gitcommit setlocal textwidth=72
+autocmd FileType gitcommit setlocal spell
 
 " Perl
 au FileType perl set cink=0{,0},!,o,O
@@ -1345,8 +934,8 @@ augroup pl
   autocmd BufWritePre,FileWritePre *.pl,*.pm  exec("normal ms")|call LastMod()|exec("normal `s")
   autocmd BufWrite           *.pl    !chmod +x %
   augroup END
-"
 
 " I use this to soon i edit my ~/.sigs/own-stuff
 autocmd BufRead  ~/.sigs/own-stuff  set tw=80
 autocmd BufWrite ~/.sigs/own-stuff  call LastMod()
+" }}}
