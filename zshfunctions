@@ -1,21 +1,3 @@
-# super powerful ls
-# MISC: Another ls(1)
-function lr() {
-	zparseopts -D -E S=S t=t r=r h=h U=U l=l F=F d=d
-	local sort="sort -t/ -k2" # by name (default)
-	local numfmt="cat"
-	local long='s:[^/]* /::; s:^\./\(.\):\1:;' # strip detail
-	local classify=''
-		[ -n $F ]] && classify='/^d/s:$:/:; /^-[^ ]*x/s:$:*:;' # dir/ binary*
-		[ -n $l ]] && long='s: /\./\(.\): \1:; s: /\(.\): \1:;' # show detail
-		[ -n $S ]] && sort="sort -n -k5" # by size
-		[ -n $r ]] && sort+=" -r" # reverse
-		[ -n $t ]] && sort="sort -k6" && { [[ -n $r ]] || sort+=" -r" } # by date
-		[ -n $U ]] && sort=cat # no sort, live output
-		[ -n $h ]] && numfmt="numfmt --field=5 --to=iec --padding=6" # human fmt
-		[ -n $d ]] && set -- "$@" -prune # don't enter dirs
-	find "$@" -printf "%M %2n %u %g %9s %TY-%Tm-%Td %TH:%TM /%p -> %l\n" | $=sort | $=numfmt | sed '/^[^l]/s/ -> $//; '$classify' '$long
-}
 
 if [ -e "/etc/arch-release" ]; then
 	function paclist() { pacman -Qei $(pacman -Qu|cut -d" " -f 1)|awk ' BEGIN {FS=":"}/^Name/{printf("\033[1;36m%s\033[1;37m", $2)}/^Description/{print $2}' }
@@ -32,8 +14,10 @@ if [ -e "/etc/arch-release" ]; then
 		arch="$(grep '^Arch' <<< "$infos" | grep -oP '[^ ]+$')"
 		xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &> /dev/null
 	}
-	# list last $@ installed packages
-	function lastpackages() { expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail $@ }
+# list last $@ installed packages
+function lastpackages() { expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail $@ }
+
+# Help for pacman
 function H-Pacman() {
 	print "
 		pacman -Syu		Fuehrt eine komplette System-Aktualisierung aus
@@ -50,7 +34,7 @@ function H-Pacman() {
 		pacman -Si <Paket>	Informationen zu (noch) nicht installierten Paketen anzeigen
 		pacman -U Dateiname	Ein lokales Paket installieren (nicht aus einem Repo)
 		pacman -Scc		Leert das lokale Paketarchiv von Pacman vollständig (/var/cache/pacman/pkg)
-		pacman -Sc		Löscht veraltete Pakete aus /var/cache/pacman/pkg 
+		pacman -Sc		Löscht veraltete Pakete aus /var/cache/pacman/pkg
 		pacman -R Paketname 	Deinstallation eines oder mehrerer Pakete (aus AUR oder Repos)
 		pacman -Rs Paketname 	Wie oben, zusätzlich werden alle abhängige Pakete gesucht und mit entfernt, falls diese nicht von einer anderen Anwendung gebraucht werden
 		pacman -Rsc Paketname   Wie oben. Abhängigkeiten werden kaskadierend entfernt
@@ -78,32 +62,6 @@ function H-Pacman() {
 	}
 fi
 
-# Create a data URL from a file
-dataurl() {
-	local mimeType
-	mimeType=$(file -b --mime-type "$1")
-	if [[ $mimeType == text/* ]]; then
-		mimeType="${mimeType};charset=utf-8"
-	fi
-	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
-}
-
-# Edit some stuff
-# MISC: Edit dotfiles
-conf() {
-	case $1 in
-		menu)		vim ~/scripts/menu ;;
-		mutt)		vim ~/.muttrc ;;
-		tmux)		vim ~/.tmux.conf ;;
-		vim)		vim ~/.vimrc ;;
-		xinit)		vim ~/.xinitrc ;;
-		xresources)	vim ~/.Xresources && xrdb ~/.Xresources ;;
-		zsh)		vim ~/.zshrc && source ~/.zshrc ;;
-		hosts)		sudoedit /etc/hosts ;;
-		*)			echo "Unknown application: $1" ;;
-	esac
-}
-
 # Pretty output of PATH and FPATH
 p-path() {
 	path_array=("${(s/:/)PATH}")
@@ -121,21 +79,17 @@ cheating() { curl cheat.sh/$1; }
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto; }
 
 # Nice mount output
-# MISC: nmount
 nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
 
 # P{a,o}ste to sprunge
-# MISC: Paste
 sprunge() { curl -F "sprunge=<-" http://sprunge.us <"$1" ;}
 
 # pstop -- ps with top-like output
-# MISC: pstop -- ps with top-like output
 pstop() {
 	ps -eo pid,user,pri,ni,vsz,rsz,stat,pcpu,pmem,time,comm --sort -pcpu | head "${@:--n 20}"
 }
 
 # search by file contents
-# MISC: foobar
 function g() {
 	emulate -LR zsh
 	local p=$argv[-1]
@@ -146,16 +100,16 @@ function g() {
 		-r -P ${@:?regexp missing} $p
 }
 
+# list only directories
 lsd() { ls -d ${^~*:-*}(/) }
 
 # printf '%-20s %s\n' ${(kv)options}
-showoptions() {                                                                                                                                                                                                     
-  local k                                                                                                                                                                                                           
-  zmodload -i zsh/parameter                                                                                                                                                                                         
-                                                                                                                                                                                                                    
-  for k in ${(ok)options}; do                                                                                                                                                                                       
-    printf "%-20s\t%s\n" $k ${options[$k]}                                                                                                                                                                          
-  done                                                                                                                                                                                                              
+showoptions() {
+  local k
+  zmodload -i zsh/parameter
+  for k in ${(ok)options}; do
+    printf "%-20s\t%s\n" $k ${options[$k]}
+  done
 }
 
 # Create a /overview/ of all available function()'s; the description for
@@ -213,8 +167,8 @@ zls () {
 }
 
 # Excuse me!
-function excuse() 
-{ 
+function excuse()
+{
 	nc bofh.jeffballard.us 666 | tail -1
 }
 
@@ -236,7 +190,6 @@ function mdate()
 }
 
 # A nicer output of cal(1)
-# MISC: Colorize the output of cal(1)
 function calendar() {
 	if [[ ! -f /usr/bin/cal ]] ; then
 		echo "Please install cal before trying to use it!"
@@ -247,22 +200,6 @@ function calendar() {
 	else
 		/usr/bin/cal $@ | egrep -C 40 --color "\<($(date +%B)|$(date +%e | tr -d ' '))\>"
 	fi
-}
-
-# eheheh :>
-# MISC: lets sing ;-)
-function littlelamb() {
-	beep -f 10
-	if [ $? = 0 ]; then
-		echo 'Marry Had A Little Lamb'
-		beep -f 466.2 -l 250 -D 20 -n -f 415.3 -l 250 -D 20 -n -f 370.0 -l 250 -D 20 -n -f 415.3 -l 250 -D 20 -n -f 466.2 -l 250 -r 2 -d 0 -D 20 -n -f 466.2 -l 500 -n -f 10 -l 20
-		echo 'Little Lamb, Little Lamb'
-		beep -f 415.3 -l 250 -r 2 -d 0 -D 20 -n -f 415.3 -l 500 -D 20 -n -f 466.2 -l 250 -D 20 -n -f 568.8 -l 250 -D 20 -n -f 568.8 -l 500 -n -f 10 -l 20
-		echo 'Marry Had A Little Lamb'
-		beep -f 466.2 -l 250 -D 20 -n -f 415.3 -l 250 -D 20 -n -f 370.0 -l 250 -D 20 -n -f 415.3 -l 250 -D 20 -n -f 466.2 -l 250 -r 2 -d 0 -D 20 -n -f 466.2 -l 250 -n -f 10 -l 20
-		echo 'Whose Fleece Was White As Snow'
-		beep -f 415.3 -l 250 -r 3 -D 20 -n -f 466.2 -l 250 -D 20 -n -f 415.3 -l 250 -D 20 -n -f 370.0 -l 500
-fi
 }
 
 # Shameless stolen von mika's grml-distribution (<http://www.grml.org/>)
@@ -289,28 +226,6 @@ function urlencode() {
 	print ${(j::)input/(#b)([^A-Za-z0-9_.--version\'\(\)-])/%$(([##16]#match))}
 }
 
-# Some (useful?) functions for mldonkey
-# MLDONKEY: Gives only the files that are currently downloaded
-function mldl() { ( echo auth admin PASSWORD ; echo vd ; echo q) | nc 127.0.0.1 4000 | sed "/Paused/d" | sed "/- *$/d" }
-
-# convert the Flash Apps to AVI and/or MPEG files.
-# MISC: convert the Flash Apps to AVI and/or MPEG files.
-vlf2mpeg() {
-    if [[ -z "$1" || ! -e "$1" ]]; then
-      echo Usage: $0 VideoFile.vlf
-      echo Use http://keepvid.com to download the VLF file.
-    else
-      ffmpeg -i $1 -ab 56 -ar 22050 -b 500 -s 320x240 ${1:r}.mpeg
-    fi
-}
-
-# MISC: mencode *.avi - Files with mencoder
-function mencode()
-{
-	mencoder "$@" -vf pp=hb/vb/dr/al -oac copy -ovc xvid -xvidencopts pass=1:bitrate=700:turbo -o /dev/null
-	mencoder "$@" -vf pp=hb/vb/dr/al -oac copy -ovc xvid -xvidencopts pass=2:bitrate=700       -o ${@%.*}.avi
-}
-
 # Convert IPv6 to IPv4 - adresses.. maybe..
 # SYS: Convert IPv6 to IPv4
 function 6to4() {
@@ -319,7 +234,7 @@ function 6to4() {
 	printf "2002:%02x%02x:%02x%02x::1" `echo $ipv4 | tr "." " "`;echo
 	}
 
-# MISC: Globbing is simple? Sure .. See zshexpn(1) /Glob Qualifiers for details and come back ;) 
+# MISC: Globbing is simple? Sure .. See zshexpn(1) /Glob Qualifiers for details and come back ;)
 function H-Glob()
 {
 echo -e "
@@ -376,7 +291,7 @@ function helpme()
 function sdu() {  du -sb $* | sort -rn | perl -ple 's|^(\d+)\s*(.*)$|sprintf qq(%9.2fM  $2),($1/1024/1024)|e' | less }
 
 # SYS: /gitize/ $PWD
-function gitize() { git init && git add . && git commit -a -m"initial commit" && git gc } 
+function gitize() { git init && git add . && git commit -a -m"initial commit" && git gc }
 
 # MISC: A uptime-/Schwanzvergleich/ ;-)
 function dick() { uptime | perl -ne "/(\d+) d/;print 8,q(=)x\$1,\"D\n\"" }
@@ -391,35 +306,14 @@ function mmake()
 # PROG: Search for the argument in the system libraries
 function lcheck() { nm -go /usr/lib/lib*.a 2>/dev/null | grep ":[[:xdigit:]]\{8\} . .*$1"":[[:xdigit:]]\{8\} . .*$1" }
 
-# FIXME: It's really .. reclaimable
-# MISC: clean directory
-function purge()
-{
-	FILES=(*~(N) .*~(N) \#*\#(N) *.o(N) a.out(N) *.core(N) *.cmo(N) *.cmi(N) .*.swp(N))
-	NBFILES=${#FILES}
-	if [[ $NBFILES > 0 ]]; then
-		print $FILES
-		local ans
-		echo -n "Remove this files? [y/n] "
-		read -q ans
-		if [[ $ans == "y" ]]
-		then
-			command rm ${FILES}
-			echo ">> $PWD purged, $NBFILES files removed"
-		else
-			echo "Ok. .. than not.."
-		fi
-	fi
-}
-
 # PASS: display a of possible passwords.
 function makepasswords()
 {
 	perl <<EOPERL
 	my @a = ("a".."z","A".."Z","0".."9",(split //, q{#@,.<>$%&()*^}));
-	for (1..10) { 
+	for (1..10) {
 		print join "", map { \$a[rand @a] } (1..rand(3)+7);
-		print qq{\n} 
+		print qq{\n}
 	}
 EOPERL
 }
@@ -515,7 +409,7 @@ function URL-search()
                 echo "Example : $0 directory | \$PAGER"
                 echo "Example : $0 directory > logfile"
         else
-                egrep -r -h -i '((ftp|https|http|www):.*)' $1 | awk -f ~/bin/fnord.awk | sort | uniq 
+                egrep -r -h -i '((ftp|https|http|www):.*)' $1 | awk -f ~/bin/fnord.awk | sort | uniq
         fi
 }
 
@@ -530,29 +424,6 @@ function cvss() { cvs status -v $* }
 function cvsq() { cvs -nq update }
 # CVS: add a new file/directory to the repository
 function cvsa() { cvs add $* && cvs com -m 'initial checkin' $* }
-
-# *narf* .. 'translate' looks up fot a word in a file with language-to-language
-# translations (field separator should be " : "). A typical wordlist looks
-# like at follows:
-#  | english-word : german-transmission
-# It's also only possible to translate english to german but not reciprocal.
-# Use the following oneliner to turn back the sort order:
-#  $ awk -F ':' '{ print $2" : "$1" "$3 }' \
-#    /usr/local/lib/words/en-de.ISO-8859-1.vok > ~/.translate/de-en.ISO-8859-1.vok
-# SEARCH: Translate DE<=>EN
-function trans()
-{
-        case "$1" in
-                -[dD]*) translate -l de-en $2
-                ;;
-                -[eE]*) translate -l en-de $2
-                ;;
-                *)
-                echo "Usage: $0 { -D | -E }"
-                echo "         -D == German to English"
-                echo "         -E == English to German"
-        esac
-}
 
 # PERL: Print the binary equivalent of a word (and back)
 function bew() { perl -le 'print unpack "B*","'$1'"' }
@@ -589,18 +460,6 @@ function showINC () { perl -e 'for (@INC) { printf "%d %s\n", $i++, $_ }' }
 # HELP: /Quick read/ help-files of Vim
 function vimhelp () { vim -c "help $1" -c on -c "au! VimEnter *" }
 
-# MISC: set the DISPLAY to where i'm logged from or - if an argument is specified - to the value of the argument
-function disp()
-{
-        if [[ $# == 0 ]]
-        then
-                DISPLAY=$(who am i | awk '{print $6}' | tr -d '()'):0
-        else
-                DISPLAY="${*}:0"
-        fi
-        export DISPLAY
-}
-
 # Shameless stolen from Sven Guckes (<http://www.guckes.net/setup/zshrc.mine>)
 # SEARCH: plap foo -- list all programs with prefix "foo":
 function plap()
@@ -636,28 +495,11 @@ function selhist()
 # DIFF: create a diff (-udrP)
 function mdiff() { diff -udrP "$1" "$2" > diff.`date "+%Y-%m-%d"`."$1" }
 
-# DIFF: 
+# DIFF:
 function adiff() { echo "Diffing: $@" >&2 ; command diff "$@" }
 
-# SEARCH: function for searching for acronyms and stuff
-function w00t()
-{
-	case "$1" in
-		-s) =grep -i "^$2" ~/.abk.txt
-		;;
-		-a) echo "$2">> ~/.abk.txt
-		;;
-		*)
-		echo "Usage $0 [-s] [-a]"
-		echo "		-s (Acronym)  Search for an acronym in the db"
-		echo "		-a (String)   Add an acronym+description to the db"
-		echo "Examples:"
-		echo "			$0 -s STFU"
-		echo "			$0 -a STFU - Shut the fuck up"
-	esac
-}
 
-# PROG: aDisplay the size of all dirs at $PWD
+# PROG: Display the size of all dirs at $PWD
 function dirsize()
 {
 	if [ -z $1 ]; then
@@ -666,14 +508,14 @@ function dirsize()
 		dir=$1
 	fi
 	find $dir -type d -maxdepth 1 -mindepth 1 -exec du -sh '{}' \; 2>/dev/null \
-	| perl -pe "s/\t.*\/(.*)$/\t$(echo '\033[01;32m')\1$(echo '\033[0m')/gi" 
+	| perl -pe "s/\t.*\/(.*)$/\t$(echo '\033[01;32m')\1$(echo '\033[0m')/gi"
 	echo
 	echo "Total: " $(du -sh $dir 2>/dev/null | awk '{print $1}')
 }
 
 # random-signature.pl can be found at <http://www.strcat.de/hacks/random-signature.pl>
 # SEARCH: show/search signatures ;-)
-function sig() 
+function sig()
 {
         if [[ $# = 0 ]]; then
                 random-signature.pl; cat ~/.signature
@@ -694,31 +536,12 @@ function mcd()
 # $ ls -l =ls
 # $ -r-xr-xr-x    1 root     bin        167936 Oct  4  2002 /bin/ls
 # $ pls ls
-# $ -r-xr-xr-x    1 root     bin        167936 Oct  4  2002 /bin/ls 
+# $ -r-xr-xr-x    1 root     bin        167936 Oct  4  2002 /bin/ls
 # SEARCH: A /replacement/ for `ls -l =command'
 function pls() { ls -l =$1 }
 
 # MISC: cd && ls
 function cl() { cd $1 && ls -a }
-
-# MISC: Use vim to convert plaintext to HTML
-function 2html() { vim -u NONE -n -c ':syntax on' -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa' $1 > /dev/null 2> /dev/null }
-
-# MISC: Often needed (if i rape '$LS_COLORS' again *g*)
-function _cols()
-{
-        esc="\033["
-        echo -e "\t 40\t 41\t 42\t 43\t 44\t 45\t 46\t 47"
-        for fore in 30 31 32 33 34 35 36 37; do
-                line1="$fore  "
-                line2="    "
-                for back in 40 41 42 43 44 45 46 47; do
-                        line1="${line1}${esc}${back};${fore}m Normal  ${esc}0m"
-                        line2="${line2}${esc}${back};${fore};1m Bold    ${esc}0m"
-                done
-                echo -e "$line1\n$line2"
-        done
-}
 
 if [ ! -x $(which unp) >/dev/null 2>&1 ]; then
 # ARCHIVE: extracts archived files (maybe)
@@ -859,7 +682,7 @@ function vman() { man $1 | col -b | view -c 'map q :q<CR>' -c 'hi StatusLine cte
 #  |
 #  `----
 if [ "${OS}" = openbsd ]; then
-        function port() 
+        function port()
         {
                 case "$1" in
                         -p) =grep -i "^Port.*$2" -B1 -A8 ~/.ports
@@ -923,7 +746,7 @@ function search()
 		;;
 		-d) lynx -source "http://dict.leo.org?$2" | grep -i "TABLE.*/TABLE" | sed "s/^.*\(<TABLE.*TABLE>\).*$/<HTML><BODY>\1<\/BODY><\/HTML>/" | lynx -stdin -dump -width=$COLUMNS -nolist;
 		;;
-		*) 
+		*)
 		  echo "Usage: $0 {-g | -u | -m | -a | -f | -c | -F | -s | -w | -W | -d}"
 		  echo "	-g:  Searching for keyword in google.com"
 		  echo "	-u:  Searching for keyword in groups.google.com"
@@ -938,47 +761,6 @@ function search()
 		  echo "	-W:  Searching for keyword at wikipedia (english)."
 		  echo "	-d:  Query dict.leo.org ;)"
 	esac
-}
-
-# SEARCH: Quick&dirty hack to read heise-news (<http://www.heise.de/>
-function heise-all()
-{
-	CURDIR=${pwd};
-        cd /tmp;
-        if [[ -s tmp/heise.rdf ]]
-		then
-			command rm heise.rdf
-		fi
-		wget -q -O - http://heise.de/newsticker/heise.rdf |\
-		sed -e '/title/!d;s, <title>\(.*\)</title>,\1,' -e '/heise online/d' ; 
-		cd $CURDIR
-}
-
-# See man date(1) and man import(1) for details.
-# Note: If you don't have 'import', install ImageMagick and stop
-#       crying.
-# MISC: make screenshot of current desktop (use 'import' from ImageMagic)
-function sshot() 
-{ 
-	[[ ! -d ~/shots  ]] && mkdir ~/shots
-	cd ~/shots ; sleep 5 ; import -window root -depth 8 -quality 80 `date "+%Y-%m-%d--%H:%M:%S"`.png && xmessage -nearmouse 'Screenshot erfolgreich'
-#	cd ~/shots && sleep 5; import -window root `date "+%Y-%m-%d%--%H:%M:%S"`.jpg
-
-}
-
-# MISC: Convert gif's to png's
-function gif2png() 
-{
-	if [[ $# = 0 ]]
-	then
-		echo "Usage: $0 foo.gif"
-		echo "Purpose: change a GIF file to a PNG file"
-	else
-		output=`basename $1 .gif`.png
-		convert  $1 $output
-		touch -r $1 $output
-		ls -l $1 $output
-	fi
 }
 
 # SEARCH: search for various types or README file in dir and display them in $PAGER
@@ -1011,19 +793,6 @@ function findsuid()
 # SYS: csh compatibility
 function setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }
 
-# MISC: if [ Now-Playing == "relaxmusic" ];then .. ;-)
-function beer()
-{
-        echo "         _.._..,_,_"
-        echo "        (          )"
-        echo "         ]~,\"-.-~~["
-        echo "       .=])' (;  ([    PANTS OFF!"
-        echo "       | ]:: '    ["
-        echo "       '=]): .)  (["
-        echo "         |:: '    |"
-        echo "          ~~----~~"
-}
-
 # http://www.strcat.de/hacks/rm-replacements.shar
 # SYS: Temporary (interactive) removes. Alternative to this u can use
 function rf()
@@ -1041,15 +810,6 @@ function refunc()
                 unfunction $func
                 autoload $func
         done
-}
-
-# ARCHIVE: Create a archive for my homepage (<http://www.strcat.de/dotfiles/>)
-function mkz()
-{
-	command rm -rf $HOME/homepage/dotfiles/zsh/*
-	for i ($HOME/.zsh/z*) zcp $i $HOME/homepage/dotfiles/zsh/dot.$i:t
-	for i ($HOME/.z{shrc,login,logout}) zcp $i $HOME/homepage/dotfiles/zsh/dot$i:t
-	(cd $HOME/homepage/dotfiles/zsh/ && tar cf dot-zsh.tar * && gzip --best dot-zsh.tar)
 }
 
 # Find (and print) all symbolic links without a target within the
@@ -1123,122 +883,9 @@ fi
 }
 
 # MISC: Display ``status'' after "the first shell"
-if [[ $SHLVL -eq 1 ]] ; then 
+if [[ $SHLVL -eq 1 ]] ; then
 	status
 fi
-
-# SYS: Download the latest Linuxkernel
-function getkernel()
-{
-	if [ $# -ne 3 ] ; then
-		echo "Usage:"
-	        echo "$0 MAJOR MINOR SUBMINOR"
-                echo ""
-                echo "eg:"
-	        echo "   $0 2 6 7"
-		latest=`echo -e "GET /kdist/finger_banner HTTP/1.0\n" | netcat www.kernel.org 80 | sed -ne "/^$/,//p"`
-		echo ""
-                echo "current versions: $latest"
-	        echo ""
-		echo -n 'Used release is: '
-		uname -r
-	else
-		cd /Source
-		SERVER=http://www.de.kernel.org/pub/linux/kernel/
-		KERNEL=$SERVER/v$1.$2/linux-$1.$2.$3.tar.bz2
-		SIGN=$SERVER/v$1.$2/linux-$1.$2.$3.tar.bz2.sign
-		echo 'starting download'
-		wget -c $KERNEL &&
-		wget -c $SIGN   &&
-		echo 'done'
-		echo 'checking signature:'
-		gpg --verify `basename $SIGN $KERNEL` &&
-		echo 'done'
-	fi
-}
-
-# rmmodcomplete() looks for modules in memory, for use with "rmmod".
-rmmodcomplete () { reply=(`/sbin/lsmod|cut -f1 -d" "|grep -v Module`) }
-compctl -K rmmodcomplete rmmod
-
-# insmodcomplete() looks for modules to use with "insmod" or "modprobe".
-insmodcomplete() { reply=(`find /lib/modules/$(uname -r)/* ! -type d -printf "%f\n"|sed "s/\.o$//"`) }
-compctl -K insmodcomplete insmod modprobe
-
-# SEARCH: Complete a howto-filename or FAQ-name (see howto script below).
-function howtocomplete() { reply=(`howto --find "$1"`) }
-compctl -U -K howtocomplete howto
-p0rncomplete() { reply=(`p0rn --find "$1"`) }
-compctl -U -K p0rncomplete p0rn
-
-# MISC: a quick hack for GNU Emacs && emacsclient
-function e()
-{
-	if [ "$1" = "" ]; then
-		echo "No file specified you have, think before you must."
-	else
-		if emacsclient -n "$1" >/dev/null 2>&1; then
-			echo "Alrite, opened $1 in the Holy Emacs."
-		else
-			echo "There's no Holy Emacs running here.. starting.."
-			exec emacs "$1" &
-		fi
-	fi
-}
-
-# MISC: generate thumbnails ;)
-function genthumbs ()
-{
-	echo "
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-	<html><head><title>Images from $PWD</title></head>
-	<body>" > index.html
-	for f in (#i)*.(gif|jpeg|jpg|png)
-	do
-		convert -size 100x200 "$f" -resize 100x200 thumb-"$f"
-		echo "    <a href=\"$f\"><img src=\"thumb-$f\"></a>" >> index.html
-	done
-	echo "</body></html>" >> index.html
-}
-
-# nconvert()    convert numbers between different bases 
-function nconvert() {
-    if (( ${#@} < 2 )) ; then
-        printf 'usage: nconvert CONVERSION_CODE NUMBER\n'
-        printf '    eg.: nconvert dh 42\n'
-        printf '      returns '\''0x2A'\'' - decimal 42 converted to hex.\n'
-        printf ' available conversion chars: d, h, o and b\n'
-        return 2
-    fi
-
-    setopt localoptions noksharrays
-    local from=${1[1]} to=${1[2]}
-    local -i from_c to_c num=$2
-
-    case ${from} in
-        (h) (( from_c = 16 )) ;;
-        (d) (( from_c = 10 )) ;;
-        (o) (( from_c =  8 )) ;;
-        (b) (( from_c =  2 )) ;;
-        (*)
-            printf 'Unknown from code: (%s)\n' ${from}
-            return 1
-            ;;
-    esac
-    case ${to} in
-        (h) (( to_c = 16 )) ;;
-        (d) (( to_c = 10 )) ;;
-        (o) (( to_c =  8 )) ;;
-        (b) (( to_c =  2 )) ;;
-        (*)
-            printf 'Unknown to code: (%s)\n' ${to}
-            return 1
-            ;;
-    esac
-
-    echo $(( [#${to_c}] ${from_c}#${num} ))
-    return 0
-}
 
 # reconnect ssh socket in an existing tmux session
 function fixssh {
@@ -1264,18 +911,4 @@ tmux-neww-in-cwd() {
 	PID=$(ps -eao pid,tty,command --forest | awk '$2 == "'$PTS'" {print $1; exit}')
 	DIR=$(readlink /proc/$PID/cwd)
 	tmux neww "cd '$DIR'; $SHELL"
-}
-
-
-# List all files, long format, colorized, permissions in octal
-function la(){
-   ls -l  "$@" | awk '
-    {
-      k=0;
-      for (i=0;i<=8;i++)
-        k+=((substr($1,i+2,1)~/[rwx]/) *2^(8-i));
-      if (k)
-        printf("%0o ",k);
-      printf(" %9s  %3s %2s %5s  %6s  %s %s %s\n", $3, $6, $7, $8, $5, $9,$10, $11);
-    }'
 }
