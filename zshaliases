@@ -424,7 +424,7 @@ if [[ $ZSH_VERSION == 5.<->* ]]; then
 	# some "file aliases"
 	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mplayer -idx"
 	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mpv"
-	alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="mirage"
+	alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="sxiv"
 	alias -s dvi=xdvi
 	alias -s pdf=xpdf
 	alias -s ps=gv
