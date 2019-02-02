@@ -204,6 +204,7 @@ set matchpairs=(:),[:],{:},<:>			" pairs of characters that "%" can match
 set mouse=a					" enable mouse (selection, resizing windows, copy without linenumbers,
 set nu relativenumber				" Numbers && relativenumbers
 set pastetoggle=<F2>				" exit paste-mode (<F7>)
+set path+=**					" search down into subfolders
 set report=0					" always report changes
 set runtimepath=~/.vim,$VIMRUNTIME		" This is a list of directories which will be searched for runtime files:
 scriptencoding utf-8				" set the right scriptencoding
