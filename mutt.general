@@ -1,9 +1,9 @@
 # $Id: mutt.general,v 1.1 2003/06/19 03:11:59 dope Exp dope $
 #
 # unset some shit
-# $ less /usr/local/share/doc/mutt/manual.txt 
+# $ less /usr/local/share/doc/mutt/manual.txt
 # (6.3 Configuration variables)
-# 
+#
 # Boolean Variables:
 #       set foo
 # or    unset foo
@@ -160,7 +160,7 @@ set charset="utf-8"
 #  %h local hostname
 #  %l approximate size (in bytes) of the current message
 #  %v Mutt version string
-set compose_format="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a] "  
+set compose_format="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a] "
 
 # prompt for confirmation when saving messages to a mailbox
 set confirmcreate
@@ -335,7 +335,7 @@ set include
 set index_format="%4C %Z %H  %-30.30F %{%d %b} (%4c) %s"
 
 # how often (in seconds) mutt should look for new mail.
-# Note: Mutt check the 'spoolfile' and *not* a POP - Server 
+# Note: Mutt check the 'spoolfile' and *not* a POP - Server
 set mail_check=30000
 
 # the path to the mailcap-file
@@ -389,7 +389,7 @@ set message_format="%s"
 
 # This variable, when set, makes the thread tree narrower, allowing
 # deeper threads to fit on the screen.
-set narrow_tree 
+set narrow_tree
 
 # specifies which pager you would like to use to view messages
 set pager="builtin"
@@ -402,7 +402,7 @@ set pager_context=10
 # message in either the internal or an external pager
 #--------------------------------------------------
 # set pager_format="-%S- [%C/%m] %n (%c) %s"
-#-------------------------------------------------- 
+#--------------------------------------------------
 
 # determines the number of lines of a mini-index which is shown when in the
 # pager
@@ -481,7 +481,7 @@ set sig_dashes
 
 # Use `fortune´ for random signatures
 #  Note: The trailing Pipe ('|') is important!
-set signature="/usr/games/fortune|"
+set signature="fortune|"
 
 # simple search into a real search pattern
 set simple_search="~f %s | ~C %s | ~s %s"
@@ -537,7 +537,7 @@ set status_chars="-*%A"
 #  set status_format="%v: %f (%s) [%M/%m]  [flags:%n new,%?t tagged?]"
 #--------------------------------------------------
 # set status_format="[`echo $LOGNAME`@%h] - [New: %n] - [Tagged: %t] - [Size: %l] - [Draft: %p] - [Sort: %s] - [Total: %m]"
-#-------------------------------------------------- 
+#--------------------------------------------------
 
 # When unset, mutt won't stop when the user presses the terminal's
 # suspkey, usually `control-Z'.
@@ -560,13 +560,13 @@ set tmpdir="~/tmp"
 
 # Controls the character used to indicate mail addressed to you.
 #set to_chars="  +LTGCF "
-set to_chars=" +TCF" 
+set to_chars=" +TCF"
 
 # When set, mutt will add a "User-Agent" header to outgoing messages,
-# indicating which version of mutt was used for composing them. 
+# indicating which version of mutt was used for composing them.
 # I create my own 'User-Agent:' - String. Take a quick look on
 # ~/.mutt/mutt.headers
-#-------------------------------------------------- 
+#--------------------------------------------------
 set user_agent=yes
 
 # weed headers when when displaying, forwarding, printing, or replying to messages.
