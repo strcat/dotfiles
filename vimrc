@@ -523,11 +523,22 @@ let g:livepreview_previewer = 'zathura'
 
 let g:ale_fixers = {
 	                    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-		\ 'html': ['htmllint'],
+		\ 'html': ['tidy'],
                     \ 'javascript': ['eslint', 'prettier'],
                     \ 'css' : ['stylelint', 'prettier'],
                     \ 'python' : ['yapf', 'isort', 'autopep8']
                     \ }
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_filetype_changed = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_delay = 500
+let g:ale_echo_cursor = 1
+let g:ale_echo_delay = 200
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_statusline_format = ['✖%d', '⚠ %d', '✓ ok']
+
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
