@@ -49,6 +49,18 @@ alias cert="openssl req -new -x509 -nodes -out cert.pem -keyout cert.key -days 3
 
 # https://projects.gw-computing.net/projects/dfc
 (( $+commands[dfc] )) && alias df=dfc
+
+# Some youtube-dl related aliases
+alias yta-aac="youtube-dl --extract-audio --audio-format aac "
+alias yta-best="youtube-dl --extract-audio --audio-format best "
+alias yta-flac="youtube-dl --extract-audio --audio-format flac "
+alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
+alias yta-mp3="youtube-dl --extract-audio --audio-format mp3 "
+alias yta-opus="youtube-dl --extract-audio --audio-format opus "
+alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
+alias yta-wav="youtube-dl --extract-audio --audio-format wav "
+alias ytv-best="youtube-dl -f bestvideo+bestaudio "
+
 # https://aria2.github.io/
 (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
 
@@ -186,6 +198,7 @@ if (( EUID != 0 )); then
 		alias pacfile="sudo pacman -Fs $1"
 		alias pacman_new='find / -regextype posix-extended -regex ".+\.pac(new|save|orig)" 2> /dev/null'
 		alias pacman_remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
+		alias lpacks="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -100 | $PAGER"
 	fi
 	if [ -e "/etc/debian_version" ]; then
 		alias apt="sudo apt"
