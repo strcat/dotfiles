@@ -89,6 +89,7 @@ fi
 #    `----
 hash -d SS=/mnt/Serien					# name it..
 hash -d SM=/mnt/Movies					# yep
+hash -d SX=/mnt/XXX					# what?!
 hash -d A=~/scripts/Asciidoc				# selfwritten documentation in asciidoc-format
 hash -d D=~/Downloads/					# there are my downloads
 hash -d F=/usr/local/share/zsh/$ZSH_VERSION/functions	# ZSH functions (OpenBSD)
