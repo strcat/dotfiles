@@ -20,14 +20,12 @@ case $TERM in
 	zle -N down-line-or-beginning-search
 	[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-beginning-search
 	[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
-	;;
-	linux*)
 	bindkey "^[[1~" beginning-of-line
 	bindkey "^[[4~" end-of-line
 	;;
-	rxvt*)
-	bindkey "^[[1~" beginning-of-line
-	bindkey "^[[4~" end-of-line
+	xterm-termite*)
+	bindkey "^[[H" beginning-of-line
+	bindkey "^[[F" end-of-line
 	;;
 	Eterm*)
 	bindkey "^[[7~" beginning-of-line
