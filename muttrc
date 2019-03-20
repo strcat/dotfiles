@@ -42,3 +42,4 @@ source ~/.mutt/mutt.ssl                 # YES. I run Mutt over SSH .. sometimes 
 source ~/.mutt/mutt.misc-hooks          # Change settings based upon message recipients
 source ~/.mutt/mutt.mlists              # Mailinglists
 source ~/.mutt/mutt.neo                 # For NeoMutt only <https://www.neomutt.org/>
+source ~/.mutt/mutt.secret              # For NeoMutt only <https://www.neomutt.org/>
