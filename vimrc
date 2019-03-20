@@ -506,7 +506,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'roxma/nvim-yarp'
 	Plug 'roxma/vim-hug-neovim-rpc'
 	Plug 'Shougo/deoplete.nvim'
-	Plug 'sheerun/vim-polyglot'
 	Plug 'airblade/vim-gitgutter'
 	Plug 'Yggdroot/indentLine'
 	Plug 'SirVer/ultisnips'
@@ -514,20 +513,29 @@ call plug#begin('~/.vim/plugged')
 	Plug 'ervandew/supertab'
 	Plug 'w0rp/ale'
 	Plug 'neomake/neomake'
+	Plug 'vim-pandoc/vim-pandoc'
+	Plug 'vim-pandoc/vim-pandoc-syntax'
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'andymass/vim-matchup'
+	Plug 'maximbaz/lightline-ale'
 call plug#end()
 
 " vim-latex-live-preview
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 
-let g:ale_fixers = {
-	                    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-		\ 'html': ['tidy'],
-                    \ 'javascript': ['eslint', 'prettier'],
-                    \ 'css' : ['stylelint', 'prettier'],
-                    \ 'python' : ['yapf', 'isort', 'autopep8']
-                    \ }
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['eslint', 'prettier']
+let g:ale_fixers['typescript'] = ['prettier', 'tslint']
+let g:ale_fixers['json'] = ['prettier']
+let g:ale_fixers['html'] = ['tidy']
+let g:ale_fixers['vue'] = ['prettier']
+let g:ale_fixers['css'] = ['stylelint', 'prettier']
+let g:ale_fixers['less'] = ['prettier']
+let g:ale_fixers['scss'] = ['prettier']
+let g:ale_fixers['graphql'] = ['prettier']
+let g:ale_fixers['markdown'] = ['prettier']
+let g:ale_fixers['yaml'] = ['prettier']
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_filetype_changed = 0
 let g:ale_lint_on_text_changed = 'never'
@@ -538,22 +546,40 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 let g:ale_statusline_format = ['✖%d', '⚠ %d', '✓ ok']
-
+let g:ale_linters = {
+  \ 'c':        ['clang'],
+  \ 'cpp':      ['clang'],
+  \ 'zsh':      ['shell'],
+  \ 'sh':       ['shell'],
+  \ 'rust':     ['rls'],
+  \ 'python':   ['pylint'],
+  \ 'scala':    ['sbtserver'],
+  \ 'markdown': [''],
+  \ 'pandoc':   [''],
+  \ 'tex':      [''],
+  \ 'bib':      ['']
+\}
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" let g:UltiSnipsSnippetDirectories = ['~/.vim/bundle/vim-snippets/']
 
 let g:UltiSnipsEditSplit="vertical"
 
 " Lightline, Bufferline, vim-devicons, .. {{{
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
+
 let g:lightline = {
     \ 'colorscheme': 'deepspace',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ], ],
+      \  'right': [ [ 'lineinfo' ], [ 'filetype', 'percent' ],
+      \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
       \ },
     \ 'tabline': {
     \   'left': [ [ 'bufferinfo' ],
@@ -565,12 +591,20 @@ let g:lightline = {
     \   'buffercurrent': 'lightline#buffer#buffercurrent',
     \   'bufferbefore': 'lightline#buffer#bufferbefore',
     \   'bufferafter': 'lightline#buffer#bufferafter',
+    \  'linter_checking': 'lightline#ale#checking',
+    \  'linter_warnings': 'lightline#ale#warnings',
+    \  'linter_errors': 'lightline#ale#errors',
+    \  'linter_ok': 'lightline#ale#ok',
     \ },
     \ 'component_type': {
     \   'buffercurrent': 'tabsel',
     \   'bufferbefore': 'raw',
     \   'bufferafter': 'raw',
     \   'readonly': 'error',
+    \     'linter_checking': 'left',
+    \     'linter_warnings': 'warning',
+    \     'linter_errors': 'error',
+    \     'linter_ok': 'left',
     \ },
     \ 'component_function': {
     \   'filetype': 'MyFiletype',
@@ -771,7 +805,7 @@ nmap ga <Plug>(EasyAlign)
 " autocommandos.. {{{
 " Automatically deletes all trailing whitespace on save¿ because no one
 " need whitespaces!
-autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
 
 " Go
 let g:go_fmt_command = "goimports"
@@ -845,6 +879,11 @@ autocmd BufNewFile,BufRead ~/scripts/Asciidoc/*.txt,*.adoc
 	\ | map <Leader>b :!asciidoctor-pdf %<CR>
 
 autocmd BufNewFile,BufRead ~/.tmux.conf set ft=tmux
+
+" Pandoc
+augroup pandoc_syntax
+	au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup end
 
 " C(++)
 function CInsert()
