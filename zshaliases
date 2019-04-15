@@ -30,6 +30,12 @@ if (( $+commands[grc] )); then
 	alias cat="grc cat"
 fi
 
+# Some aliases for kitty
+if (( $+commands[kitty] )); then
+	alias Kimg="kitty +kitten icat"
+	alias Kdiff="kitty +kitten diff"
+fi
+
 # /better/ calendars
 alias cal="gcal --highlighting='\e[41m:\e[0m:\e[33m:\e[0m' --pager --starting-day=1 --cc-holidays=TR \$(date +'%Y')"
 
@@ -67,6 +73,9 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 # Indent (according to GCS - Gnu Coding Standards)
 (( $+commands[indent] )) && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
 
+# see https://github.com/Peltoche/lsd for details
+(( ${+DISPLAY} )) && alias ls='lsd'
+
 # Quick edit often used setup file
   alias Ez='$EDITOR ~/.zshrc'
   alias Es='$EDITOR ~/.slrnrc'
@@ -94,6 +103,7 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
    alias group="stat -c '%G - %g - %n'"
 
 # GIT
+  alias gd="git diff"
   alias gl="git log --graph $GIT_PRETTY_FORMAT"
   alias gll='gl --all'
   alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
@@ -334,17 +344,17 @@ fi
    alias null-screen="screen -c /dev/null"
 
 # *Very* often used!
-   alias lad='ls -d -- .*(/)'				# only show dot-directories
+   alias lad='=ls -d -- .*(/)'				# only show dot-directories
    alias lsa='ls -a -- .*(.)'				# only show dot-files
-   alias lse='ls -ld -- *(/^F)'				# only show empty directories
-   alias lsen='ls -d *(/om[1])'				# newest directory
+   alias lse='=ls -ld -- *(/^F)'				# only show empty directories
+   alias lsen='=ls -d *(/om[1])'				# newest directory
    # FIXME: Replace the ``grep -v'', ``2&>/dev/null'' by zsh-only syntax
    alias lsnew='=ls -rtlh -- *(.) | tail $@ 2&>/dev/null'  # only the newest files
    alias lsold="=ls -rtl -- *(.) | head $@ 2&>/dev/null"   # display the oldest files
    alias lssmall="=ls -Sl -- *(.) | tail $@ 2&>/dev/null"  # display the smallest files
    alias lsx='ls -l -- *(*) | head $@ 2&>/dev/null'        # only show executables
    alias lssuid='ls -l -- *(s,S) | head $@ 2&>/dev/null'   # only show suid-files
-   alias lsbig="ls -lSh -- *(.) | grep -v total | head $@ 2&>/dev/null"    # display the biggest files
+   alias lsbig="=ls -lSh -- *(.) | grep -v total | head $@ 2&>/dev/null"    # display the biggest files
    # show sorted directory sizes for all directories
    alias dua='du -s *(/DN) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
    # show sorted directory sizes for visible directories only
@@ -353,7 +363,6 @@ fi
    alias duh='du -s .*(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
 
 # Make the source to be with you!!!11!
-   alias C='./configure'
    alias CH='./configure --help | $PAGER'
 # zmv -- see ``less ${^fpath}/zmv(N)'' for more details.
    alias zcp='zmv -C'
@@ -463,7 +472,6 @@ if [[ $ZSH_VERSION == 5.<->* ]]; then
 	alias -g ET='|& tail'
 	alias -g ETL='|& tail -n $(( +LINES ? LINES - 4 : 20 ))'
 	# Sorting / counting
-	alias -g C='| wc -l'
 	alias -g Su='| sort -u'
 	alias -g Sn='| sort -n'
 	alias -g Snr='| sort -nr'
