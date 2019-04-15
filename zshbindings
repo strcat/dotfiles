@@ -13,6 +13,10 @@ case $TERM in
 	[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-beginning-search
 	[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 	;;
+	xterm-256color*)
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
 	screen*)
 	autoload -U up-line-or-beginning-search
 	autoload -U down-line-or-beginning-search
@@ -23,13 +27,9 @@ case $TERM in
 	bindkey "^[[1~" beginning-of-line
 	bindkey "^[[4~" end-of-line
 	;;
-	xterm-termite*)
+	xterm-kitty*)
 	bindkey "^[[H" beginning-of-line
 	bindkey "^[[F" end-of-line
-	;;
-	Eterm*)
-	bindkey "^[[7~" beginning-of-line
-	bindkey "^[[8~" end-of-line
 	;;
 esac
 	bindkey "^[[2~" yank			# Einfg
