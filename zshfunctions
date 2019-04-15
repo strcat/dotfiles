@@ -1,12 +1,3 @@
-# OK.. lets get funky and colorize stderr output in red
-zmodload zsh/terminfo zsh/system
-color_stderr() {
-	while sysread std_err_color; do
-		syswrite -o 2 "${fg_bold[red]}${std_err_color}${terminfo[sgr0]}"
-	done
-}
-exec 2> >(color_stderr)
-
 # check website
 function downforme() {
 	RED='\e[1;31m'
@@ -129,7 +120,7 @@ function g() {
 }
 
 # list only directories
-lsd() { ls -d ${^~*:-*}(/) }
+lsdd() { =ls -d ${^~*:-*}(/) }
 
 # printf '%-20s %s\n' ${(kv)options}
 showoptions() {
