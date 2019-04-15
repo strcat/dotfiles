@@ -13,6 +13,7 @@
 (( ${+SHITDIR} )) || export SHITDIR="$HOME/Trash"
 (( ${+LESSCHARSET} )) || export LESSCHARSET=utf-8
 (( ${+TERMINAL} )) || export TERMINAL=st
+(( ${+TERM} )) || export TERM=xterm-256color
 
 # Git <http://git.or.cz/>
 if (( $+commands[git] )); then
@@ -32,6 +33,9 @@ fi
 if [[ -x `which tidy` ]]; then
 	(( ${+HTML_TIDY} )) || export HTML_TIDY=${HOME}/.tidyrc
 fi
+
+# FUCK YOU YOU FUCKING FUCK!
+export PYTHONPATH=/bin/python
 
 # Needed for Perl.. i think so!?
 # To stop Perl interpreters not configured to expect a Unicode locale:
@@ -132,8 +136,6 @@ if  (( $+commands[less] )); then
 
 # gnarf
 (( ${+READNULLCMD} )) || export READNULLCMD=${PAGER:-/usr/bin/pager}
-# Fucking python *gnarf*
-  export PYTHONPATH=${PYTHONPATH}/usr/lib/python2.7/site-packages/
 # NOTE: This newsserver is *only* for T-Online user!
   export NNTPSERVER='news.eternal-september.org'
 # just for fun ..
@@ -259,8 +261,8 @@ else
 	LS_COLORS=$LS_COLORS:'*.sl=30;33'     # Slang-Scripts     = Yellow
 	LS_COLORS=$LS_COLORS:'*,v=5;34;93'    # Versioncontrols   = Bold, Yellow
 	LS_COLORS=$LS_COLORS:'or=01;05;31'    # Orphaned link     = Bold, Red, Flashing
-	LS_COLORS=$LS_COLORS:'*.c=1;33'       # Sources           = Bold, Yellow
-	LS_COLORS=$LS_COLORS:'*.C=1;33'       # Sources           = Bold, Yellow
+	LS_COLORS=$LS_COLORS:'*.c=0;33'       # Sources           = Bold, Yellow
+	LS_COLORS=$LS_COLORS:'*.C=0;33'       # Sources           = Bold, Yellow
 	LS_COLORS=$LS_COLORS:'*.h=1;33'       # Sources           = Bold, Yellow
 	LS_COLORS=$LS_COLORS:'*.cc=1;33'      # Sources           = Bold, Yellow
 	LS_COLORS=$LS_COLORS:'*.awk=1;33'     # Sources           = Bold, Yellow
