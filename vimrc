@@ -512,18 +512,22 @@ call plug#begin('~/.vim/plugged')
 	Plug 'honza/vim-snippets'
 	Plug 'ervandew/supertab'
 	Plug 'w0rp/ale'
-	Plug 'neomake/neomake'
 	Plug 'vim-pandoc/vim-pandoc'
-	Plug 'vim-pandoc/vim-pandoc-syntax'
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 	Plug 'andymass/vim-matchup'
 	Plug 'maximbaz/lightline-ale'
+	Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+	Plug 'rhysd/devdocs.vim'
 call plug#end()
+
+" vim-devdocs
+nmap K <Plug>(devdocs-under-cursor)
 
 " vim-latex-live-preview
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 
+" ALE releated stuff.. {{{
 let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['eslint', 'prettier']
 let g:ale_fixers['typescript'] = ['prettier', 'tslint']
@@ -559,12 +563,16 @@ let g:ale_linters = {
   \ 'tex':      [''],
   \ 'bib':      ['']
 \}
+" }}}
+
+" Markdown preview
+" do not close the preview tab when switching to other buffers
+let g:mkdp_auto_close = 0
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 let g:UltiSnipsEditSplit="vertical"
 
 " Lightline, Bufferline, vim-devicons, .. {{{
