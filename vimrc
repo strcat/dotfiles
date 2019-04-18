@@ -201,7 +201,6 @@ set list					" show <Tab> and <EOL>
 set listchars=tab:>-,trail:-			" This tells Vim which characters to show for expanded TABs, ...
 set makeef="~/tmp/vim##.err"			" name of the errorfile for ":make"
 set matchpairs=(:),[:],{:},<:>			" pairs of characters that "%" can match
-set mouse=a					" enable mouse (selection, resizing windows, copy without linenumbers,
 set nu relativenumber				" Numbers && relativenumbers
 set pastetoggle=<F2>				" exit paste-mode (<F7>)
 set path+=**					" search down into subfolders
