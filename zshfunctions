@@ -591,17 +591,6 @@ function simple-extract ()
 }
 fi
 
-# ARCHIVE: Create a tarball from given directory
-function create-archive()
-{
-	local archive_name
-	archive_name="$1.tar.gz"
-	archive_name=${archive_name/\//}
-	tar cvfz "$archive_name" "$1"
-	echo "Created archive $archive_name"
-}
-compdef _directories create-archive
-
 # ARCHIVE: Only needed if lesspipe unavailable
 if [ ! -x $(which lesspipe.sh > /dev/null 2>&1)  ]; then
 	# view archive without unpack
