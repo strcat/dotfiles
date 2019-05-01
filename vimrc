@@ -1,5 +1,5 @@
 " $Id: .vimrc,v 1.1 2002/09/27 02:13:02 dope Exp dope $
-
+"
 " Informations {{{
 "    File: $HOME/.vimrc
 "  Author: Christian Schneider <strcat(at)gmx.net>
@@ -512,7 +512,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'ervandew/supertab'
 	Plug 'w0rp/ale'
 	Plug 'vim-pandoc/vim-pandoc'
-	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 	Plug 'andymass/vim-matchup'
 	Plug 'maximbaz/lightline-ale'
 	Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
