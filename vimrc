@@ -516,7 +516,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'maximbaz/lightline-ale'
 	Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 	Plug 'rhysd/devdocs.vim'
+	Plug 'foosoft/vim-argwrap'
 call plug#end()
+
+" argwrap
+nnoremap <silent> <leader>a :ArgWrap<CR>
 
 " vim-devdocs
 nmap K <Plug>(devdocs-under-cursor)
