@@ -142,6 +142,19 @@ else
         print "Note: ~/.zsh/zshkeep is unavailable."
 fi
 
+# # https://github.com/romkatv/powerlevel10k/
+# if [ -f ~/.zsh/zshprompt ]; then
+#         source ~/.zsh/zshprompt
+# else
+#         print "Note: ~/.zsh/zshpowerlevel is unavailable"
+# fi
+#
+# # https://www.reddit.com/r/zsh/comments/dk53ow/new_powerlevel10k_feature_instant_prompt/
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+#
+
 # https://github.com/junegunn/fzf
 if [ -f ~/.fzf.zsh ]; then
 	source ~/.fzf.zsh && source ~/.zsh/zshfzf
@@ -149,3 +162,7 @@ else
 	rm -rf ~/.fzf
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+source ~/download/Sources/powerlevel10k/powerlevel10k.zsh-theme
