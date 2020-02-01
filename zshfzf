@@ -19,7 +19,6 @@ export FZF_DEFAULT_OPTS='--color=bg:233,bg:#002b36,spinner:#719e07,hl:#586e75,fg
 #export FZF_DEFAULT_COLORS='--color light,hl:124,fg+:242,bg+:230,hl+:33,info:52,prompt:245,spinner:245,pointer:245,marker:208'
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_COLORS \
 	--border \
-	--height 80% \
 	--extended \
 	--ansi \
 	--reverse \
@@ -29,8 +28,8 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_COLORS \
 	--bind ctrl-d:half-page-down \
 	--bind alt-a:select-all,ctrl-r:toggle-all \
 	--bind ctrl-s:toggle-sort \
-	--preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\" \
-	--preview-window right:50%:hidden"
+	--no-height \
+	--preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\" "
 export FZF_DEFAULT_OPTS
 
 # https://github.com/junegunn/fzf
@@ -44,15 +43,28 @@ Fvim() { vim $(fzf -m  --preview '[[ $(file --mime {}) =~ binary ]] && echo {} i
 
 # fshow - git commit browser (enter for show, ctrl-d for diff)
 # fshow - git commit browser
+# fshow() {
+#   git log --graph --color=always \
+#       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+#   fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+#       --bind "ctrl-m:execute:
+#                 (grep -o '[a-f0-9]\{7\}' | head -1 |
+#                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+#                 {}
+# FZF-EOF"
+# }
+alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+
+# fshow_preview - git commit browser with previews
 fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF"
+    glNoGraph |
+        fzf --no-sort --reverse --tiebreak=index --no-multi \
+            --ansi --preview="$_viewGitLogLine" \
+                --header "enter to view, alt-y to copy hash" \
+                --bind "enter:execute:$_viewGitLogLine   | less -R" \
+                --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # v - open files in ~/.viminfo
 v() {
@@ -119,10 +131,16 @@ zle -N fzf-cdr
 bindkey "^x^b" fzf-cdr
 
 # apropos..
-fzf-apropos() {  apropos '' | fzf --preview-window=up:50% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " " }
+fzf-apropos() {  apropos '' | fzf --prompt='Apropos> ' --preview-window=right:70% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " " }
 
 # list/search aliases
 fzf-alias() { alias | tr = "\t" | fzf | cut -f 1 }
+
+# function bind to a hotkey
+fzf_history() { zle -I; eval $(history | fzf +s | sed 's/ *[0-9]* *//') ; }; zle -N fzf_history; bindkey '^F' fzf_history
+
+# surfraw
+fzf-surfraw() { surfraw "$(cat ~/.config/surfraw/bookmarks | sed '/^$/d' | sort -n | fzf -e)" ;}
 
 # fkill - kill processes - list only the ones you can kill. Modified the earlier script.
 fkill() {
@@ -151,3 +169,6 @@ ftags() {
   ) && ${EDITOR:-vim} $(cut -f3 <<< "$line") -c "set nocst" \
                                       -c "silent tag $(cut -f2 <<< "$line")"
 }
+
+# List files in $PWD with preview and highlighting
+prevls() {  fzf --preview 'bat --color "always" {}' --preview-window=right:60% }
