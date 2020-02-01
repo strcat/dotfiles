@@ -17,6 +17,10 @@ case $TERM in
 	bindkey "^[[1~" beginning-of-line
 	bindkey "^[[4~" end-of-line
 	;;
+	tmux*)
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
 	screen*)
 	autoload -U up-line-or-beginning-search
 	autoload -U down-line-or-beginning-search
@@ -72,7 +76,8 @@ esac
 	run-with-sudo () { LBUFFER="sudo $LBUFFER" }
 	zle -N run-with-sudo
 	bindkey '^N' run-with-sudo
-
+	# Fix backspace bug when switching modes
+	bindkey "^?" backward-delete-char
 
 	# 2005-02-27: Navigation im Completion-Menü. GENIAL!
 	# <http://www.plenz.com/tmp/setup/zshrc>
