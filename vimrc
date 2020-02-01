@@ -181,7 +181,7 @@ set autoread					" autom. read file when changed outside of Vim
 set backspace=2					" how backspace works at start of line
 set backup					" Make a backup (i. e. 'file~') and save it.
 set cpoptions=aABceFsJWy			" flags for Vi-compatible behavior
-set nocompatible				" compatible to vi? Hey. If i want Vi, i'm *using* Vi and not Vim.
+"set nocompatible				" compatible to vi? Hey. If i want Vi, i'm *using* Vi and not Vim.
 set cmdheight=2					" Disable the 'Press RETURN...' - Messages
 set digraph					" required for those umlauts
 set dict=/usr/share/dict/words			" list of file names used for keyword completion
@@ -197,10 +197,11 @@ set iskeyword=@,48-57,_,192-255,-,.,@-@		" enable the search for @, ., _ and -
 set laststatus=2				" show statusline
 set linebreak					" If on Vim will wrap long lines at a character in 'breakat' rather than at the
 						" last character that fits on the screen.
-set list					" show <Tab> and <EOL>
-set listchars=tab:>-,trail:-			" This tells Vim which characters to show for expanded TABs, ...
+"set list					" show <Tab> and <EOL>
+"set listchars=tab:>-,trail:-			" This tells Vim which characters to show for expanded TABs, ...
 set makeef="~/tmp/vim##.err"			" name of the errorfile for ":make"
 set matchpairs=(:),[:],{:},<:>			" pairs of characters that "%" can match
+set mouse=a					" Useful for tabline
 set nu relativenumber				" Numbers && relativenumbers
 set pastetoggle=<F2>				" exit paste-mode (<F7>)
 set path+=**					" search down into subfolders
@@ -214,7 +215,7 @@ set nostartofline				" commands listed below move the cursor to the first blank 
 set secure					" trust this current file, but no other
 set shortmess=atIT				" list of flags, reduce length of messages
 set shiftround					" round indent to multiple of shiftwidth
-set showbreak=+					" String to put at the start of lines that have been wrapped
+set showbreak=↪					" String to put at the start of lines that have been wrapped
 set showcmd					" Show (partial) command in status line
 set showmatch					" when a bracket is inserted, briefly jump to the matching one
 set showmode					" display current mode
@@ -238,20 +239,13 @@ set wildmode=list:longest,full			" have command-line completion <Tab> (for filen
 set whichwrap=<,>,h,l				" specified keys that move the cursor left/right to wrap
 " }}}
 
-" Source some Files {{{
-" Note: The "expand" is necessary to evaluate ~dope
-" https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/plugin/betterdigraphs_utf8.vim
-let BETTERDIGRAPHS=expand("~/.vim/plugin/betterdigraphs_utf8.vim")
-if filereadable(BETTERDIGRAPHS)
-	exec "source " BETTERDIGRAPHS
-	inoremap <expr>  <C-K>   BDG_GetDigraph()
-endif
-" }}}
-
 " Misc stuff {{{
 " type of file, used for autocommands
 filetype plugin on
 filetype indent on
+
+" gx seems broken? idk..
+nmap gx yiW:!xdg-open <cWORD><CR> <C-r>" & <CR><CR>
 
 " When editing a file, always jump to the last cursor position.
 "autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
@@ -273,34 +267,42 @@ autocmd BufWinEnter *
 " Colors, colorscheme, .. {{{
 " terminal stuff
 set t_Co=256
+set term=xterm-kitty
+
+" needed for bracketed paste within tmux/screen
+if &term =~ '^tmux'
+  let &t_BE="\<Esc>[?2004h"
+  let &t_BD="\<Esc>[?2004l"
+  let &t_PS="\<Esc>[200~"
+  let &t_PE="\<Esc>[201~"
+endif
 
 " Enable True Color in Vim in combination with st(-term)
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
-colorscheme znake
+
+" colorscheme znake
+colorscheme painless
 " }}}
 
 " Options for Vim 7.0 {{{
 if version >= 700
 	let loaded_matchparen = 1
 	" turn spelling on by default
-	set nospell
 	set spellfile=~/.vim/spellfile.add
 	" change to german
 	set spelllang=de
 	set pumheight=7
-	map <Leader>tn :tabnew<CR>
-	map <Leader>tc :tabclose<CR>
-	map <Leader>tw :tabnext<CR>
 	" toggle spelling with F2 key
 	map <F2> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
 	" they were using white on white
 	" highlight PmenuSel ctermfg=black ctermbg=lightgray
 	" limit it to just the top 10 items
 	set sps=best,10
-	au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta
-	au InsertLeave * hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
+	let &t_Cs = "\e[4:3m"
+	let &t_Ce = "\e[4:0m"
+	hi SpellBad     gui=undercurl guisp=red term=undercurl cterm=undercurl
 endif
 " }}}
 
@@ -413,17 +415,6 @@ function! LastMod()
         endif
         exe "1," . l . "s/Last modified: .*/Last modified: " .  strftime("[ %Y-%m-%d %T ]") . "/e"
 endfunction
-
-" Fnord!
-function DamnedWQ()
-        let x = confirm("Current Mode ==  Insert-Mode!\n Would you like ':wq'?"," &Yes \n &No (yes means no and no means yes)",1,1)
-        if x == 1
-                silent! :wq
-        else
-                "???
-        endif
-endfun
-iab wq <bs><esc>:call DamnedWQ()<CR>
 " }}}
 
 " Abbreviations {{{
@@ -481,11 +472,11 @@ iab wq <bs><esc>:call DamnedWQ()<CR>
 " Plugins {{{
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
+	Plug 'tpope/vim-surround'
+	Plug 'cespare/vim-toml'
 	Plug 'mattn/emmet-vim'
 	Plug 'junegunn/goyo.vim'
-	Plug 'tpope/vim-surround'
-	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-	Plug 'PotatoesMaster/i3-vim-syntax'
+	Plug 'tpope/vim-repeat'
 	Plug 'itchyny/lightline.vim'
 	Plug 'junegunn/vim-easy-align'
 	Plug '~/.fzf'
@@ -502,28 +493,89 @@ call plug#begin('~/.vim/plugged')
 	Plug 'scrooloose/nerdtree'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	Plug 'taohexxx/lightline-buffer'
-	Plug 'roxma/nvim-yarp'
 	Plug 'roxma/vim-hug-neovim-rpc'
+	Plug 'roxma/nvim-yarp'
 	Plug 'Shougo/deoplete.nvim'
 	Plug 'airblade/vim-gitgutter'
-	Plug 'Yggdroot/indentLine'
+	" Plug 'Yggdroot/indentLine'
 	Plug 'SirVer/ultisnips'
+	" located under ~/.vim/plugged/vim-snippets/snippets/
 	Plug 'honza/vim-snippets'
 	Plug 'ervandew/supertab'
 	Plug 'w0rp/ale'
 	Plug 'vim-pandoc/vim-pandoc'
+	" Plug 'vim-pandoc/vim-pandoc-syntax'
 	Plug 'andymass/vim-matchup'
 	Plug 'maximbaz/lightline-ale'
 	Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
-	Plug 'rhysd/devdocs.vim'
+	Plug 'romainl/vim-devdocs'
 	Plug 'foosoft/vim-argwrap'
+	Plug 'jiangmiao/auto-pairs'
+	Plug 'luochen1990/rainbow'
+	Plug 'vim-ruby/vim-ruby'
+	Plug 'tpope/vim-rails'
+	Plug 'tpope/vim-markdown'
+	Plug 'tpope/vim-liquid'
+	Plug 'easymotion/vim-easymotion'
+        Plug 'reedes/vim-pencil'
+	Plug 'kovetskiy/sxhkd-vim'
+	Plug 'ap/vim-css-color'
+	Plug 'gko/vim-coloresque'
 call plug#end()
+
+" spelcheck is usless!!!111!
+let g:pandoc#spell#enabled = 0
+
+" Configure Rainbow Parenthese
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': ['red', 'blue', 'yellow', 'cyan', 'magenta', 'lightred', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+    \   'operators': '_,_',
+    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+    \   'separately': {
+    \       '*': {},
+    \       'tex': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \       },
+    \       'vim': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \       },
+    \       'html': {
+    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'css': 0,
+    \   }
+    \}
+" Enable Rainbow Parenthesis
+let g:rainbow_active = 1
+
+" Disable unused builtin plugins
+ " Read/Write compressed files
+ let g:loaded_gzip              = 1
+ let g:loaded_tar               = 1
+ let g:loaded_tarPlugin         = 1
+ let g:loaded_zip               = 1
+ let g:loaded_zipPlugin         = 1
+ " Create a self-installing Vim script
+ let g:loaded_vimball           = 1
+ let g:loaded_vimballPlugin     = 1
+ " Download latest version of VIM scripts
+ let g:loaded_getscript         = 1
+ let g:loaded_getscriptPlugin   = 1
+
+" Autopairs 
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" Prettier
+let g:prettier#config#use_tabs = 'false'
 
 " argwrap
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
 " vim-devdocs
-nmap K <Plug>(devdocs-under-cursor)
+" nmap K <Plug>(devdocs-under-cursor)
+nmap ;k :DD<CR>
 
 " vim-latex-live-preview
 autocmd Filetype tex setl updatetime=1
@@ -565,6 +617,10 @@ let g:ale_linters = {
   \ 'tex':      [''],
   \ 'bib':      ['']
 \}
+
+" Ctrl+j and Ctrl+k to moving between errors
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " }}}
 
 " Markdown preview
@@ -576,6 +632,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mySnippets']
+" let g:UltiSnipsSnippetsDir="~/.vim/mySnippets"
+
 
 " Lightline, Bufferline, vim-devicons, .. {{{
 let g:lightline#ale#indicator_checking = "\uf110"
@@ -587,7 +646,7 @@ let g:lightline = {
     \ 'colorscheme': 'deepspace',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ], ],
+      \             [ 'fugitive', 'readonly', 'absolutepath', 'modified' ], ],
       \  'right': [ [ 'lineinfo' ], [ 'filetype', 'percent' ],
       \             [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ],
       \ },
@@ -620,7 +679,7 @@ let g:lightline = {
     \   'filetype': 'MyFiletype',
     \   'fileformat': 'MyFileformat',
     \   'bufferinfo': 'lightline#buffer#bufferinfo',
-    \ 'gitbranch': 'fugitive#head'
+    \   'fugitive': 'LightlineFugitive'
     \ },
     \ 'component': {
     \   'separator': '',
@@ -629,6 +688,15 @@ let g:lightline = {
 let g:gitgutter_sign_added = '✚'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_removed = '✘'
+
+
+function! LightlineFugitive()
+  if exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
 
 function! MyFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
@@ -695,9 +763,14 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 " }}}
 
-" Mappings for Limelight and GoYo {{{
-map <leader>l :Limelight!!0.9<CR>
-map <leader>g :Goyo \| set linebreak<CR>
+" Mappings for turning Limelight and GoYo on/off {{{
+  map <leader>l :Limelight!!0.9<CR>
+  map <leader>g :Goyo \| set linebreak<CR>
+" increase width
+let g:goyo_width = '70%'
+" Goyo and Limelight together
+ autocmd! User GoyoEnter Limelight!!0.9
+ autocmd! User GoyoLeave Limelight!
 " }}}
 
 " Deoplete {{{
@@ -786,6 +859,15 @@ function! s:fzf_statusline()
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 
+" Mappings for FZF
+nnoremap <silent> \ff :Files<CR>
+nnoremap <silent> \fT :Tags<CR>
+nnoremap <silent> \ft :BTags<CR>
+nnoremap <silent> \fh :History<CR>
+nnoremap <silent> \fH :History:<CR>
+nnoremap <silent> \fm :Marks<CR>
+nnoremap <silent> \fv :Helptags!<CR>
+
 " \<Enter> == <ESC>:buffers<Enter>
 function! s:buflist()
 	redir => ls
@@ -803,6 +885,12 @@ nnoremap <silent> <Leader><Enter> :call fzf#run({
 	\   'down':    len(<sid>buflist()) + 2
 	\ })<CR>
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+" or https://vim.fandom.com/wiki/Cycle_through_buffers_including_hidden_buffers
+ " Tab
+ nnoremap <Tab> :bnext<CR>
+ " Shift-Tab
+ nnoremap <S-Tab> :bprevious<CR>
 " }}}
 
 " https://github.com/junegunn/vim-easy-align {{{
@@ -869,6 +957,10 @@ endfunction
 " Run xrdb whenever Xdefaults or Xresources are updated.
 autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
+" Ruby/Erb: 2.. TWO FUCKING SPACES!
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+
 " Formatoptions
 " Formatoptions for asciidoc (<http://www.methods.co.nz/asciidoc/>)
 if has("autocmd")
@@ -890,9 +982,15 @@ autocmd BufNewFile,BufRead ~/scripts/Asciidoc/*.txt,*.adoc
 
 autocmd BufNewFile,BufRead ~/.tmux.conf set ft=tmux
 
+" fuck you you fucking fuck
+autocmd BufRead ~/.config/polybar/config set ft=dosini
+
 " Pandoc
 augroup pandoc_syntax
-	au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+	au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc tw=100
+	map ;; :%s+<blockquote>+{{< blockquote author="" link="" >}}\r+gic \| %s+</blockquote>+{{< /blockquote >}}\r+gic<CR>
+	map ;a otags:<ESC>\|/---
+	map ;w i class="input"<ESC>
 augroup end
 
 " C(++)
