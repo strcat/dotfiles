@@ -59,7 +59,7 @@
 % Save a copy of this file to "$HOME/.slrnrc" and check *all* values in this
 % file for your requisites.
 %
-% Last modified: [ 2019-01-18 21:47:44 ]
+% Last modified: [ 2019-06-14 21:58:37 ]
 % }}}
 
 % Configuration commands initiating with »a« {{{
@@ -145,6 +145,8 @@ set custom_headers "X-Face: ,>[:$oWa1d@rqX'u1(z8,QN\"Dhe-A0}47t;#s]ZpG^mBq$|LEXa
 % The first char uppercase means inverted sortorder
 %set custom_sort_order "subject,Score,date,number,id"
 
+% http://slrn.sourceforge.net/patches/custom_os.patch
+set custom_os "Unix"
 % Should color be used to indicate the score of an article?
 %   0    scores do not influence colors
 %   1    scores are colored by their value
