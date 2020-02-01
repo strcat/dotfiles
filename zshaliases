@@ -1,12 +1,14 @@
 # Wetter
 alias wetter='curl -s "wttr.in/Pfatter?lang=de" | head -37 | tail -30'
 
+# Play asciip0rn.. well.. kinda.. http://artscene.textfiles.com/vt100/
+alias vtporn='clear ; RANDVT=( ~/.zsh/asciiart/*.vt ) ; pv -q -L 2000 $RANDVT[$RANDOM%$#RANDVT+1]*'
 # Yeah.. i watch p0rn..
 alias p0rn='mpv "http://www.pornhub.com/random"'
 
 # *I* *HATE* *OpenGL*!!!11!
-   alias gl="gcc  -L/usr/X11R6/lib -L/usr/X11/lib -lglut  -lGL -lGLU -lXi -lXmu -lXt -lXext -lSM -lm -lX11"
-   alias ogl="g++  -L/usr/X11R6/lib -lglut -lGLU -lGL  -lXi -lXmu"
+alias gl="gcc  -L/usr/X11R6/lib -L/usr/X11/lib -lglut  -lGL -lGLU -lXi -lXmu -lXt -lXext -lSM -lm -lX11"
+alias ogl="g++  -L/usr/X11R6/lib -lglut -lGLU -lGL  -lXi -lXmu"
 
 # needed for some sources from CVS (fucking autohell *narf*)
 alias autofuck='aclocal && autoheader && libtoolize --copy --automake && automake --copy --add-missing && autoconf'
@@ -28,6 +30,7 @@ if (( $+commands[grc] )); then
 	alias gcc='grc gcc'
 	alias configure='grc ./configure'
 	alias cat="grc cat"
+	alias ip="grc ip"
 fi
 
 # Some aliases for kitty
@@ -67,14 +70,28 @@ alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
 alias yta-wav="youtube-dl --extract-audio --audio-format wav "
 alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 
-# https://aria2.github.io/
-(( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+# order of preference: aria2c, axel, wget, curl. This order is derrived from speed based on personal tests.
+# (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+if (( ${+commands[aria2c]} )); then
+	# https://aria2.github.io/
+	alias youtube-dl="youtube-dl --ignore-errors --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+elif (( ${+commands[axel]} )); then
+	# https://github.com/axel-download-accelerator/axel
+        alias axel='axel --num-connections=5 --alternate'
+elif (( ${+commands[wget]} )); then
+	#https://www.gnu.org/software/wget/
+	alias wget='wget --continue --progress=bar --timestamping'
+elif (( ${+commands[curl]} )); then
+	# https://curl.haxx.se/
+	alias curl='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+fi
+
 
 # Indent (according to GCS - Gnu Coding Standards)
 (( $+commands[indent] )) && alias indent="indent -nbad -bap -nbc -bbo -bl -bli2 -bls -ncdb -nce -cp1 -cs -di2 -ndj -nfc1 -nfca -hnl -i2 -ip5 -lp -pcs -psl -nsc -nsob"
 
 # see https://github.com/Peltoche/lsd for details
-(( ${+DISPLAY} )) && alias ls='lsd'
+# (( ${+DISPLAY} )) && alias ls='lsd'
 
 # Quick edit often used setup file
   alias Ez='$EDITOR ~/.zshrc'
@@ -84,12 +101,11 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
   alias Et='$EDITOR ~/.tmux.conf'
 
 # Disable "spell-correction" for this commands:
-  alias mv="nocorrect mv"
-  alias cp="nocorrect cp"
-  alias man="nocorrect man"
-  alias mkdir="nocorrect mkdir"
-  alias mcd="nocorrect mcd"
-  alias rm="nocorrect rm"
+  alias cp="${aliases[cp]:-cp} -iv"
+  alias ln="${aliases[ln]:-ln} -iv"
+  alias mv="${aliases[mv]:-mv} -iv"
+  alias rm="${aliases[rm]:-rm} -i"
+  alias mkdir="${aliases[mkdir]:-mkdir} -p"
   # Move Pics to ~D/Pics
   alias picmv="mv *(#i).(jp{,e}g|gif|png|bmp) ~D/Pics/"
 
@@ -197,8 +213,6 @@ if (( EUID != 0 )); then
 		alias pkg_delete='sudo pkg_delete'
 		alias upsrc="cd /usr/src && cvs -q up -Pd"
 		alias upports="cd /usr && cvs -q get -P ports"
-		# format a floppy (OpenBSD)
-		alias format="fdformat /dev/rfc0a"
 	fi
 	if [ -e "/etc/arch-release" ]; then
 		alias pacman="sudo pacman"
@@ -206,6 +220,7 @@ if (( EUID != 0 )); then
 		alias yaconf="sudo yaconf"
 		alias pacinfo="sudo pacman -Si $@"
 		alias pacfile="sudo pacman -Fs $1"
+		alias clcache='sudo yay -Sc'
 		alias pacman_new='find / -regextype posix-extended -regex ".+\.pac(new|save|orig)" 2> /dev/null'
 		alias pacman_remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
 		alias lpacks="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -100 | $PAGER"
@@ -241,6 +256,7 @@ if (( EUID != 0 )); then
 		alias shutdown="sudo shutdown"
 		alias tcpdump="sudo tcpdump"
 		alias nmap="sudo nmap"
+		alias snap="sudo snap"
 		# takes snapshot from /dev/ttyN
 		alias mkscreeny="cd ~/shots/ ; fbgrab -s 5 -w 1024 -h 768 -b 16 `date +"%F-%T"`.png"
 	fi
@@ -338,10 +354,8 @@ fi
 # start mutt/vim/zsh/jed without any setup
    alias null-mutt='mutt -n -f /dev/null -F /dev/null'
    alias null-zsh='zsh -f'
-   alias null-vim='vim -u NONE'
-   alias null-jed='jed -n'
+   alias null-vim='vim --clean' # starts with defaults in non-compatible mode
    alias null-irssi='irssi --config=/dev/null'
-   alias null-screen="screen -c /dev/null"
 
 # *Very* often used!
    alias lad='=ls -d -- .*(/)'				# only show dot-directories
@@ -403,35 +417,20 @@ fi
 	alias H-Zsh='${BROWSER:-lynx} ${HOME}/.Documentations/Zsh/Doc/zsh_toc.html'
 	alias H-ZshGuide='${BROWSER:-lynx}  ${HOME}/.Documentations/Zsh/guide/zshguide.html'
 	alias H-ZshFAQ='${BROWSER:-lynx} /home/dope/.Documentations/Zsh/faq/zshfaq.txt'
-	# The Linuxfibel (German). See <http://www.fibel.org/> for details.
-	alias H-Linux='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/lfo-0.6.0/index.html'
 	# Yup. I'm fucking lazy :>
 	alias H-OpenBSD='${BROWSER:-lynx} ${HOME}/.Documentations/OpenBSD/index.html'
 	alias H-FreeBSD='${BROWSER:-lynx} ${HOME}/.Documentations/FreeBSD/index.html'
 	alias H-NetBSD='${BROWSER:-lynx} ${HOME}/.Documentations/NetBSD/index.html'
-	# de.comp.os.unix.linux - FAQ
-	alias H-Dcoul='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/dcoul.txt'
 	# The editor of my choice! The one and only! J-E-H-O-V-A!!!11!
 	alias H-Vim='${BROWSER:-lynx} ${HOME}/.Documentations/vim/usr_toc.html'
 	# THE SED FAQ (<http://sed.sourceforge.net/sedfaq.html>)
 	alias H-Sed="${BROWSER:-lynx} ${HOME}/.Documentations/Sed/sedfaq.txt"
-	# HTML .. *sigh*
-	alias H-HTML='${BROWSER:-lynx} ${HOME}/.Documentations/Self-HTML/index.htm'
 	# The Jargon File (version 4.4.7)
 	alias H-Jargon='${BROWSER:-lynx} ${HOME}/.Documentations/Jargon/jargon-4.4.7/html/index.html'
 	# CSS .. Fuck me gently with a chainsaw
 	alias H-CSS='${BROWSER:-lynx} ${HOME}/.Documentations/CSS/about.html'
 	# Fucking FHS *gnarf*
 	alias H-FHS='${BROWSER:-lynx} ${HOME}/.Documentations/Linux/fhs-2.3.txt'
-	# Extensible Markup Language
-	alias H-XML='${BROWSER:-lynx} ${HOME}/.Documentations/XML/index.html'
-	# German Manpages. <http://www.ibiblio.org/pub/Linux/docs/LDP/man-pages/manpages-de-0.4.tar.gz>
-	alias de-man="man -M ${HOME}/.Documentations/manpages.de '$1'"
-	# See http://svnbook.red-bean.com/
-	alias H-Svn="{BROWSER:-lynx} ${HOME}/.Documentations/svnbook-1.1/index.html"
-	# RFC-Index. Not really needed. See <http://strcat.neessen.net/hacks/rfc.zsh>
-	# for details.
-	#  alias H-RFC='${BROWSER:-lynx} /backups/Documentations/RFCs/rfc-index.txt.gz'
 fi
 
 # fucking devices *narf*
@@ -444,8 +443,7 @@ fi
 # 'foo.ps' execute 'gv foo.ps'.
 if [[ $ZSH_VERSION == 5.<->* ]]; then
 	# some "file aliases"
-	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mplayer -idx"
-	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov}="mpv"
+	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mkv,mp4,mov}="mpv"
 	alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="sxiv"
 	alias -s dvi=xdvi
 	alias -s pdf=xpdf
