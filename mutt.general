@@ -576,7 +576,7 @@ set weed
 set wrap_search
 
 # Controls the size of the margin remaining at the right side of the terminal
-set wrapmargin=10
+# set wrapmargin=10
 
 # When writing a mailbox, a message will be printed every write_inc messages to indicate progress.
 set write_inc=10
