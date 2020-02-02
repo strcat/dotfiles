@@ -54,6 +54,7 @@ save-hook '~s "Backup - Report"'					=Cron/CRON-%{%Y-%m}
 save-hook '~C vim_use@googlegroups.com'					=/Vim/Vim-%{%Y-%m}
 save-hook '~f noreply@myfritz.net"'					=/FritzBox/Fritz-%{%Y-%m}
 save-hook '~f ^.*bahn.de'						=/Bahn/Bahn-%{%Y-%m}
+save-hook '~f ^.*@paypal.de'						=/Paypal/Paypal-%{%Y-%m}
 save-hook '~s "Internet-Adresse:"'					=/FritzBox/Fritz-%{%Y-%m}
 save-hook '~f googleplay-noreply@google.com'				=/Google/Playstore-%{%Y-%m}
 save-hook "(~h 'in-reply-to:.*@bofh.my-fqdn.de) | (~x bofh.my-fqdn.de)" =Usenet-Fups
@@ -62,14 +63,15 @@ save-hook "~C mailfilter-dev@lists.sourceforge.net$"			=/Mailfilter/Mailfilter-%
 save-hook "~C misc@openbsd.org$"					=OpenBSD/OpenBSD-%{%Y-%m}
 save-hook '(~f ^.*@linux-web.de) | (~f ^.*@bsdforen.de)'		=Boards
 save-hook '(~C ^.*dragoncat.net | ~C ^.*scripts.irssi.org)'		=/Irssi/Irssi-%{%Y-%m}
-save-hook '~f ^.*@ebay.com'						=eBay/eBay-%{%Y-%m}
+save-hook '(~f ^.*@ebay.com | ~f ^.*reply.ebay.de)'			=eBay/eBay-%{%Y-%m}
+save-hook '~f ^.*@dialog.ebay-kleinanzeigen.de'				=eBay-Kleinanzeigen/eBay-%{%Y-%m}
 save-hook '~f ^.*@donnerwetter.de'					=/Wetter/Wetter-%{%Y-%m}
 save-hook '~t ^.*@zsh.org$'						=/Zsh/Zsh-%{%Y-%m}
-save-hook '~Czsh-users@sunsite.dk$'					=/Zsh/Zsh-%{%Y-%m}
-save-hook '~Czsh-workers@sunsite.dk$'					=/Zsh/Zsh-%{%Y-%m}
+save-hook '~C zsh.org$'							=/Zsh/Zsh-%{%Y-%m}
+save-hook '~C zsh-workers@sunsite.dk$'					=/Zsh/Zsh-%{%Y-%m}
 save-hook '~h "^X-Spam-Flag: YES"'					+/SPAM/SPAM-%{%Y-%m}
 save-hook '~t ftp@strcat.de'						+/strcat/ftp
 save-hook '(~t blog@strcat.de) | (~f strcat.de*)'			+/Blog/blog-%{%Y-%m}
 save-hook '~t router@strcat.de'						+/strcat/logfiles
-save-hook '~t i3-discuss@freelists.org'					+/i3/i3-%{%Y-%m}
+save-hook '~f support@neessen.net'					+/Homepage/page-%{%Y-%m}
 save-hook '^.*$'							+/strcat/strcat-%{%Y-%m}
