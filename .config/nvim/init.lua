@@ -35,7 +35,7 @@ require("lazy").setup({
 	require("plugins.none-ls"),
 	require("plugins.nvim-tree"),
 	require("plugins.telescope"),
-  require("plugins.trouble"),
+	require("plugins.trouble"),
 	require("plugins.abolish"),
 	require("plugins.treesitter"),
 	require("plugins.vim-tmux-navigator"),
