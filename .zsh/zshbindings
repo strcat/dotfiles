@@ -1,0 +1,102 @@
+# To find out the keynames you can use
+#  | cat > /dev/null
+#  or
+#  | od -c
+#
+
+case $TERM in
+	xterm*)
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
+	xterm-256color*)
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
+	tmux*)
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
+	screen*)
+	autoload -U up-line-or-beginning-search
+	autoload -U down-line-or-beginning-search
+	zle -N up-line-or-beginning-search
+	zle -N down-line-or-beginning-search
+	[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-beginning-search
+	[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	;;
+	xterm-kitty*)
+	bindkey "^[[H" beginning-of-line
+	bindkey "^[[F" end-of-line
+	;;
+esac
+  bindkey "^O" clear-screen
+	bindkey "^[[2~" yank			# Einfg
+	bindkey "^[[5~" up-line-or-history	# PageUp
+	bindkey "^[[6~" down-line-or-history	# PageDown
+	bindkey "^[e" expand-cmd-path		# C-e for expanding path of typed command
+	bindkey "^[[A" up-line-or-search	# up arrow for back-history-search
+	bindkey "^[[B" down-line-or-search	# down arrow for fwd-history-search
+	bindkey " " magic-space			# do history expansion on space
+	bindkey -v				# vi keybindings
+	bindkey "\e[3~" delete-char		# "Entf" or "Del"
+	bindkey "^[[A" history-search-backward	# PgUp
+	bindkey "[B" history-search-forward	# PgDown
+	bindkey "[C" forward-char		# ->
+	bindkey "[D" backward-char		# <-
+	bindkey "q" push-line			# Kill the *complete* line! (ESC+q)
+	bindkey "^R" history-incremental-search-backward # Search in my $HISTFILE (STRG+R)
+	bindkey '^Q' history-beginning-search-backward   #
+	bindkey '^F' history-beginning-search-forward    #
+	bindkey "^[[2;5~" insert-last-word	# STRG+Einfg
+	bindkey "a" accept-and-hold		# ESC+a
+	bindkey "^B"  backward-word		# One word back
+	# bindkey "^X"  forward-word		# One word forward
+	# Strg+arrors
+	bindkey '^[[1;5D' backward-word
+	bindkey '^[[1;5C' forward-word
+	# fzf (ALT+Up)
+	bindkey "^Y" run-help			#  i. e. "run-help foo" == "man foo"
+	bindkey "^E" expand-cmd-path		# $ ls<STRG+E> == /bin/ls
+  bindkey "^[[1;5H" insert-last-word
+	bindkey " " my-expand-abbrev		# See ~/.zsh/zshmisc "/^myiabs" for details
+
+	# caphusos Tip
+	# run-with-sudo () { LBUFFER="$BOSS $LBUFFER" }
+	# zle -N run-with-sudo
+	# bindkey '^N' run-with-sudo
+	# Toggle "doas" at the start.
+toggle-sudo() {
+	[[ "${BUFFER:0:4}" = "sudo" ]] &&
+		{CURSOR+=-5; BUFFER="${BUFFER:5}";} ||
+		{BUFFER="sudo $BUFFER"; CURSOR+=5;}
+}
+zle -N toggle-sudo toggle-sudo && bindkey '^n' toggle-sudo
+
+# Replace first word with "rm".
+replace-rm() { zle beginning-of-line; zle delete-word; zle -U "rm " }
+zle -N replace-rm replace-rm && bindkey '^_' replace-rm
+
+  # Fix backspace bug when switching modes
+	bindkey "^?" backward-delete-char
+
+	# 2005-02-27: Navigation im Completion-Menü. GENIAL!
+	# <http://www.plenz.com/tmp/setup/zshrc>
+	# Navigation in der Completion-Liste (Tab-Tab): hjkl wählt aus, Return fügt ein
+	# und beendet das Menü (wobei es weiterhin angezeigt wird) und i fügt ein und
+	# lässt das Menü offen, um eine weitere Vervollständigung einzufügen.
+	# Die Befehle funktionieren nur, *nachdem* zsh/complist geladen wurde!
+	bindkey -M menuselect 'h' vi-backward-char                # links
+	bindkey -M menuselect 'j' vi-down-line-or-history         # unten
+	bindkey -M menuselect 'k' vi-up-line-or-history           # oben
+	bindkey -M menuselect 'l' vi-forward-char                 # rechts
+	# Fügt die Completion auf der Kommandozeile ein, lässt aber das Menü
+	# für eine Weitere Vervollständigung offen.
+	bindkey -M menuselect 'i' accept-and-menu-complete
+	# Fügt die Completion auf der Kommandozeile ein und zeigt dann ein
+	# Menü mit weiterhin möglichen Completions. "Engere Auswahl"
+	bindkey -M menuselect 'o' accept-and-infer-next-history
+
+  bindkey -s "^[[24;5~" "tv git-log\n"

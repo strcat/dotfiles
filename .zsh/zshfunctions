@@ -1,0 +1,216 @@
+if [ -e "/etc/arch-release" ]; then
+	function paclist() { pacman -Qei $(pacman -Qu|cut -d" " -f 1)|awk ' BEGIN {FS=":"}/^Name/{printf("\033[1;36m%s\033[1;37m", $2)}/^Description/{print $2}' }
+	# list last $@ installed packages
+	function lastpackages() { expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail $@ }
+	# List installed packages
+	function elist() { expac -H M "%011m\t%-20n\t%10d" $( comm -23 <(pacman -Qqen|sort) <(pacman -Qqg base base-devel|sort) ) | sort -n | less }
+  function pacls() {
+	# list all packages on local system sorted by their installed size using "expac" and "sort".
+	# expac -H M -Q "%12m - \e[1m%n\e[0m %v"  displays size, name, and version number
+	# "sort -n -r"  sorts list by number (with which every element begins).
+	# ATTENTION: (i do not know why but) using quotes (" symbols) around $( comm ...) breaks expac
+	expac -H M -Q "%12m - \e[1m%n\e[0m" $(pacman -Qq | sort) | sort -n -r | fzf -i --multi --exact --no-sort --ansi --reverse --bind=right:half-page-down,left:half-page-up --margin=4%,1%,1%,1% --info=inline --no-unicode --preview '
+            echo -e "\e[1mInstalled package info: \e[0m"
+            pacman -Qi {4} --color always
+            ' "$(if (($(tput cols) >= 125)); then echo "--preview-window=right:60%:wrap"; else echo "--preview-window=bottom:60%:wrap"; fi)" --header="Navigate with PageUp / PageDown. ESC to quit." --prompt='Enter string to filter list > ' | awk -F ' - ' '{print $2}'
+
+}
+
+  function function_depends()  {
+          search=$(echo "$1")
+          sudo yay -Sii $search | grep "Required" | sed -e "s/Required By     : //g" | sed -e "s/  /\n/g"
+  }
+
+# Help for pacman
+  function H-Pacman() {
+    print "
+      pacman -Syu		Fuehrt eine komplette System-Aktualisierung aus
+      pacman -S paket 	Eines oder mehrere Pakete installieren oder aktualisieren
+      pacman -Sy		Lokale Datenbank aktualisieren
+      pacman -Su		Alle installierten Pakete aktualisieren
+      pacman -Syy		Lokale Datenbank komplett neu aufbauen und aktualisieren
+      pacman -Syuu		Alle installierten Pakete downgraden (von Testing nach Core/Extra oder von Community-Testing nach Community)
+      pacman -S testing/Paket aus einem spezifischen Repo (hier: testing) installieren
+      pacman -Sw <Paket>	Paket herunterladen, ohne es zu installieren
+      pacman -Ss <Paket> 	Sucht nach installierbaren Paketen. Es reicht ein Teil des Paketnamens oder der Paketbeschreibung
+      pacman -Sg		Sucht nach installierbaren Paketgruppen
+      pacman -Sg Paketgruppe  Zeigt den Inhalt einer Paketgruppe
+      pacman -Si <Paket>	Informationen zu (noch) nicht installierten Paketen anzeigen
+      pacman -U Dateiname	Ein lokales Paket installieren (nicht aus einem Repo)
+      pacman -Scc		Leert das lokale Paketarchiv von Pacman vollständig (/var/cache/pacman/pkg)
+      pacman -Sc		Löscht veraltete Pakete aus /var/cache/pacman/pkg
+      pacman -R Paketname 	Deinstallation eines oder mehrerer Pakete (aus AUR oder Repos)
+      pacman -Rs Paketname 	Wie oben, zusätzlich werden alle abhängige Pakete gesucht und mit entfernt, falls diese nicht von einer anderen Anwendung gebraucht werden
+      pacman -Rsc Paketname   Wie oben. Abhängigkeiten werden kaskadierend entfernt
+      pacman -Rscn Paketname  Wie oben. Die Konfigurationsdateien der Anwendung werden mit entfernt
+      pacman -Rdd <Paket> 	Deinstallation eines Paketes ohne Prüfung bestehender Paketabhängigkeiten.
+      pacman -Rss <Paket> 	Paket mit allen benötigten Abhängigkeiten und deren Abhängigkeiten entfernen
+      pacman -Q		Zeigt alle installierten Pakete inklusive Versionsnummer auf dem System an
+      pacman -Qi <Paket> 	Informationen zu bereits installiertem Paket anzeigen
+      pacman -Qs <Suchmuster> Installierte Pakete nach Name oder einem Begriff in der Beschreibung durchsuchen.
+      pacman -Qdt		Verwaiste Pakete anzeigen, die als Abhängigkeiten installiert wurden, aber nicht mehr von anderen Paketen benötigt werden
+      pacman -Qet		Pakete anzeigen, die ausdrücklich installiert wurden, aber nicht von anderen als Abhängigkeit benötigt werden
+      pacman -Ql <Paket> 	Zeigt alle installierten Dateien des Pakets im System
+      pacman -Qm		Pakete anzeigen, die sich in keinem aktivierten Repo laut /etc/pacman.conf befinden
+      pacman -Qo PfadzurDatei Zeigt das Paket an, welches die gesuchte Datei enthält
+      pacman -Sy &&pacman -Qu Aktualisiert die lokale Paketdatenbank und zeigt verfügbare Updates an
+      pacman -Qk|grep warning Überprüft alle Pakete auf fehlende Dateien und schränkt die Ausgabe auf Problempakete ein
+      pacman -Fy		Lokale Datenbank aktualisieren (wie -Sy)
+      pacman -Fyy		Lokale Datenbank neu aufbauen und aktualisieren (wie -Syy)
+      pacman -Fs <Datei> 	Paket suchen das die Datei enthält
+      pacman -Fsx <Regex> 	Wie -Fs, aber Suche mit regulären Ausdrücken (hilfreich, falls der vollständige Dateiname unbekannt ist)
+      pacman -Fl <Paket> 	Alle Dateien des Paketes anzeigen
+      pacman -Fo PfadzurDatei	Paketzugehörigkeit einer Datei abfragen
+      pacman -D --asexplicit Paket	Status eines installierten Paketes auf Ausdrücklich installiert setzen
+      pacman -D ---asdeps <Paket> 	Status eines installierten Paketes auf Installiert als Abhängigkeit setzen"
+	}
+
+# Download a package and leave it in the ~/Downloads directory
+  function pdown() {
+    $BOSS pacman -Sw $1 && $BOSS mv $(ls -t /var/cache/pacman/pkg/$1* | head -1) $HOME/Downloads/ && echo -e "\nPackage moved to \e[1;34m~/Downloads\e[0m."
+  }
+fi
+
+# Pretty output of PATH and FPATH
+p-path() {
+	path_array=("${(s/:/)PATH}")
+        for c in $path_array; do print "\t$c"; done
+}
+p-fpath() {
+	fpath_array=("${(s/:/)FPATH}")
+        for c in $fpath_array; do print "\t$c"; done
+}
+p-mpath() {
+	mpath_array=("${(s/:/)MANPATH}")
+	for c in $mpath_array; do print "\t$c"; done
+}
+
+function _grc() {
+  shift words
+  (( CURRENT-- ))
+  _normal
+}
+
+# printf '%-20s %s\n' ${(kv)options}
+showoptions() {
+  local k
+  zmodload -i zsh/parameter
+  for k in ${(ok)options}; do
+    printf "%-20s\t%s\n" $k ${options[$k]}
+  done
+}
+
+# MISC: Globbing is simple? Sure .. See zshexpn(1) /Glob Qualifiers for details and come back ;)
+function H-Glob() {
+  echo -e "
+     /      directories
+      .      plain files
+      @      symbolic links
+      =      sockets
+      p      named pipes (FIFOs)
+      *      executable plain files (0100)
+      %      device files (character or block special)
+      %b     block special files
+      %c     character special files
+      r      owner-readable files (0400)
+      w      owner-writable files (0200)
+      x      owner-executable files (0100)
+      A      group-readable files (0040)
+      I      group-writable files (0020)
+      E      group-executable files (0010)
+      R      world-readable files (0004)
+      W      world-writable files (0002)
+      X      world-executable files (0001)
+      s      setuid files (04000)
+      S      setgid files (02000)
+      t      files with the sticky bit (01000)
+ print *(m-1)                    # Dateien, die vor bis zu einem Tag modifiziert wurden.
+ print *(a1)                     # Dateien, auf die vor einem Tag zugegriffen wurde.
+ print *(@)                      # Nur Links
+ print *(Lk+50)                  # Dateien die ueber 50 Kilobytes grosz sind
+ print *(Lk-50)                  # Dateien die kleiner als 50 Kilobytes sind
+ print **/*.c                    # Alle *.c - Dateien unterhalb von \$PWD
+ print **/*.c~file.c             # Alle *.c - Dateien, aber nicht 'file.c'
+ print (foo|bar).*               # Alle Dateien mit 'foo' und / oder 'bar' am Anfang
+ print *~*.*                     # Nur Dateien ohne '.' in Namen
+ chmod 644 *(.^x)                # make all non-executable files publically readable
+ print -l *(.c|.h)               # Nur Dateien mit dem Suffix '.c' und / oder '.h'
+ print **/*(g:users:)            # Alle Dateien/Verzeichnisse der Gruppe >users<
+ echo /proc/*/cwd(:h:t:s/self//) # Analog zu >ps ax | awk '{print $1}'<"
+}
+
+# PROG: invoke this every time when u change .zshrc to recompile it.
+function src()
+{
+        autoload -U zrecompile
+                [ -f ~/.zshrc ] && zrecompile -p ~/.zshrc
+                [ -f ~/.zcompdump ] && zrecompile -p ~/.zcompdump
+                [ -f ~/.zcompdump ] && zrecompile -p ~/.zcompdump
+                [ -f ~/.zshrc.zwc.old ] && command rm -f ~/.zshrc.zwc.old
+                [ -f ~/.zcompdump.zwc.old ] && command rm -f ~/.zcompdump.zwc.old
+                source ~/.zshrc
+}
+
+# pip, npm, werewolves, hell, ..
+function npm-update() { echo "Installed packages:" npm -g list for i in $(npm -g outdated | rg -v Package | awk '{print $1}'); echo $i && npm -g update $i }
+function pip-update() { for i in $(pip freeze --user | cut -d '=' -f 1); echo "--- $i ---" && pip install -U --user $i }
+
+# Shameless stolen from Sven Guckes (<http://www.guckes.net/setup/zshrc.mine>)
+# SEARCH: plap foo -- list all programs with prefix "foo":
+function plap()
+{
+        if [[ $# = 0 ]]
+        then
+                echo "Usage:    $0 program"
+                echo "Example:  $0 zsh"
+                echo "Lists all occurrences of program in the current PATH."
+        else
+		ls -l ${^path}/*$1*(*N)
+	fi
+}
+
+# MISC: mkdir && cd
+function mcd()
+{
+	test -z "$1" && echo mcd: no path given && return
+	test -d "$1" && print "mcd: Directory $1 already exists"
+	mkdir -p -- "$1"
+	builtin cd -- "$1"
+}
+
+# MISC: cd && ls
+function cl() { cd $1 && ls -a }
+
+# SEARCH: search for various types or README file in dir and display them in $PAGER
+function readme()
+{
+	local files
+        files=(./(#i)*(read*me|lue*m(in|)ut)*(ND))
+	if (($#files))
+	then
+		$PAGER $files
+	else
+		print 'No README files. Please lart \$MAINTAINER!'
+	fi
+}
+
+if (( $+commands[transmission-remote] )); then
+  function trrm() { transmission-remote -t $@ -r }
+fi
+
+# tmux split git updates from package-manager udpates
+if (( ${+TMUX} )); then
+	if (( $+commands[paru] )); then
+		alias UU='tmux split -h  paru -Suy --devel --skipreview'
+	elif (( $+commands[pkg] )); then
+		alias UU='tmux split -h pkg update'
+	elif (( $+commands[apt] )); then
+		alias UU='tmux split -h sh -c "$BOSS apt update && $BOSS apt full-upgrade"'
+	fi
+fi
+
+# ytdl audio search
+function mm() {
+    vidTitle=${@// /"\ "}
+	mpv --ytdl-format=bestaudio ytdl://ytsearch:"$vidTitle"
+}

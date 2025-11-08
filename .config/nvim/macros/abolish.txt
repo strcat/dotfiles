@@ -1,0 +1,240 @@
+iabbrev     du              Du
+iabbrev     dir             Dir
+iabbrev     dich            Dich
+iabbrev     dein            Dein
+iabbrev     deine           Deine
+iabbrev     deiner          Deiner
+iabbrev     deinem          Deinem
+iabbrev     deinen          Deinen
+iabbrev     deines          Deines
+iabbrev     deinetwegen     Deinetwegen
+iabbrev     aslo            also
+iabbrev     distri          Distribution
+iabbrev     distris         Distributionen
+iabbrev     standart        standard
+iabbrev     Standart        Standard
+iabbrev     aggressiv       agressiv
+iabbrev     assozial        asozial
+iabbrev     dilletantisch   dilettantisch
+iabbrev     haelst          haeltst
+iabbrev ha hard 
+iabbrev alos      also
+iabbrev aslo      also
+iabbrev bianry    binary
+iabbrev bianries  binaries
+iabbrev charcter  character
+iabbrev charcters characters
+iabbrev exmaple   example
+iabbrev exmaples  examples
+iabbrev shoudl    should
+iabbrev seperate  separate
+iabbrev gearten   geraten
+iabbrev gerarten  geraten
+iabbrev relyast   relayst
+iabbrev teh       the
+iabbrev Srever    Server
+iabbrev tpyo      typo
+iabbrev nciht     nicht
+iabbrev doer      oder
+iabbrev eig       eigentlich
+iabbrev merkw     merkwuerdig
+iabbrev Latex     LaTeX
+iabbrev Tex       TeX
+iabbrev insb      insbesondere
+iabbrev led       lediglich
+iabbrev merkw     merkwuerdig
+iabbrev mitt      mittlerweile
+iabbrev sicherl   sicherlich
+iabbrev sog       sogenannt
+iabbrev viell     vielleicht
+iabbrev abbr{,s} Abbrevation{,s}
+
+" Neoreformierte Rechtschreibung:
+" http://www.leckse.net/profilieren/rechtschreibung#neoreformiert
+iabbrev Addresse           Adresse
+iabbrev Billiard           Billard
+iabbrev Chatt              Chat
+iabbrev Diphtong           Diphthong
+iabbrev Flachbrettscanner  Flachbettscanner
+iabbrev Gallerie           Galerie
+iabbrev Gebahren           Gebaren
+iabbrev Gelantine          Gelatine
+iabbrev Geradewohl         Geratewohl
+iabbrev Gradwanderung      Gratwanderung
+iabbrev Imobilien          Immobilien
+iabbrev Kaffe              Kaffee
+iabbrev Karussel           Karussell
+iabbrev Klemptner          Klempner
+iabbrev Looser             Loser
+iabbrev Lybien             Libyen
+iabbrev Millenium          Millennium
+iabbrev Orginal            Original
+iabbrev Packet             Paket
+iabbrev Progrom            Pogrom
+iabbrev Psychater          Psychiater
+iabbrev Pupertaet          Pubertaet
+iabbrev Quartz             Quarz
+iabbrev Reperatur          Reparatur
+iabbrev Replay             Reply
+iabbrev Resource           Ressource
+iabbrev Rueckgrad          Rueckgrat
+iabbrev Rueckrad           Rueckgrat
+iabbrev Rueckrat           Rueckgrat
+iabbrev Sattelit           Satellit
+iabbrev Seroesitaet        Seriositaet
+iabbrev Spilunke           Spelunke
+iabbrev Standart           Standard
+iabbrev Stehgreif          Stegreif
+iabbrev Terrabyte          Terabyte
+iabbrev Threat             Thread
+iabbrev Vierenscanner      Virenscanner
+iabbrev Vorraussetzung     Voraussetzung
+iabbrev Webseite           Website
+iabbrev aggressiv          agressiv
+iabbrev assozial           asozial
+iabbrev authorisieren      autorisieren
+iabbrev bischen            bisschen
+iabbrev blos               bloss
+iabbrev brilliant          brillant
+iabbrev detailiert         detailliert
+iabbrev dilletantisch      dilettantisch
+iabbrev entgueltig         endgültig
+iabbrev erwiedern          erwidern
+iabbrev grabschen          grapschen
+iabbrev haelst             haeltst
+iabbrev hahnebuechen       hanebüchen
+iabbrev intollerant        intolerant
+iabbrev kranker            kraenker
+iabbrev lethal             letal
+iabbrev lizensiert         lizenziert
+iabbrev morgentlich        morgendlich
+iabbrev orginal            original
+iabbrev projezieren        projizieren
+iabbrev seelig             selig
+iabbrev seperat            separat
+iabbrev symphatisch        sympathisch
+iabbrev ward               wart
+iabbrev warscheinlich      wahrscheinlich
+iabbrev wiederlich         widerlich
+
+" Funny things ;-)
+" I use a upper »FUN« to initiate those abbreviations
+" Two *really* long URLs
+  iabbrev     FUN42             <http://www.llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.co.uk/>
+  iabbrev     FUN23             <http://www.thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com/>
+" Not a japanese mental bypass but the name of a hill in New Zealand.
+  iabbrev     FUNTauma          Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwenuakitanatahu
+" The name of a town in Wales.  I am not making this up! (see above or <http://194.159.85.168/>)
+  iabbrev     FUNwales          LLanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch
+" Yes, KrautLang *is* weird! :>
+  iabbrev     FUNdonau          Donaudampfschifffahrtgesellschaftskapitaenwitwenrentengesetzzusatzparagraph
+  iabbrev     FUNschlosser      Metallbauer, Fachrichtung Konstruktionsmechanik. Schwerpunkt Leichtmetallbauweise.
+  iabbrev     FUNauth           Authentifikationsmechanismen
+" Hello Mary Poppins :-)
+  iabbrev     FUNmary           supercalifragilisticexpialidocious
+" Longest Word in the second edition of the Oxford English Dictionary?
+  iabbrev     FUNoxford         pneumonoultramicroscopicsilicovolcanoconiosis
+" wtf?!
+  iabbrev     FUNsp             <Spock>Faszinierend!</Spock>
+  iabbrev     FUNhoo            <Hoomer>NEIN!</Hoomer>
+  iabbrev     FUNek             <Erkan+Stefan>Krass!!!11!</Erkan+Stefan>
+  iabbrev     FUNje             J-E-H-O-V-A!!!11!
+" The lower/upper letter alphabet
+  iabbrev     FUNabc            abcdefghijklmnopqrstuvwxyz
+  iabbrev     FUNABC            ABCDEFGHIJKLMNOPQRSTUVWXYZ
+" Abbreviations for some important numbers
+  iabbrev     FUNPI             3.1415926535897932384626433832795028841972
+  iabbrev     FUNNE             2.7182818284590452353602874713526624977573
+" A little ruler
+  iabbrev     FUNruler          12345678901234567890123456789012345678901234567890123456789012345678901234567890
+
+" Often used URL's
+iabbrev     Ugo             <http://www.google.de/>
+iabbrev	Ufgo		<http://www.justfuckinggoogleit.com/search?q=foo+bar>
+iabbrev     Uggo            <http://www.groups.google.de/>
+iabbrev     Unetti          <http://www.kirchwitz.de/~amk/dni/netiquette>
+iabbrev     Uquo            <http://got.to/quote/>
+iabbrev     Uldoc           <http://www.linuxdoc.org/>
+iabbrev     Utuhar          <http://www.tu-harburg.de/dlhp/>
+iabbrev     Uxwm            <http://www.plig.org/xwinman/>
+iabbrev     Usou            <http://www.sourceforge.net/>
+iabbrev     Ufre            <http://www.freshmeat.net/>
+iabbrev     Urpmf           <http://www.rpmfind.net/>
+iabbrev     Udufr           <http://yadocfaq.fefe.de/#dumm>
+iabbrev     Usdb            <http://sdb.suse.de/>
+iabbrev     Uily            <http://piology.org/ILOVEYOU-Signature-FAQ.html>
+iabbrev     Uwls            <http://linuxshop.ru/linuxbegin/win-lin-soft-german/>
+iabbrev     Uren            <http://www.faqs.org/faqs/unix-faq/faq/part2/section-6.html>
+
+" Often needed FAQs.. youngsters .. please.. RTFM!
+iabbrev FAQwinpart  <http://www.dcoul.de/faq/html/2.html#2.winpartschreiben>
+iabbrev FAQxdisp    <http://www.dcoul.de/faq/html/5.html#5.xdisplayzugriff>
+iabbrev FAQbindfile <http://www.dcoul.de/faq/html/2.html#2.bindestrichdateien>
+iabbrev FAQntp      <http://www.dcoul.de/faq/html/1.html#1.ntpzeit>
+iabbrev FAQftpd     <http://www.dcoul.de/faq/html/1.html#1.welcherftpd>
+iabbrev FAQsinstall <http://www.dcoul.de/faq/html/2.html#2.sourceinstall>
+iabbrev FAQsuninst  <http://www.dcoul.de/faq/html/2.html#2.makeuninstall>
+iabbrev FAQbdistri  <http://www.dcoul.de/faq/html/0.html#0.bestdistro>
+iabbrev FAQbooks    <http://strg-alt-entf.org/buecherfaq.txt>
+iabbrev FAQnua      <http://www.thomas-huehn.de/usenet/newsreaderFAQ.txt>
+iabbrev FAQmsgid    <http://www.hanau.net/usenet/faq/messageid.php>
+
+" Standard answers :>
+iabbrev Yanfs  And now for something completely different...
+iabbrev Ybtdt  Been there, done that, got the tshirt.
+iabbrev Ypass  You are in a maze of twisty little passages, all alike.
+iabbrev Yicty  I could tell you, but then I'd have to kill you.
+iabbrev Ywyot  when your only tool is a hammer, every problem looks like a nail.
+iabbrev Ywus   Es muss noch einen signifikanten Unterschied geben zwischen dem was Du meinst und dem was ich verstanden habe...
+iabbrev Ygweg  Geh weg, Du verschwendest Zeit und Bandbreite, die Du nicht verdient hast.
+iabbrev Yuot   Und sogar Martin Luther haette mehr vom Usenet verstanden als Du. Der hat naemlich seine Thesen an die Kirchentuere genagelt und nicht ans Stadttor. Er hatte naemlich begriffen, wo sie on topic sind.
+iabbrev Yhae   In erster Naeherung mit einem zweiten Versuch bei der Beschreibung Deines Problems... Anders formuliert: Haeh?!?
+iabbrev Ysau   Fast wie im richtigen Leben. Da denkt man an einen Schweinebraten und dann kommt eine ganze Sau daher..
+iabbrev Ygs    Geh sterben.
+iabbrev Ygw    Geh weg.
+iabbrev Ysa    Score adjusted.
+iabbrev Yplo   Anotherone bites the dust..
+iabbrev Ymgi   Langsam aber sicher komm ich mir vor wie ein Magnet fuer Idioten.
+iabbrev Ydgw   Dieser Gott .. wie mag die wohl aussehend? <sigh>
+
+" Some Abbrevation's for Mail/Usenet ('H' == Hint)
+" Note: ^M (<STRG+V STRG+M>) start a new line.
+iabbrev     cyas    cya  Chris
+iabbrev     byes    bye  Chris
+iabbrev     Hf2     [ Fup'2 => ]<Left><Left>
+iabbrev     Hxf2    [ Xpost + Fup'2 => ]<Left><Left>
+iabbrev     Hftm    [ Fup'2'Poster ] <ESC>gg/^Followup-To: /<esc>A poster
+iabbrev     Hmn     Mental note to self: 
+iabbrev     Htofu   [ TOFU/Fullquote stilgerecht entsorgt. Lies mal <http://got.to/quote/> durch und halte Dich in Zukunft daran. Danke. ]
+iabbrev     Hmsg    Das sieht irgendwie nicht nach einer gueltigen MessageID aus ;)
+iabbrev     Hlin    Und was genau hat das mit Linux zu tun hat wirst Du mir sicher gleich erklaeren oder?
+iabbrev     Hbsd    Und was genau das mit Free-, Open- oder NetBSD zu tun hat wirst Du mir sicher gleich erklaeren oder?
+iabbrev     Hgoo    Was genau hindert Dich eigentlich daran eine Suchmaschine wie <http://www.google.de/> zu verwenden?
+iabbrev     Hrm     Gibt es einen bestimmten Grund wieso Du die man-Pages nicht liest?
+iabbrev     Hrf     Gibt es einen bestimmten Grund wieso Du die Anleitungen nicht liest?
+iabbrev     HRF     Gibt es einen bestimmten Grund wieso Du die FAQ nicht liest?
+iabbrev     Hsiggi  Das ist keine Signature. Eine /gueltige/ Signature sollte mit '-- ' (StrichStrichSpace) abgetrennt werden, damit andere Newsreader sie auch als solche erkennen.
+iabbrev     Hwsig   Was soll das sein? Eine Signature sicher nicht.
+iabbrev     Hwgo    Was genau an "Du bist hier *total* OT!" hast Du nicht verstanden?
+iabbrev     Hsgo    <http://www.google.com/search?q=WORD1+WORD2
+iabbrev     Hmgo    <http://groups.google.de/groups?selm=MID
+iabbrev     Higo    <http://images.google.com/images?q=WORD
+iabbrev     Hago    <http://groups.google.com/groups?as_uauthors=WORD
+
+" NG's (for (X)Fup2's, Hints, ..)
+iabbrev NGinfos     de.comp.os.unix.linux.infos
+iabbrev NGmisc      de.comp.os.unix.linux.misc
+iabbrev NGapps      de.comp.os.unix.apps
+iabbrev NGdiscus    de.comp.os.unix.discussion
+iabbrev NGshell     de.comp.os.unix.shell
+iabbrev NGeditor    de.comp.editoren
+iabbrev NGnetwork   de.comp.os.unix.networking
+iabbrev NGdsnu      de.soc.netzkultur.umgangsformen
+iabbrev NGdaf       de.alt.flame
+iabbrev NGdag       de.alt.gruppenkasper
+iabbrev NGmserver   de.comm.software.mailserver
+iabbrev NGmuas      de.comm.software.mailreader.misc
+iabbrev NGnuas      de.comm.software.newsreader
+iabbrev NGahog      alt.hacker.org-gcf
+iabbrev NGbsd       de.comp.os.unix.bsd
+iabbrev NGkde	de.comp.os.unix.apps.kde

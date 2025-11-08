@@ -1,0 +1,378 @@
+# TODO: change the (( $+commands[...])) to something like
+# has()  {(($+commands[$1]))}
+
+# vim=nvim
+if (( $+commands[nvim] )); then
+	alias vim=nvim
+fi
+
+if (( $+commands[transmission-remote] )); then
+  alias trl='transmission-remote -l'
+fi
+
+# https://github.com/umlx5h/gtrash
+#if (( $+commands[trash-put] )); then
+if (( $+commands[gtrash] )); then
+  alias rm='gtrash put'
+  # alias rm="trash-put"
+fi
+
+# grc - frontend for generic colouriser grcat(1)
+if (( $+commands[grc] )); then
+	alias grc='grc --colour=auto'
+	alias ping='grc ping'
+	alias last='grc last'
+	alias netstat='grc netstat'
+	alias traceroute='grc traceroute'
+	alias diff='grc diff'
+	alias gcc='grc gcc'
+	alias configure='grc configure'
+	alias cvs='grc cvs'
+	alias gcc='grc gcc'
+	alias configure='grc ./configure'
+	alias cat="grc cat"
+	alias ip="grc ip"
+  alias nmap="grc nmap"
+  alias gcc="grc gcc"
+  alias ps="grc ps"
+  alias cc="grc cc"
+  alias make="grc make"
+  alias gmake="grc gmake"
+  alias g++="grc g++"
+  alias c++="grc c++"
+fi
+
+# "better" grep
+if (( $+commands[ugrep] )); then
+  alias uq='ug -Q'       # short & quick query UI (interactive, uses .ugrep config)
+  alias ux='ug -UX'      # short & quick binary pattern search (uses .ugrep config)
+  alias uz='ug -z'       # short & quick compressed files and archives search (uses .ugrep config)
+  alias ugit='ug -R --ignore-files' # works like git-grep & define your preferences in .ugrep config
+  alias grep='ugrep -G'    # search with basic regular expressions (BRE)
+  alias egrep='ugrep -E'    # search with extended regular expressions (ERE)
+  alias fgrep='ugrep -F'    # find string(s)
+  alias pgrep='ugrep -P'    # search with Perl regular expressions
+  alias xgrep='ugrep -W'    # search (ERE) and output text or hex for binary
+  alias zgrep='ugrep -zG'   # search compressed files and archives with BRE
+  alias zegrep='ugrep -zE'   # search compressed files and archives with ERE
+  alias zfgrep='ugrep -zF'   # find string(s) in compressed files and/or archives
+  alias zpgrep='ugrep -zP'   # search compressed files and archives with Perl regular expressions
+  alias zxgrep='ugrep -zW'   # search (ERE) compressed files/archives and output text or hex for binary
+fi
+
+# ripgrep - https://github.com/BurntSushi/ripgrep
+(( $+commands[rg] )) && alias search="rg --color='always' --heading --line-number --no-messages --no-ignore --hidden --follow --smart-case --glob '!{.git/*,node_modules/*}' --regexp"
+
+# https://projects.gw-computing.net/projects/dfc
+(( $+commands[dfc] )) && alias df='dfc -sdlmt ext4,ext2,btrfs'
+
+# Some youtube-dl related aliases
+if (( ${+commands[yt-dlp]} )); then
+  alias yta-aac="yt-dlp --extract-audio --audio-format aac "
+  alias yta-best="yt-dlp --extract-audio --audio-format best "
+  alias yta-flac="yt-dlp --extract-audio --audio-format flac "
+  alias yta-m4a="yt-dlp --extract-audio --audio-format m4a "
+  alias yta-mp3="yt-dlp --extract-audio --audio-format mp3 "
+  alias yta-opus="yt-dlp --extract-audio --audio-format opus "
+  alias yta-vorbis="yt-dlp --extract-audio --audio-format vorbis "
+  alias yta-wav="yt-dlp --extract-audio --audio-format wav "
+  alias ytv-best="yt-dlp -f bestvideo+bestaudio "
+  alias xdl="yt-dlp -o '~/Downloads/XXX/%(title)s.%(ext)s'"
+fi
+
+# order of preference: aria2c, axel, wget, curl. This order is derrived from speed based on personal tests.
+# (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+if (( ${+commands[aria2c]} )); then
+	# https://aria2.github.io/
+	# alias youtube-dl="youtube-dl --ignore-errors --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+    alias yt-dlp="yt-dlp --ignore-errors --downloader aria2c --downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"
+elif (( ${+commands[axel]} )); then
+	# https://github.com/axel-download-accelerator/axel
+        alias axel='axel --num-connections=5 --alternate'
+elif (( ${+commands[wget]} )); then
+	#https://www.gnu.org/software/wget/
+	alias wget='wget --continue --progress=bar --timestamping'
+elif (( ${+commands[curl]} )); then
+	# https://curl.haxx.se/
+	alias curl='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+fi
+
+# Quick edit often used setup file
+  alias Ez='$EDITOR ~/.zshrc'
+  alias Es='$EDITOR ~/.slrnrc'
+  alias Ev='$EDITOR ~/.vimrc'
+  alias En='$EDITOR ~/.config/nvim/init.lua'
+  alias Em='$EDITOR ~/.muttrc'
+  alias Et='$EDITOR ~/.tmux.conf'
+  alias Esig="$EDITOR ~/.sigs/own-stuff"
+
+# Disable "spell-correction" for this commands:
+  alias cp="${aliases[cp]:-cp} -iv"
+  alias ln="${aliases[ln]:-ln} -iv"
+  alias mv="${aliases[mv]:-mv} -iv"
+  alias mkdir="${aliases[mkdir]:-mkdir} -p"
+  # Move Pics to ~D/Pics.. yeah.. i know.. its crap
+  alias picmv="mv *(#i).(jp{,e}g|gif|png|bmp) ~D/Pics/"
+
+# /quick-stat/
+   alias atime="stat -c '%X - %x - %n'"
+   alias mtime="stat -c '%Y - %y - %n'"
+   alias owner="stat -c '%U - %u - %n'"
+   alias group="stat -c '%G - %g - %n'"
+
+# GIT
+  alias gfuck="git commit -am '`curl -s http://whatthecommit.com/index.txt`'"
+  alias gp="git pull"
+
+#  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
+#  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
+#  Modifiers can be found in ``info -f zsh -n Modifiers''.
+   alias :{w,q,wq,qa,wqa,x}{,!}='echo "This is $SHELL:t and not Vi(m)"'
+
+# quick&dirty mirror
+  alias mirror="noglob wget --mirror --no-parent --timestamping --continue --recursive $1"
+
+# access the database of ${HOME} (Note: This is for *OpenBSD*! Not for
+# Linux!
+  if [ "${OS}" = openbsd ]; then
+     alias hupdatedb="updatedb --searchpaths="$HOME" --prunepaths="/" --fcodes=$HOME/.locatedb"
+     alias hlocate="locate -d ${HOME}/.locatedb"
+  else
+     if [[ "${OS}" =  "linux-gnu" ]] && [[ -x $(which plocate) ]] ; then
+ 	   alias hupdatedb="$BOSS updatedb"
+  else
+     # That's for GNU updatedb
+     alias hupdatedb="$BOSS updatedb --localpaths="$HOME" --output=$HOME/.locatedb --prunefs="/""
+     alias hlocate="locate -d ${HOME}/.locatedb"
+  fi
+fi
+
+# Only non-root need this aliases
+if (( EUID != 0 )); then
+	# some stuff for gentoo (i compelled to use it sometimes *narf*)
+	if [[ `uname` == FreeBSD ]]; then
+		alias pkg='$BOSS pkg'
+		alias portsnap='$BOSS portsnap'
+		alias postmaster='$BOSS portmaster'
+	fi
+	# setting for OpenBSD
+	if [[ `uname` == OpenBSD ]]; then
+		alias pkg_add='doas pkg_add'
+		alias pkg_delete='doas pkg_delete'
+		alias upsrc="cd /usr/src && cvs -q up -Pd"
+		alias upports="cd /usr && cvs -q get -P ports"
+	fi
+	if [ -e "/etc/arch-release" ]; then
+		alias pacman="$BOSS pacman"
+		alias trizen="$BOSS trizen"
+		alias yaconf="$BOSS yaconf"
+		alias pacinfo="$BOSS pacman -Si $@"
+		alias pacfile="$BOSS pacman -Fs $1"
+		alias clcache='$BOSS yay -Sc'
+		alias pacman_new='find / -regextype posix-extended -regex ".+\.pac(new|save|orig)" 2> /dev/null'
+		alias pacman_remove_orphans='$BOSS pacman -Rns $(pacman -Qtdq)'
+		alias lpacks="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -100 | $PAGER"
+    alias reflector='reflector --country Germany --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist'
+	fi
+		# Linux/Unix
+		alias ifconfig="$BOSS ifconfig"
+		alias shutdown="$BOSS shutdown"
+		alias tcpdump="$BOSS tcpdump"
+		alias nmap="$BOSS nmap"
+		alias snap="$BOSS snap"
+		# takes snapshot from /dev/ttyN
+		alias mkscreeny="cd ~/shots/ ; fbgrab -s 5 -w 1024 -h 768 -b 16 `date +"%F-%T"`.png"
+fi
+
+# copy/move with a backup
+  #if [ ${OS} = "linux-gnu" -n ${(MS)$(mv --version 2>/dev/null)#GNU} ]; then
+     # GNU numbered backup files
+     # --verbose and --backup are GNUis *narf*
+     if [[ "${OSTYPE}" = linux-gnu ]]; then
+	     (( ${+VERSION_CONTROL} )) || export VERSION_CONTROL="numbered"
+	     alias mv="nocorrect mv --verbose --backup=numbered"
+	     alias cp="nocorrect cp --verbose --backup=numbered"
+     fi
+  #fi
+
+# SSH to some hosts :>
+   alias router="telnet 192.168.1.1"
+   alias dreckskind="ssh dope@192.168.1.2"
+   alias hellfire="ssh dope@192.168.1.3"
+   alias fuckingtosh="ssh dope@192.168.1.4"
+   alias blitzkrieg="ssh bofh@192.168.1.5"
+   alias painless="ssh dope@192.168.1.6"
+   alias diehard="ssh lart@192.168.1.7"
+   alias goliath='ssh god@192.168.1.8'
+   alias vhost='ssh dope@80.190.98.198'
+   alias sourceforge="ssh strcat@shell.sf.net"
+   alias gohome="ssh dope@strcat.ath.cx"
+   alias vms="ssh strcat@dahmer.vistech.net"
+
+# "-" is the same as the -l option (deprecated).
+   alias su="su -"
+# Quick chmod ;-)
+  alias rw-='chmod 600'
+  alias rwx='chmod 700'
+  alias r--='chmod 644'
+  alias r-x='chmod 755'
+# stolen from a ~/.bashrc (IIRC RedHat(?))
+  alias ..='cd ..'
+  alias ...='cd ../..'
+  alias ....="cd ../../.."
+
+# Use colors, do not check for new groups, specific my killfile an use
+# spool (needed for slrnpull)
+  alias news='slrn -C -n --kill-log ~/.slang/KILL --spool -f ~/.jnewsrc'
+  alias gnews='slrnpull -d ~/nslrn/slrnpull --logfile ~/nslrn/slrnpull/log -h news.solani.org'
+  # alias gnews='slrnpull -d ~/nslrn/slrnpull --logfile ~/nslrn/slrnpull/log -h news.uni-stuttgart.de'
+
+# call mailfilter and start getmail after a positive return value
+# <http://mailfilter.sourceforge.net/> && <http://www.qcc.ca/~charlesc/software/getmail-3.0/>
+   alias gmail='getmail -v --rcfile ${HOME}/.getmail/getmailrc-gmail \
+                --rcfile ${HOME}/.getmail/getmailrc \
+                --rcfile ${HOME}/.getmail/getmailrc-schneider \
+                --rcfile ${HOME}/.getmail/getmailrc-strcat \
+                --rcfile ${HOME}/.getmail/getmailrc-blog \
+                --rcfile ${HOME}/.getmail/getmailrc-web \
+                --rcfile ${HOME}/.getmail/getmailrc-eigenes \
+                --rcfile ${HOME}/.getmail/getmailrc-404'
+# the two above together..
+   alias gall="gmail ; gnews"
+
+# start mutt/vim/zsh/jed without any setup
+   alias null-mutt='mutt -n -f /dev/null -F /dev/null'
+   alias null-zsh='zsh -f'
+   alias null-vim='$EDITOR --clean' # starts with defaults in non-compatible mode
+   alias null-irssi='irssi --config=/dev/null'
+
+if (( $+commands[eza] )); then
+    alias ls='eza --color=always --group-directories-first --icons=always' # my preferred listing
+    alias l='eza -al --color=always --group-directories-first --icons=always' # my preferred listing
+    alias la='eza -a --color=always --group-directories-first --icons=always'  # all files and dirs
+    alias ll='eza -l --color=always --group-directories-first --icons=always'  # long format
+    alias lt='eza -aT --color=always --group-directories-first --icons=always' # tree listing
+    alias lsa='eza -a | egrep "^\."'
+    alias lsd='eza -D' #  list only directories
+    alias lad='eza -Da' # only directories including dots
+    alias lsg='eza --long --git' # git status
+    alias lsnew='eza -lsnew | tail $@' # newest files
+    alias lsold='eza -lsold | tail $@' # oldest files
+    alias lsbig='eza -lssize | tail $@' # biggest files
+    alias lssmall='eza -lssize | head $@' # smalles files
+    alias lt2="eza -lTg --level=2 --icons=always"
+    alias lt3="eza -lTg --level=3 --icons=always"
+    alias lt4="eza -lTg --level=4 --icons=always"
+    alias lta="eza -lTag --icons=always"
+    alias lta2="eza -lTag --level=2 --icons=always"
+    alias lta3="eza -lTag --level=3 --icons=always"
+    alias lta4="eza -lTag --level=4 --icons=always"
+  elif
+    (( $+commands[lsd] )); then
+    alias ls='lsd --group-directories-first'
+    alias la='lsd -a --group-directories-first'
+    alias lt='lsd -a --tree --group-directories-first'
+    alias ldo='lsd -d *(/)'
+    alias lsnew='lsd -l --sort=time --reverse | tail $@'
+    alias lsold='lsd -l --sort=time | tail $@'
+    alias lsbig='lsd -l --sort=size --reverse | tail $@'
+    alias lssmall='lsd --sort=size -l | tail $@'
+    alias lsx='lsd -l -- *(*) | head $@'
+  else
+    # *Very* often used!
+    alias lad='=ls -d -- .*(/)'				# only show dot-directories
+    alias lsa='ls -a -- .*(.)'				# only show dot-files
+    alias lse='=ls -ld -- *(/^F)'				# only show empty directories
+    alias lsen='=ls -d *(/om[1])'				# newest directory
+    # FIXME: Replace the ``grep -v'', ``2&>/dev/null'' by zsh-only syntax
+    alias lsnew='=ls -rtlh -- *(.) | tail $@ 2&>/dev/null'  # only the newest files
+    alias lsold="=ls -rtl -- *(.) | head $@ 2&>/dev/null"   # display the oldest files
+    alias lssmall="=ls -Sl -- *(.) | tail $@ 2&>/dev/null"  # display the smallest files
+    alias lsx='ls -l -- *(*) | head $@ 2&>/dev/null'        # only show executables
+    alias lssuid='ls -l -- *(s,S) | head $@ 2&>/dev/null'   # only show suid-files
+    alias lsbig="=ls -lSh -- *(.) | grep -v total | head $@ 2&>/dev/null"    # display the biggest files
+    # show sorted directory sizes for all directories
+    alias dua='du -s *(/DN) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+    # show sorted directory sizes for visible directories only
+    alias duv='du -s *(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+    # show sorted directory sizes for hidden directories only
+    alias duh='du -s .*(/N) | sort -nr | cut -f 2- | while read a; do du -sh "$a"; done'
+fi
+
+# Make the source to be with you!!!11!
+   alias CH='./configure --help | $PAGER'
+# zmv -- see ``less ${^fpath}/zmv(N)'' for more details.
+   alias zcp='zmv -C'
+   alias zln='zmv -L'
+
+# Some aliases for the OpenBSD - Portcollection
+   if [ "${OS}" = openbsd ]; then
+           alias Svar='make show=FLAVORS'
+           alias Spversion='make show=VERSION'
+           alias Scomm='make show=COMMENT'
+           alias Swth='make show=DESCRIPTION'
+   fi
+
+# suffix aliases (needs Zsh >= 4.*).  Suffix aliases allow the shell
+# to run a command on a file by suffix, e.g 'alias -s ps=gv' makes
+# 'foo.ps' execute 'gv foo.ps'.
+# if [[ $ZSH_VERSION == 5.<->* ]]; then
+	# some "file aliases"
+	alias -s {ogg,flac,mpg,mpeg,avi,ogm,wmv,m4v,mkv,mp4,mov}="mpv"
+	alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="sxiv"
+	alias -s dvi=xdvi
+	alias -s pdf=xpdf
+	alias -s ps=gv
+	alias -s {htm,html,php,com,net,org,gov}="pick-web-browser"
+	alias -s tex=${EDITOR:-vi}
+	alias -s txt=${PAGER:-less}
+	# some global aliases for redirection
+	alias -g N="&>/dev/null"
+	alias -g 1N="1>/dev/null"
+	alias -g 2N="2>/dev/null"
+	alias -g DN="/dev/null"
+	alias -g PI="|"
+	# Paging with less / head / tail
+	alias -g LS='| less -S'
+	alias -g EL='|& less'
+	alias -g ELS='|& less -S'
+	alias -g TRIM='| cut -c 1-$COLUMNS'
+	alias -g H='| head'
+	alias -g HL='| head -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g EH='|& head'
+	alias -g EHL='|& head -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g TL='| tail -n $(( +LINES ? LINES - 4 : 20 ))'
+	alias -g ET='|& tail'
+	alias -g ETL='|& tail -n $(( +LINES ? LINES - 4 : 20 ))'
+	# Sorting / counting
+	alias -g Su='| sort -u'
+	alias -g Sn='| sort -n'
+	alias -g Snr='| sort -nr'
+	# grep(1)'ing
+	for switches in {,i}{,l,L}{,r}{,v}; do
+		eval "alias -g GG$switches='| egrep ${switches:+-$switches}'"
+		eval "alias -g EG$switches='|& egrep ${switches:+-$switches}'"
+		eval "alias -g XG$switches='| xargs egrep ${switches:+-$switches}'"
+		eval "alias -g X0G$switches='| xargs -0 egrep ${switches:+-$switches}'"
+	done
+	# awk
+	alias -g A1="| awk '{print \$1}'"
+	alias -g A2="| awk '{print \$2}'"
+	alias -g A3="| awk '{print \$3}'"
+	alias -g A4="| awk '{print \$4}'"
+	alias -g A5="| awk '{print \$5}'"
+	alias -g A6="| awk '{print \$6}'"
+	alias -g A7="| awk '{print \$7}'"
+	alias -g A8="| awk '{print \$8}'"
+	alias -g A9="| awk '{print \$9}'"
+	alias -g A10="| awk '{print \$11}'"
+	alias -g EA='|& awk '
+	alias -g EA1="|& awk '{print \$1}'"
+	alias -g EA2="|& awk '{print \$2}'"
+	alias -g EA3="|& awk '{print \$3}'"
+	alias -g EA4="|& awk '{print \$4}'"
+	alias -g EA5="|& awk '{print \$5}'"
+	alias -g EA6="|& awk '{print \$6}'"
+	alias -g EA7="|& awk '{print \$7}'"
+	alias -g EA8="|& awk '{print \$8}'"
+	alias -g EA9="|& awk '{print \$9}'"

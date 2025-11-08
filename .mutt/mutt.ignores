@@ -1,0 +1,28 @@
+# $Id: mutt.ignores,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+# ignore this (X-)Header
+#ignore Delivered-To: Apparently-To: X-Job: X-Authentication-Warning:
+#ignore X-Help-Page-Location: X-Envelope-Sender: X-Accept-Language: X-Sender:
+#ignore X-Loop: X-Mailing-List: Precedence: Priority: Resent- In-reply-to:
+#ignore Organization: Mail-Followup-To: X-Priority: X-Attribution: X-MIMETrack:
+#ignore X-MSMail-Priority: X-MimeOLE: Importance: X-Sent: X-Trace: X-Apparently-To: 
+#ignore Original-Sender: X-MIME-Autoconverted: X-Complaints-To: Old-Return-Path:
+#ignore X-Originating-IP: X-OriginalArrivalTime: Mailing-List: List-Unsubscribe:
+#ignore X-eGroups- List- X-BeenThere: X-Mailman-Version: Errors-To: X-Lotus-FromDomain: 
+#ignore X-BadReturnPath: Originator: X-UnityID: X-UnityUser: Thread-Index: X-list: 
+#ignore X-Mailer-Version: X-Dispatcher: Authorized-User: IP-Address: X-listar-version: 
+#ignore Disposition-Notification-To: X-UIDL: X-lyris-type: X-Bulkmail: X-original-sender: 
+#ignore X-Virus-Scanned: NNTP-Posting-Date: X-Majordomo: Cancel-Lock:
+#ignore X-Debian-GNU-Linux: X-image-url: Comments: X-No-Archive: X-Spam-Status:
+#ignore X-Stardate: X-NO-SPAM: X-Debian: Mail-Copies-To: X-Kuro5hin-cabal:
+#ignore Private-Web-Page: Company-Web-Page: X-Organization: X-Home-Address:
+#ignore X-Home-Web-Site: X-Work-Web-Site: X-Work-Address: X-Disclaimer:
+#ignore X-Editor: X-Keyboard: X-Copywrong: X-GSM: X-BOFH: X-Flames-To: X-Spammers:
+#ignore X-Jihad: X-Spammer-Kill-Ratio: X-cuse: X-X: X-Cat: X-Go-Away:
+#ignore X-Spam-Level: Delivery-date: Envelope-to: X-Delivery-Agent: 
+#ignore X-Library: X-Converted-To-Plain-Text: NNTP-Posting-Host:
+#ignore Path: Xref: X-eBay-MailTracker: X-GMX-Antivirus: X-GMX-Antispam:
+#ignore X-Flags: From
+
+# gnaaa
+ignore *

@@ -1,0 +1,15 @@
+{
+  "fast start": {
+    "prefix": "comp",
+    "body": [
+      "#include<bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "int main(){",
+      "\t return 0;",
+      "}"
+    ],
+    "description": "code snippet for less includes",
+    "scope": "cpp"
+  }
+}

@@ -1,0 +1,926 @@
+% $Id: .slrnrc,v 1.2 2004/05/12 01:59:10 dope Exp dope $
+
+% Informations {{{
+% This file usually is named $HOME/.slrnrc
+% Purpose: setup file for the 'slrn'.
+% Author: Christian Schneider <strcat@gmx.net>
+% Structure of this file:
+%  Lines starting with an '%' are comments.
+%
+% Note: Used and tested under OpenBSD 3.2 with Slrn 0.9.8.0.
+%       Colors are /optimized/ for a transparent $TERM with a dark
+%       background(-image).
+%
+
+%  ,----
+%  |  $ slrn --version
+%  |  Slrn 0.9.8.0 [2003-08-25]
+%  |  S-Lang Library Version: 1.4.5
+%  | Compiled at: Aug 30 2003 04:46:04
+%  | Operating System: OpenBSD
+%  |
+%  |  COMPILE TIME OPTIONS:
+%  |   Backends: +nntp +slrnpull +spool
+%  |   External programs / libs: -canlock +inews +ssl -uudeview
+%  |   Features: +charset_mapping +decoding +emphasized_text +end_of_thread
+%  |     +fake_refs +gen_msgid -grouplens +mime -msgid_cache +piping +rnlock
+%  |     +slang +spoilers -strict_from
+%  |  DEFAULTS:
+%  |   Default server object:     nntp
+%  |   Default posting mechanism: inews
+%  |   Default character set:     isolatin
+%  | SUPPORTED CHARACTER SETS:
+%  |   isolatin ibm850 ibm852 ibm857 ibm737 NeXT koi8
+%  `----
+%
+% It was also compiled with:
+%  ,----
+%  | $ ./configure --enable-setgid-code --enable-spool --enable-inews \
+%  |   --enable-force-inews --with-slrnpull --enable-ipv6 --with-ssl \
+%  |   --enable-largefile --with-rsh=ssh
+%  `----
+%
+% Ressources:
+%   TFM:                         <http://slrn.sourceforge.net/manual/slrn-manual.html>
+%   Andrew Preater's .slrnrc:    <http://www.preater.f9.co.uk/slrn/slrnrc.gz>
+%   Jurriaan's page:             <http://www.xs4all.nl/~thunder7/>
+%   Emmanuele's page:            <http://digilander.libero.it/ebassi/slrn.html>
+%   Sven's site:                 <http://www.guckes.net/slrn/>
+%   Michael Prokop's page:       <http://www.michael-prokop.at/computer/config/.slrn>
+%   Tsca's s-lang macros:        <http://www.geocities.com/tsca.geo/slang.html>
+%   Tomasz Koczko's slrn-stuff:  <http://cvs.pld.org.pl/slrn-pl/>
+%   Tomasz Koczko's macros:      <http://cvs.pld.org.pl/slrn-pl/macros>
+%   Jbn's S-Lang code:           <http://forestfield.org/slrn/>
+%   S-lang regexps:              <http://www.s-lang.org/doc/html/slang-18.html>
+%
+% WARNING:      Please do not use this file without adjusting it!
+%               You need to adjust it a little for yourself.
+%
+% Save a copy of this file to "$HOME/.slrnrc" and check *all* values in this
+% file for your requisites.
+%
+% Last modified: [ 2021-01-01 17:55:40 ]
+% }}}
+
+% Configuration commands initiating with »a« {{{
+% This variable can be used to customize the status line of the article pager.
+%       H   Prints `H' unless headers are hidden
+%       I   Prints `P' unless PGP signatures are hidden
+%       L   Current line (e.g. '1/18')
+%       P   Percentage of the way through the article
+%       Q   Prints `Q' unless quotes are hidden
+%       T   Prints `S' unless signatures are hidden
+%       V   Prints `V' unless verbatim text is hidden
+%       W   Prints `W' if wrapping is enabled
+%       p   Prints `<' if the window is panned (scrolled horizontally)
+%       v   Prints `v' unless verbatim marks are hidden
+%set art_status_line "%p%n : %15r: %s %-18g -- %L (%P)"
+set art_status_line "%p[%n]: %s %-29g[%H%I%Q%T%V%W%p%<] --- [%L] [%P]"
+
+%  Change the article help line.
+%  By default slrn includes a little line of infos in the article pager to
+%  help in case we forget which keys to press.
+%  I don't forget the easy ones, it's the obscure stuff that slips my mind.
+%   Default: SPC:Pgdn  B:PgUp  u:Un-Mark-as-Read  f:Followup  n:Next  p:Prev  q:Quit
+set art_help_line " [: Verbatim | esc-s: Sort | esc-q: Fix OE quotes | ;: Mark | ,: Goto marked | esc-1-K: Edit scorefile"
+%set art_help_line " o:Save | ;:Mark | ,:Goto marked | [ESC 1] ESC t:Collapse/Uncollapse all threads"
+
+%If non-zero, slrn aborts posting or email operations if the user did
+% not modify the article.
+set abort_unmodified_edits 1
+% }}}
+
+% Configuration commands initiating with »b« {{{
+% If 0, do not beep terminal.
+% If 1, send audible beep.
+% If 2, send only visible bell.
+% If 3, send both.
+set beep 1
+% }}}
+
+% Configuration commands initiating with »c« {{{
+% Set this to 0 for no-confirmation on follow, reply, quit, etc...
+% 1     Confirm marking groups as read or un-read.
+% 2     Confirm printing an article.
+% 4     Confirm posts, followups, replies and supersedes.
+% 8     Confirm leaving a group by following a news: URL.
+% 16    Confirm quitting slrn.
+%set confirm_actions 1
+set confirm_actions 27 % 1+2+8+16
+
+% Some authors will request a CC by email as well as a post,
+% by default slrn asks if we want to send an email as well.
+%   0     Never send email copies automatically
+%   1     Prompt if original poster requested a copy
+%   2     Send email copy if original poster requested it
+%   3     Always prompt
+%   4     Send copy if poster requested it; prompt otherwise
+% "Post the NG, read the NG" so set to 0 for 'never CC'.
+set cc_followup 0
+
+% These are inserted when sending email CCs of your postings.
+% cc_post_string currently does not support any % escapes.
+set cc_post_string "[This message has also been posted.]"
+
+% Custom headers to add to *new* posts
+% For the feature X-Face check out Karl Voit's XFace-Mini-Howto:
+% <http://www.karl-voit.at/howtos/en/xface.txt>
+%  "  ->  \"
+%  \  ->  \\
+%  %  ->  %%
+% See http://strcat.de/slrn/slrn.png for an example
+set custom_headers "X-Face: ,>[:$oWa1d@rqX'u1(z8,QN\"Dhe-A0}47t;#s]ZpG^mBq$|LEXakL`e!P?)\\S%%(',/'8pn9WCYWRgO3wsW.r;Hac;(V_6T#S&5WrFoO"
+
+% If custom sorting is enabled by setting ``sorting_method'' to 12, this
+% variable defines the sort order you want to use. It is a comma-
+% separated list of the following keywords:
+%   subject   =>        Alphabetic a-z, Case insensitiv;
+%   date      =>        Oldest first;
+%   highscore =>        NonHighscore first;
+%   score     =>        Lowest first;
+%   author    =>        Alphabetic A-z;
+%   num       =>        Lowest First;
+%   lines     =>        Lowest First;
+%   id        =>        Alphabetic A-z;
+% The first char uppercase means inverted sortorder
+%set custom_sort_order "subject,Score,date,number,id"
+
+% http://slrn.sourceforge.net/patches/custom_os.patch
+%set custom_os "Unix"
+% Should color be used to indicate the score of an article?
+%   0    scores do not influence colors
+%   1    scores are colored by their value
+%   2    subjects are colored by score
+%   3    both scores and subjects are colored by score
+set color_by_score 3
+% }}}
+
+% Configuration commands initiating with »d« {{{
+% The directory where uuencoded files, shar archives and things like
+% that are placed after decoding.
+set decode_directory "/home/dope/nslrn/News"
+
+% Draw cursor bar ala tin instead of slrn "->" cursor? By default the
+% current article is marked with a ->, if we set this to 1 the article
+% is highlighted with a horizontal bar across the screen
+set display_cursor_bar 0
+% }}}
+
+% Configuration commands initiating with »e« {{{
+% This bitmapped variable controls what parts of an article should be scanned
+% for emphasized text.  Set it to one of the following values or the  sum
+% of any combination of the values to scan the corresponding parts of  the
+% article:
+%   1 message portion (the non-quoted, non-signature part)
+%   2 quoted portion
+%   4 signature
+% For example, using 3 [1]
+set emphasized_text_mask 3
+
+% ll cause the message and quoted portions to
+% be scanned. If non-zero, interprete _this_ as underlined text and *that* as
+% bold text using underlinetext and boldtext colors, resp.
+% If set to 1, do not write _ and * characters.
+% If set to 2, write _ and * with spaces.
+% Otherwise, if non-zero, write _ and * characters.
+set emphasized_text_mode 3
+
+% my favorite editor
+% Before start, add a new bofh excuse in ~/.sig, *then* start $EDITOR
+%set editor_command "/usr/games/fortune bofh-excuses >| /home/dope/.sig ; vim -T rxvt '+set tw=72'" % ft=mail' +%d '%s'"
+%--------------------------------------------------
+% set editor_command "/home/dope/bin/slrn.sh ; vim %s"
+%--------------------------------------------------
+set editor_command "nvim %s"
+%--------------------------------------------------
+% set editor_command "/usr/bin/fortune /home/dope/.sigs/own >|/home/dope/.sig ; vim %s "
+%--------------------------------------------------
+%set editor_command "/usr/bin/fortune /home/dope/.sigs/own >|/home/dope/.sig ; vimwrap "
+%set editor_command "/home/dope/vimwrap"
+%set editor_command "jed '%s' -g %d -tmp -f mail_mode"
+%set editor_command "jed '%s' -g %d -tmp"
+%set editor_command "pico -t +%d '%s'"
+%set editor_command "nano +%d %s"
+%set editor_command "mcedit %s %d"
+%set editor_command "gvim %s"
+%set editor_command "emacs -nw +%d %s"
+% }}}
+
+% Configuration commands initiating with »f« {{{
+% File where failed posts are appended.  Use "" to disable
+% saving. I use
+%  | if [ -e ~/dead.letter ]; then
+%  |         mv ~/dead.letter ~/.dead_letter.`date +%Y%m%d-%R`
+%  | fi
+% in my ~/.zsh/zshmisc, to /manage/ this postings.
+%  => Not really needed. See ``save_posts''.
+% set failed_posts_file "~/dead.letter"
+
+% If non-zero, signature will not be included in quoted text of followups
+set followup_strip_signature 1
+
+% customize the attibutionline
+%   %d: Date        %r: Name       %f: Email  %s: Subject
+%   %m: Message-Id  %n: Newsgroup  %%: Prozent
+set followup_string "Thus spake %r (%f):"
+
+
+% Use this variable to create additional headers when posting a
+% followup.
+% For the feature X-Face check out Karl Voit's XFace-Mini-Howto:
+% <http://www.karl-voit.at/howtos/en/xface.txt>
+%  "  ->  \"
+%  \  ->  \\
+%  %  ->  %%
+set followup_custom_headers "X-Important: <http://www.ccc.de/updates/2007/biometrie-terror>\nX-Webhoster: Neessen Webhosting (<http://www.neessen.net/>)\nX-Face: ,>[:$oWa1d@rqX'u1(z8,QN\"Dhe-A0}47t;#s]ZpG^mBq$|LEXakL`e!P?)\\S%%(',/'8pn9WCYWRgO3wsW.r;Hac;(V_6T#S&5WrFoO"
+% }}}
+
+% Configuration commands initiating with »g« {{{
+% This variable affects the status line in group mode.
+% It accepts all % escapes that are defined for group_display_format
+% plus the following ones:
+%       D   Prints `*' if newsrc file needs saving, `-' otherwise
+%       L   Current line (e.g. ``1/34'')
+%       P   Percentage of the way through the group window
+%       s   Name of the current server
+set group_status_line "-%D-[%?u?%u/?%t] %d %-18g -- %L (%P)"
+
+% Set this to zero if you want to leave Message-ID generation to your server
+% or your system does not have a proper unique hostname.
+set generate_message_id 1
+
+% generate a date-header
+set generate_date_header 1
+
+% set the display format in group-mode, toggle between this settings
+% with 'ESC-a' (default)
+%
+%       F   Group flag (`U' for unsubscribed, `N' for new)
+%       d   Group description (needs to be downloaded once with slrn -d)
+%       h   ``High water mark'' (highest article number in the group)
+%       l   ``Low water mark'' (lowest article number in the group)
+%       n   Group name
+%       t   Total number of articles in the group (estimate)
+%       u   Number of unread articles in the group
+%group_display_format 0 "%F%-5u [%-6t]  %40n %d"
+group_display_format 0 "%F%-5u  [%-5t] %n%55g%d "
+group_display_format 1 "%F%-4u  %n%50g%d"
+group_display_format 2 "%F%-4u  %n%50g%-8l-%h"
+% }}}
+
+% Configuration commands initiating with »h« {{{
+% When unset, the default is (the localized form of)
+% "%p[%u/%t unread] Group: %n%-20g -- %L (%P)".
+%       L   Current line (e.g. '1/74')
+%       P   Percentage of the way through the header list
+%       T   Number of articles in the current subthread
+%       h   Number of high scoring articles in the group
+%       k   Number of articles killed by the scorefile
+%       l   Number of low scoring articles
+%       n   Name of the current group
+%       p   Prints `<' if the window is panned (scrolled horizontally)
+%       r   Number of read articles in the group
+%       t   Total number of articles in the group
+%       u   Number of unread articles in the group
+%set header_status_line "[total: %t%?u? unread: %u?] Group: %n%-18g -- %L (%P)"
+set header_status_line "%p[%u/%t unread - %T subthread] [%h high, %l low, %k killed] [%n]%-20g --- [%L] [%P]"
+
+% Setting the header window display format.
+% The generic format specifier begins with the `%' character and must
+% be of the form:
+% num "%[-][w]x"
+% where the brackets indicate optional items.
+% Here, _w_ is a width  specifier consisting of one or more digits.
+% If the minus sign (-) % is present, the item will be right justified,
+% otherwise it will be  left justified. (num) is a number of theme,
+% switched by toggle_headers_format. num == 0 is default header_format
+% The item specifier _x_ is required and, depending on it value, has
+% the following meaning:
+%       s : subject
+%       S : score
+%       r : author real name
+%       f : from header
+%       G : Group lens score
+%       l : Number of lines
+%       n : server number
+%       d : date
+%       t : thread tree
+%       F : flags (read/unread, `*' and `#' tags, header number)
+%       % : percent character
+%       g : goto a specified column
+%header_display_format 0         "%F%-5S%G%-5l:[%20r]%t%s"
+header_display_format 0 "%F%-5S%-5l:[%16r] %t%s %-24g[%-22d]"
+header_display_format 1 "%F%-5S%t%50s%-45g%r"
+header_display_format 2 "%F%-5l:%t%70s%-35g%r"
+header_display_format 3 "%F%-5l:%t%70s%-45g%f"
+header_display_format 4 "%F%t%70s%-45g%r"
+header_display_format 5 "%F%-5l:[%15r]%t%70s"
+header_display_format 6 "%F%-5S%G%-5l:[%12r][%17d]%t%s"
+
+% If non-zero, URLs are highlighted.
+set highlight_urls 1
+
+% my hostname (that's the part after the '@')
+set hostname "gmx.net"
+
+% don't show pgp-signatures
+set hide_pgpsignature 1
+
+% highlight a posting if unread
+set highlight_unread_subjects 0
+% }}}
+
+% Configuration commands initiating with »i« {{{
+% This regular expression defines lines that are consider to be quoted lines.
+% It says that any lines beginning with 0-2 spaces followed by a either
+% a >, <, :, |, or = character is a quoted line.
+% ignore_quotes "^[ \t]*[]>^:|&%]" "^[ \t]*[a-zäöåÖÄÖA-Z-]*>" "^()" "^[-=]+>" "^\+\+"
+ignore_quotes "^ *[a-zA-Z-]*>" "^ *[\]|)]" "^ *:[^-()^]"
+
+% }}}
+
+% Configuration commands initiating with »k« {{{
+% scoring is evil :>
+set kill_score -3000
+% }}}
+
+% Configuration commands initiating with »m« {{{
+% Character set to declare when posting 8bit characters. Do *not* use
+% the same value as for "charset" here.
+%--------------------------------------------------
+% set mime_charset "iso-8859-15"
+%--------------------------------------------------
+%--------------------------------------------------
+% compatible_charsets "us_ascii,iso-8859-1,iso-8859-15,Windows-1252,utf-8"
+%--------------------------------------------------
+
+% This variable is interpreted as a shell command which will be used
+% to invoke my editor of choice when i want to reply by email. If it
+% is unset, slrn will use the editor defined by 'editor_command'.
+set mail_editor_command "mutt -H '%s' -e 'set signature='"
+
+% Set this variable if my 'mail_editor_command' is a Mail User  Agent,
+% i.e.  sends the email itself.  This makes sure it does not get sent
+% twice (both by your MUA and slrn).
+set mail_editor_is_mua 1
+
+% scoring is evil, huh?
+set max_low_score -50
+
+% Enable xterm mouse support: 1 to enable, 0 to disable. mouse? For
+% Slrn? A mouse is a device used to select the xterm you want to type
+% in. Real hackers use screen oder Emacs.. mouse.. *rofl*
+set mouse 0
+% }}}
+
+% Configuration commands initiating with »n« {{{
+% If non-zero, a header with a new subject will start a new thread.
+set new_subject_breaks_threads 2
+
+% Newsserver and Password
+% nnrpaccess "HOSTNAME" "USERNAME" ""  % Prompt for password
+% nnrpaccess "HOSTNAME" ""         ""  % Prompt for username and password
+
+% following the URL's
+% set non_Xbrowser "w3m '%s'"
+set non_Xbrowser "screen -t 'url' w3m %s"
+% }}}
+
+% Configuration commands initiating with »p« {{{
+% Directory where articles you want to postpone are saved.
+set postpone_directory "/home/dope/nslrn/News/Postponed"
+
+% set my FQDN
+posting_host "bofh.my-fqdn.de"
+
+% verbatim text is between pairing lines containing "#v+" (verbose on)
+% and "#v-" (verbose off). If non-zero, #v+ and #v- will be interpreted
+% as markers of verbatim lines; i. e.:
+%  | #v+
+%  | $ slrn --version
+%  | #v-
+set process_verbatim_marks 1
+% }}}
+
+% Configuration commands initiating with »q« {{{
+% Setting either of these to 0 will enable you to move directly to the
+% next article/group without confirmation
+set query_next_group 0
+set query_next_article 0
+
+% Maximum number of articles to read before slrn will prompt.  Default is 100.
+% Set this to zero to turn of prompting.
+set query_read_group_cutoff 100
+
+% The quote string will be used when following up/replying
+% Hint: ">" (without a space) create
+% '> quoted text'
+% and "> " (with a space behind the '>' create
+% '>  quoted text'
+set quote_string ">"
+% }}}
+
+% Configuration commands initiating with »r« {{{
+% if 1, slrn will not allow me to post if message has more than 80 characters
+% 2 will issue me a warning
+set reject_long_lines 2
+
+% customize the attibutionline
+%   %d: Date        %r: Name       %f: Email  %s: Subject
+%   %m: Message-Id  %n: Newsgroup  %%: Prozent
+set reply_string "* Thus spake %r (%f) [%n]:"
+
+% Use this variable to create additional headers when replying to a posting
+% (via email). You can use all % escapes that are defined in
+% "followup_string". The headers you add this way will also show up in
+% your editor and can be modified.
+set reply_custom_headers "X-Newsgroup: %n\nX-Realname: %r\nX-MessageID: %m: "
+
+% If non-zero, slrn will read the active file when starting. This may lead
+% to faster startup times IF your network connection is fast. If it slow,
+% DO NOT USE IT. If you can, I recommend setting it to 1.
+set read_active 0
+
+% my name
+set realname "Christian Schneider"
+% }}}
+
+% Configuration commands initiating with »s« {{{
+% Custom headers for followup/reply/supersedes. These can use format
+% specifiers as in the 'followup_string' variable.
+set supersedes_custom_headers "X-Superseded-Date: %d\nX-Face: ,>[:$oWa1d@rqX'u1(z8,QN\"Dhe-A0}47t;#s]ZpG^mBq$|LEXakL`e!P?)\\S%%(',/'8pn9WCYWRgO3wsW.r;Hac;(V_6T#S&5WrFoO"
+
+% Defines the program that will be called to edit your score file. If
+% unset, the editor in 'editor_command' is used.
+set score_editor_command "vim '%s'"
+
+% If non-zero, the first article is automatically displayed when entering a group.
+set show_article 0
+
+% Tell slrn which newsrc file it should use for which server.
+% Note: This does *not* set the default server; you need to set the
+%       NNTPSERVER environment variable for this.
+% We can refer to other slrnrc files located elsewhere
+% using 'include', a la muttrc in Mutt.
+% All paths are relative to $SLRNHOME or $HOME if unset.
+% e.g. include ".slrn-colours", "News/server-settings"
+% But here are the basics anyway:
+%server news.individual.de ".jnewsrc"
+%--------------------------------------------------
+% server news.arcor.de	".jnewsrc"
+%--------------------------------------------------
+%--------------------------------------------------
+%--------------------------------------------------
+% server news.t-online.com  ".jnewsrc"
+%--------------------------------------------------
+%--------------------------------------------------
+%server news.gmane.org     ".g-newsrc"
+
+%  0     do not sort
+%  1     perform threading
+%  2     sort by subject
+%  3     thread, then sort by subject
+%  4     sort by score
+%  5     thread, then sort by score
+%  6     sort by score, then by subject
+%  7     thread, then sort by score and subject
+%  8     sort by date with most recent first
+%  9     thread, then sort by date with most recent first
+% 10     sort by date with most recent last
+% 11     thread, then sort by date with most recent last
+% 12     custom sorting
+set sorting_method 9
+
+% If non-zero, slrn will draw the thread tree using simple ascii characters
+set simulate_graphic_chars 1
+
+% Add a 'np:' (NowPlaying) - signature ;)
+% Require the SongChange-Plugin!
+% xmms -> STRG+P -> SongChange-Plugin and add a line
+% /bin/sh /home/dope/.slang/slrn.sh
+% my ~/.slang/slrn.sh look like as follows:
+% #!/bin/sh
+% rm -f ~/.nnsig
+% echo -e "-- \nhttp://3d-crew.com/     Public Key ID: 0xF2B2F85F" > ~/.nnsig
+% cat ~/.xmms/current_song >> ~/.nnsig
+set signature "/home/dope/.nnsig"
+% Nope. I use ~/.slang/nowplaying.sl for a 'X-Now-Playing' - Header.
+%--------------------------------------------------
+% set signature "/home/dope/.signature"
+%--------------------------------------------------
+%--------------------------------------------------
+% set signature "/home/dope/.sig"
+%--------------------------------------------------
+
+% Character to use to hide spoiler text:
+set spoiler_char '*'
+
+% save my postings
+set save_posts "/home/dope/nslrn/Posts"
+set save_replies "/home/dope/nslrn/Replies"
+set save_directory "/home/dope/nslrn/News"
+
+% Uncomment the following line if you want to have old subjects stripped
+% automatically on followups:
+% Alternately change it with you're $EDITOR (vi(m) can do this).
+strip_was_regexp " ?(was:.*)$
+
+% Some broken user agents mess up the "Re:". Here, you can define up to five
+% regular expressions to detect this (and strip it on followups)
+strip_re_regexp "^Re\\^?[0-9]+:" "^Re\\[[0-9]+\\]:" "\\c^A[Ww]:" "\\c^S[Vv]:"
+
+% slrn itself makes sure that you use the signature delimiter that
+% current drafts prescribe ("-- " - mind the trailing space!). If you
+% want it to recognize different delimiters as well (e.g. ones created
+% by broken software), you can use this command to define (up to five)
+% regular expressions that match them.
+% '^' <= To the first non-blank character of the line.
+% '$' <= To the end of the line.
+strip_sig_regexp "^--$" "^-- $"
+
+% use my scorefile aka The last line of defense aka Hall of Lamer
+set scorefile "/home/dope/.slang/score"
+
+% The value of this variable will be inserted before the signature. This
+% is useful for people who want to sign off their messages with their
+% name, like it is common in some groups.
+% set signoff_string ":wq 42"
+
+% Controls the method slrn uses to read news. It can be either "nntp"
+% (connect an NNTP server) or "spool" (read from a local spool).
+%  set server_object "nntp"
+%  set post_object "nntp"
+% I fetch articles with 'slrnpull' and read it offline.
+ set spool_inn_root              "/home/dope/nslrn/slrnpull"
+ set spool_root                  "/home/dope/nslrn/slrnpull/news"
+ set spool_nov_root              "/home/dope/nslrn/slrnpull/news"
+ set use_slrnpull                1
+ set server_object               "spool"
+% }}}
+
+% Configuration commands initiating with »t« {{{
+% Currently, the only allowed sequences for top_status_line are:
+%    %%   percent character
+%    %d   current date
+%    %n   name of the current newsgroup
+%    %s   name of the current server
+%    %t   current time
+%    %v   version of slrn
+set top_status_line "  slrn %v (%d) .:{ %n }:.   **    Typo in the code"
+% }}}
+
+% Configuration commands initiating with »u« {{{
+% that's the part before the '@' from your email-address
+set username "strcat"
+
+% use my time
+set use_localtime 1
+
+% If non-zero, slrn will automatically subscribe new groups.  The default is
+% 0.
+set unsubscribe_new_groups 1
+
+% If non-zero, call metamail for mime formats that slrn does not handle
+set use_metamail 0
+
+% MIME-Support
+%--------------------------------------------------
+% set use_mime 1
+%--------------------------------------------------
+% }}}
+
+% Configuration commands initiating with »v« {{{
+% Which headers do you want to see by default?
+% You can also match all headers starting with a given string and exclude
+% specific headers by preceding them with "!" (e.g. use "X-,!X-Trace:" to
+% display all the "X-"headers except "X-Trace:").
+visible_headers "Subject:,From:,Organization:,Newsgroups:,Date:,Message-ID:,User-Agent:,X-Newsreader:,X-Url:,X-Now-Playing:,X-Old-Subject:"
+% }}}
+
+% Configuration commands initiating with »w« {{{
+% What to wrap when wrapping an article:
+%  0 or 4 ==> wrap body
+%  1 or 5 ==> wrap headers, body
+%  2 or 6 ==> wrap quoted text, body
+%  3 or 7 ==> wrap headers, quoted text, body
+% The higher number indicates that every article will be automatically
+% wrapped.
+set wrap_flags 7
+
+% With this variable, you can control how slrn wraps long lines. When 0,
+% it wraps at word boundries, leaving words that are longer than your
+% line width untouched. When 1, it always wraps at the right border of
+% the screen. When 2, it first tries so find a good place to wrap the
+% line and wraps at the right border only when necessary.
+set wrap_method 2
+
+% If this variable is zero, all groups are saved when writing your newsrc
+% file. If it is 1, unsubscribed groups are not saved; if it is 2,
+% unsubscribed groups are not saved if there are any unread messages in them.
+set write_newsrc_flags 2
+% }}}
+
+% Configuration commands initiating with »x« {{{
+% following the URL's
+%set Xbrowser "opera -geometry 1024x768+0+0 '%s' &"
+%set Xbrowser "opera -remote 'openURL(%s, new-window)' &"
+set Xbrowser "url_handler.sh"
+% }}}
+
+% Macros {{{
+% My Macrodirectory
+set macro_directory "/home/dope/.slang/"
+ %% Repair "Kammquoting" (Outlook(-Express))
+ %% Define the keystroke in the source. I use
+ %% '<ESC>-q'
+ interpret "oe_quot.sl"
+ interpret "slrnpull.sl"
+ %% "save as subject"
+ interpret "saveex.sl"
+ %% Search body of articles ('ESC e /')
+ interpret "body_search.sl"
+ %% die hard, Score fast
+ interpret "onekey-score.sl"
+ interpret "slrn-pl.sl"
+ %% Edit colors with 'ESC e c'
+ interpret "color.sl"
+ %% This macro searches the article for msg-id's and presents them
+ %% in the menu form (just as it is with URL's).
+ interpret "msgid.sl"
+ %% Save URL's in a File
+ interpret "saveurl.sl"
+ %% repair wraped URLs ('<ESC>-d')
+ interpret "repairurl.sl"
+ %% Download the FAQ
+ interpret "faq.sl"
+ %% Scan an article for Message-Ids and fetch them
+ interpret "get-by-mid.sl"
+ %% Make article sticky (beware for delete)
+ interpret "stickytags.sl"
+ %% This macro check if the current message is part of a thread
+ interpret "part_of_thread.sl"
+ %% MIME workaround to enable windows-1252 and utf-7
+ %% Original is from Bernd Nawothnig in
+ %% <news://a2bjr1-ci9.ln1@Bernd.Nawothnig.dialin.t-online.de>
+ interpret "recode.sl"
+ %% My personal macros
+ interpret "my_macros.sl"
+ %% feeble attempt at delivering X-Faces to slrn users
+ %%interpret "slrnface.sl"
+ %% a macro for using GNU Privacy Guard (GnuPG) with SLRN.
+ %interpret "gnupg.sl"
+ %% /usr/share/slrn/macros/varset.sl
+ interpret "varset.sl"
+ %% sorted output of header lines
+ interpret "sort-headers.sl"
+ %% ToFu-Protection
+ % interpret "t-prot.sl"
+ % interpret "t-prot-cfg"
+% }}}
+
+% Colors {{{
+% Monochrome attributes for monochrom terminals.
+% One or more attributes may be specified.
+%
+%  ,----
+%  | $ sed -n 1144,1167p /usr/local/share/doc/slrn/manual.txt
+%  |   The foreground and background colors have to be set to one of the
+%  |   following strings:
+%  |
+%  |
+%  |        black                gray
+%  |        red                  brightred
+%  |        green                brightgreen
+%  |        brown                yellow
+%  |        blue                 brightblue
+%  |        magenta              brightmagenta
+%  |        cyan                 brightcyan
+%  |        lightgray            white
+%  |
+%  |
+%  |
+%  |   Additionally, you can use the default foreground / background colors
+%  |   of your terminal via the keyword "default".
+%  |
+%  |   Please note that the colors in the right column are all ``bright'' (or
+%  |   ``bold''). On many terminals, they can only be used for the
+%  |   foreground. If you think your terminal has more than 8 background
+%  |   colors, but slrn refuses to use them, you might need to chose a
+%  |   different terminfo entry. On modern xterms and rxvt, setting $TERM to
+%  |   xterm-16color should work.
+%  `----
+mono     normal         "none"
+mono     header_number  "none"
+mono     header_name    "bold"
+mono     error          "blink"         "bold"
+mono     status         "reverse"
+mono     group          "bold"
+mono     article        "none"
+mono     cursor         "bold"          "reverse"
+mono     author         "none"
+mono     subject        "none"
+mono     headers        "bold"
+mono     menu           "reverse"
+mono     menu_press     "none"
+mono     tree           "bold"
+mono     quotes         "underline"
+mono     thread_number  "bold"
+mono     high_score     "bold"
+mono     signature      "none"
+mono     description    "none"
+mono    response_char   "bold"
+
+% These settings are used for color terminals.
+%color article         "grey" "default"
+%color article         "white"         "default"
+color article "default" "default"
+color author          "magenta"       "default"
+color boldtext        "brightblue"    "default"
+color box             "lightgray"     "default"
+color cursor          "blue"     "default"
+color date            "lightgray"     "default"
+color description     "lightgray"     "default"
+color error           "red"           "default"
+color frame           "yellow"        "blue"
+color from_myself     "brightmagenta" "default"
+color group           "lightgray"     "default"
+color grouplens_display "lightgray"   "default"
+color header_name     "green"         "default"
+color header_number   "green"         "default"
+color headers         "lightgray"     "default"
+color high_score      "red"           "default"
+color italicstext     "magenta"       "default"
+color menu            "brightblue"          "black"
+color menu_press      "lightgray"     "yellow"
+color message         "lightgray"     "default"
+color neg_score       "green"         "default"
+color normal          "lightgray"     "default"
+color pgpsignature    "lightgray"     "default"
+color pos_score       "blue"          "default"
+color quotes          "green"         "default"
+color quotes1         "magenta"       "default"
+color quotes2         "cyan"          "default"
+color quotes3         "yellow"        "default"
+color quotes4         "brown"         "default"
+color quotes5         "brown"         "default"
+color quotes6         "brown"         "default"
+color quotes7         "brown"         "default"
+color response_char   "green"         "default"
+color selection       "yellow"        "blue"
+color signature       "red"           "default"
+color status          "blue"        "default"
+color subject         "lightgray"     "default"
+color thread_number   "lightgray"     "default"
+color tilde           "green"         "default"
+color tree            "red"           "default"
+color underlinetext   "cyan"          "default"
+color url             "magenta"       "default"
+color verbatim        "green"         "default"
+% }}}
+
+% {{{ Keymappings
+% "article" contains the functions in article mode (note that header
+% overview and pager do not have separate keymaps)
+% Article mode key bindings:
+setkey article   register_t_prot "\e6"
+setkey article unregister_t_prot "\e7"
+setkey article "call(\"catchup_all\");call(\"skip_to_next_group\")" "\e\eV"
+setkey article "call(\"toggle_collapse_threads\");call(\"delete\")" "\e\ev"
+setkey article article_bob              "<"     % Move to the beginning
+setkey article article_eob              ">"     % Move to the end of the article
+setkey article article_left             "\eOD"  % Pan article to the left
+setkey article article_line_down        "\eOD"  % Scroll article down one line
+setkey article article_line_up          "\e\eOB"% Scroll article up one line
+setkey article article_page_down        " "     % Scroll article down one page
+setkey article article_page_up          "^H"    % Scroll article up one page
+setkey article article_page_up          "^?"    % Scroll article up one page
+setkey article article_right            "\eOC"  % Pan article to the right
+setkey article article_search           "/"     % Search forward in the article
+setkey article author_search_backward   "A"     % Author search backward
+setkey article author_search_forward    "a"     % Author search forward
+setkey article browse_url               "U"     % Search for URL and follow it
+setkey article cancel                   "\e^C"  % Cancel article
+setkey article catchup                  "\eC"   % Catchup (up to this article)
+setkey article catchup_all              "c"     % Mark all articles as read
+setkey article decode                   ":"     % Decode article
+setkey article delete                   "d"     % Mark article as read
+setkey article delete_thread            "\ed"   % Mark (Sub-)Thread as read
+setkey article enlarge_article_window   "^"     % Enlarge the article window
+setkey article expunge                  "x"     % Remove all read articles
+setkey article fast_quit                "Q"     % Quit slrn immediately
+setkey article followup                 "f"     % Post a followup
+setkey article forward                  "F"     % Forward posting via mail
+setkey article forward_digest           "g"     % Skip to next digest
+setkey article get_children_headers     "\e^P"  % Find all children
+setkey article get_parent_header        "\ep"   % Reconstruct aders
+setkey article goto_article             "j"     % Move to article (number)
+setkey article goto_last_read           "L"     % go to the last read article
+setkey article header_bob               "\e<"   % Go to first article in group
+setkey article header_eob               "\e>"   % Go to last article in group
+setkey article header_line_down         "\eOB"  % Move to next article
+setkey article header_line_up           "\eOA"  % Move to previous article
+setkey article header_page_down         "\e[G"  % (*BSD keycode)
+setkey article header_page_down         "^V"    % Scroll down one page
+setkey article header_page_up           "\eV"   % Scroll up one page
+setkey article header_page_up           "\e[I"  % (*BSD keycode)
+setkey article hide_article             "h"     % Hide/Show the article window
+setkey article next                     "n"     % next unread article
+setkey article next_high_score          "!"     % next article with high score
+setkey article next_same_subject        "="     % next article with same subject
+setkey article pipe                     "|"     % Pipe article
+setkey article post                     "P"     % Post a new article
+setkey article post_postponed           "\eP"   % Post/edit a postponed article
+setkey article previous                 "p"     % previous unread article
+setkey article print                    "y"     % Print article
+setkey article reply                    "r"     % Reply to poster
+setkey article save                     "O"     % Save article
+setkey article savex			"^b"	% save article as subject
+setkey article show_spoilers            "\e?"   % Reveal spoilers (on/off)
+setkey article shrink_article_window    "^^"    % Shrink the article window
+setkey article skip_quotes              "\t"    % Skip beyond quoted text
+setkey article skip_to_next_group       "N"     % go to the next group
+setkey article skip_to_previous_group   "\e\e[D"% go to the previous group
+setkey article subject_search_backward  "S"     % Subject search backward
+setkey article subject_search_forward   "s"     % Subject search forward
+setkey article supersede                "\e^S"  % Supersede article
+setkey article suspend                  "^Z"    % Suspend slrn
+setkey article toggle_header_tag        "*"     % Set/remove header tag
+setkey article toggle_headers           "t"     % Full headers (on/off)
+setkey article toggle_pgpsignature      "]"     % Show PGP signature (on/off)
+setkey article toggle_quotes            "T"     % Display quoted lines (on/off)
+setkey article toggle_rot13             "\eR"   % Toggle ROT-13 decryption
+setkey article toggle_signature         "\\"    % Show signature (on/off)
+setkey article toggle_sort              "\eS"   % Select threading method
+setkey article toggle_verbatim_marks    "["     % Show verbatim marks (on/off)
+setkey article uncatchup                "\eU"   % Uncatchup (up to this article)
+setkey article uncatchup_all            "\eu"   % Mark all articles as unread
+setkey article undelete                 "u"     % Mark article as unread
+setkey article wrap_article             "W"     % Wrap long lines (on/off)
+setkey article zoom_article_window      "z"     % Maximize/Unmaximize article
+
+% "group" keymaps contains all functions in group mode.
+% Group mode key bindings:
+setkey group add_group                  "a"     % Add a new newsgroup
+setkey group bob                        "\e<"   % Go to the bottom of the list
+setkey group catchup                    "C"     % Mark all articles as read
+setkey group eob                        "\e>"   % Go to the top of the list
+setkey group evaluate_cmd               "^X\e"  % Read line and interpret it as S-Lang
+setkey group group_search_backward      "\\"    % Group keyword search backward
+setkey group group_search_forward       "/"     % Group keyword search forward
+setkey group help                       "?"     % Display a help screen
+setkey group line_down                  "\eOB"  % Go to the next group
+setkey group line_up                    "\eOA"  % Go to the previous group
+setkey group move_group                 "m"     % Move newsgroup to a different location
+setkey group page_down                  "^V"    % Scroll to the next page
+setkey group page_up                    "\eV"   % Scroll to the previous page
+setkey group post                       "P"     % Post an article
+setkey group post_postponed             "\eP"   % Post or edit a postponed article
+setkey group quit                       "Q"     % Quit slrn
+setkey group redraw                     "^L"    % Redraw the screen
+setkey group slrnp			"f"	% Get new news from server
+setkey group refresh_groups		"g"
+setkey group repeat_last_key            "."     % Repeat last key sequence
+setkey group save_newsrc                "X"     % Force a save of the newsrc file
+setkey group select_group               " "     % Enter the current newsgroup
+setkey group subscribe                  "S"     % Subscribe to the current newsgroup
+setkey group suspend                    "^Z"    % Suspend slrn
+setkey group toggle_group_formats       "\033A" % Toggle group display formats
+setkey group toggle_hidden              "l"     % Toggle display of hidden groups
+setkey group toggle_list_all            "L"     % Toggle listing of unsubscribed groups
+setkey group toggle_scoring             "K"     % Select scoring mode
+setkey group transpose_groups           "^X^T"  % Transpose position of groups
+setkey group uncatchup                  "\eu"   % Mark all articles as unread
+setkey group unsubscribe                "U"     % Unsubscribe from the current newsgroup
+
+% "readline" keymaps can be used to customize the line editor.
+% Readline key bindings:
+setkey readline bol                     "^A"    % Beginning of line
+setkey readline complete                "\t"    % Complete filename
+setkey readline cycle                   " "     % Cycle among filenames
+setkey readline delbol                  "^U"    % Delete to Beginning of line
+setkey readline delbow                  "^W"    % Delete to Beginning of word
+setkey readline deleol                  "^K"    % Delete to End
+setkey readline eol                     "^E"    % End of line
+setkey readline left                    "\e[D"  % Move left
+setkey readline quoted_insert           "^Q"    % Quoted insert
+setkey readline right                   "\e[C"  % Move right
+setkey readline trim                    "\e/"   % Trim whitespace
+
+% Own definitions. I need this for "my" macros.
+% Macro key bindings:
+setkey article OneKeyScore->ignore_subthread "^K" % <STRG>-K
+setkey article OneKeyScore->watch_subthread "^W" % <STRG>-K
+setkey article edit_colors "\eec" % <ESC>-e-c
+setkey article "OneKeyScore->create_score('r', -9999, 't', 5, 1);" "^K" % <STRG>-K
+setkey article "OneKeyScore->create_score('r', 3000, 't',10, 1);" "^W" % <STRG>-W
+setkey article "OneKeyScore->create_score('s', 1000, 't',10, 1);" "^S" % <STRG>-S
+setkey article "OneKeyScore->create_score('f', -9999, 'a', 100, 1); " "^F" % <STRG>-F
+setkey article "reload_scorefile(-1)" "\ek"
+setkey article StickyTags->save_as "I"
+setkey group   StickyTags->save_as "I"
+setkey group   StickyTags->catchup "i"
+setkey article set_variable "\eed"
+setkey group set_variable "\eed"
+setkey group   rtfFAQ->now "_"
+setkey article rtfFAQ->now "_"
+% }}}

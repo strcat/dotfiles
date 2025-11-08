@@ -1,0 +1,52 @@
+# # unset sidebar_visible
+# set mail_check_stats
+# # When abbreviating mailbox path names, use any of these characters as path
+# # separators.  Only the part after the last separators will be shown.
+# # For file folders '/' is good.  For IMAP folders, often '.' is useful.
+# set sidebar_delim_chars = '/.'
+
+# # If the mailbox path is abbreviated, should it be indented?
+# set sidebar_folder_indent = no
+
+# # Indent mailbox paths with this string.
+# set sidebar_indent_string = '  '
+
+# # Make the Sidebar only display mailboxes that contain new, or flagged,
+# # mail.
+# set sidebar_new_mail_only = no
+
+# # When searching for mailboxes containing new mail, should the search wrap
+# # around when it reaches the end of the list?
+# set sidebar_next_new_wrap = no
+
+# # The character to use as the divider between the Sidebar and the other Mutt
+# # panels.
+# # Note: Only the first character of this string is used.
+# set sidebar_divider_char = '|'
+
+# # Display the Sidebar mailboxes using this format string.
+
+
+bind index,pager \CP sidebar-prev       # Ctrl-Shift-P - Previous Mailbox
+bind index,pager \CN sidebar-next       # Ctrl-Shift-N - Next Mailbox
+bind index,pager \CO sidebar-open       # Ctrl-Shift-O - Open Highlighted Mailbox
+# bind index,pager B sidebar-toggle-visible   # Use 'B' to switch the Sidebar on and off
+
+set sidebar_visible = yes           ## Make the Sidebar visible by default
+# set sidebar_width = 16              ## Sidebar width, including divider
+set sidebar_divider_char = '│'      ## Pretty line-drawing character
+set sidebar_short_path              ## Shorten mailbox names
+set sidebar_delim_chars = "/"       ## Delete mailbox name up to the last / characters
+set mail_check_stats
+set sidebar_format = '%D%?F? [%F]?%* %?N?%N/?%?S?%S?'
+set sidebar_folder_indent           ## Indent folders whose names we've shortened
+color sidebar_indicator default color17         ## Dark blue background
+color sidebar_highlight white   color238        ## Grey background
+#color sidebar_highlight white   cyan            ## Cyan for visablity
+color sidebar_spoolfile yellow  black           ## Yellow
+color sidebar_new       green   black           ## Green
+color sidebar_flagged   red     black           ## Red
+#color sidebar_ordinary  color8  black           ## test
+color sidebar_divider   color8  black           ## Dark grey
+### End Sidebar Colors ### }}}
+

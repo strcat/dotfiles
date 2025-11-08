@@ -1,0 +1,185 @@
+# $Id: mutt.bind,v 1.1 2003/06/19 03:1159 dope Exp dope $
+#
+# This file is mainly based upon »The ultimative Key-Bindings for Mutt«
+# (Version 1.35), written by Roland Rosenfeld. You can find the original
+# version of this file under <http://www.spinnaker.de/mutt/> . I was very
+# fond of this bindings as I see them the first time, so i decided to take
+# them into my setup (see '/usr/local/doc/mutt/html/manual-6.html#ss6.4' for
+# details.
+#
+# The command 'bind' binds the given key for the given map to the given
+# function.
+# Valid maps are:
+#  'generic', 'alias', 'attach' 'browser', 'editor', 'index', 'compose',
+#  'pager', 'pgp', 'postpone' and 'mix'.
+#
+# Valid Strings are:
+#  '\t', '<Tab>', '\t', '\n', '\e', '<esc>', '<up>', '<down>', '<left>',
+#  '<right>', '<pagedown>', '<pageup>', '<backspace>', '<delete>', '<insert>',
+#  '<enter>', '<home>', '<end>', '<Space>', '<F1{2,3,n}>' and '<f1{,2,3,n}>'.
+
+# Generic key bindings.
+  # Quick change Mailfolders
+    macro	generic	E	"<change-folder>/var/spool/mail/dope<enter>" "Show my local mailbox"
+    macro	generic	I	"<change-folder>!<enter>" "Go to =INBOX"
+  # toggle TOFU protection with ESC-0 and ESC-1
+    macro	generic	\e0	":unset display_filter\n" "Turn TOFU protection off"
+    macro	generic	\e1	":set display_filter='t-prot -acelmtS -Mmutt --spass -L$HOME/.mutt/mlfooters -A$HOME/.mutt/adfooters'\n" "Turn TOFU protection on"
+
+# Bindings for INDEX
+  # Next/Prev/Del/Flag - Message
+    bind	index	<up>		previous-entry
+    bind	index	<down>		next-entry
+    bind	index	<delete>	delete-message
+    bind	index	\Cw		flag-message
+    bind	editor	"\e<delete>"	kill-word
+    macro	index	\eb		'/~b '								'Search in message bodies'
+    macro	index	<left>		"<change-folder>?<toggle-mailboxes>"				"Show mailboxes"
+    macro	index	_		"<change-newsgroup>?"						"Show Newsgroups"
+  # Quick change Mailfolders
+    macro	index	E	"<change-folder>/var/spool/mail/dope<enter>"				"Show my local mailbox"
+    macro	index	I	"<change-folder>!<enter>"						"Go to =INBOX"
+    macro	index	\ej	"<change-folder>~/nslrn/Posts<enter>"					"Show my Usenet postings"
+  # SPAM? AOL? Trojans? $LUSER? welcome in my killfile (requires mailfilter (<http://mailfilter.sourceforge.net/>)).
+    macro	index	<F2>	"| ~/.mutt/kill-from.sh\n"						"Add Sender to Killfile"
+    macro	index	<F3>	"| ~/.mutt/kill-sub.sh\n"						"Add Subject to Killfile"
+  # Answers of messages from me are highlightet (F2) or not (F3)
+    macro	index	<F4>	':color index brightyellow default "!~f strcat@gmx.net ~b strcat"'	'Highlight ON for answers to me'
+    macro	index	<F5>	':uncolor index brightyellow default "!~f strcat@gmx.net ~b strcat"'	'Highlight OFF for answers to me'
+  # reload ~/.muttrc
+    macro	index	<F12>	"<enter-command>source ~/.muttrc<enter>"				"Reload ~/.muttrc"
+  # Mark all messages as read (useful for NG's ;))
+  #  macro	index	M	"T \n;WN^t \n"								"Mark all messages read"
+  # *I* *HATE* *OUTLOOK*
+    macro	index	\eK	'<delete-pattern>~h "X-Mailer: Microsoft Outlook"<enter>'		"Mark all Outlook-Messages as read"
+  # Main menu arrows
+    bind	index	<right>		display-message
+    bind	pager	<left>		exit
+    macro	index	<left>		"<change-folder>?"	"Browser"
+  # show only new / all messages
+#    macro	index	.n	"l~N\n"				"Show only new messages"
+#    macro	index	.a	"l~A\n"				"Show all messages"
+  # Sho folder with new mails
+    macro	index	.	"<buffy-list>"			"list mailboxes with new mail"
+  # Relocate deleted messages in =Trash
+    macro	index	d	s=trash/trash-`date +%Y-%m`\n	"Move to Trash"
+  # Jumping to the next mail that is still unread.
+    bind	index	\t	next-unread
+  # use getmail for multiple POP - Accounts
+    macro	index	G	 "!echo 'Check for new Mails... ' ; gmail.sh 2>&1 > /dev/null &\n "	"Check for new mail via getmail"
+  # SPAM..
+  macro index \ed "<enter-command>unset wait_key\n<pipe-entry>/usr/bin/sa-learn --spam\n<enter-command>set wait_key\n<save-message>=SPAM/evilspam\n" "Tags as SPAM"
+  macro index \eu "<pipe-entry>/usr/bin/sa-learn --ham\n<enter-command>set wait_key\n<save-message>=inbox\n" "Untags as SPAM"
+  macro index \et "<pipe-entry>/usr/bin/spamassassin -t\n<enter-command>set wait_key\n" "Tests if it is SPAM"
+  # Saving the current message into SPAM folder: spamassassin report and classify as spam
+  #  macro	index	S	"| sudo spamassassin --debug --report\n.<flag-message>"			"Submit message to spam-databases and train Bayes (and flag it)"
+  #  macro	index	S	"|/usr/bin/spamassassin -D -r"						"report message to Vipul's Razor"
+  #  macro	index	H	"|sudo /usr/bin/sa-learn --ham --no-sync --single"				"Add message to no-spam"
+  #  According to notmuch-mutt(1)
+  macro index S "<enter-command>unset wait_key<enter><shell-escape>read -p 'mu query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`mu find --fields i --quiet 2> /dev/null \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;s/\\+/\\\\+/g for@a;s/=/\\\\=/g for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a mu pattern"
+  macro index A "<limit>all\n" "show all messages"
+    # macro	index	S	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                              <shell-escape>notmuch-mutt -r --prompt search<enter>\
+    #                             <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: search mail"
+    # macro	index	H	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                             <pipe-message>notmuch-mutt -r thread<enter>\
+    #                             <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: reconstruct thread"
+    # macro 	index 	A 	"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+    #                             <pipe-message>notmuch-mutt tag -- -inbox<enter>\
+    #                             <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+    #                             "notmuch: remove message from inbox"
+
+  # View good/bad mails
+    macro	index	"\em"	"<limit>~h \"X-Spam-Flag: YES\"<enter><last-entry>"			"Show only SPAM"
+    macro	index	"\ef"	"<limit>~h \"X-Spam-Status: No\"<enter><last-entry>"			"Hide SPAM"
+  # Tag Spam!
+    macro	index	"\eq"	"<tag-pattern>~h 'X-Spam-Flag: YES'\n"
+  # Prints the contents of the recieved headers
+    macro	index	\eh	"| ~/bin/mailhops | less -c\n"						"View the path of the mail."
+  # Edit the Bindings And Macros File
+    macro	index	\eB	"!vim  ~/.mutt/mutt.bind\n:source ~/.mutt/mutt.bind\n"			"Edit the bindings and macros file and reload it"
+    macro	index	\eC	"!vim ~/.mutt/mutt.color\n:source ~/.mutt/mutt.color\n"			"Edit the colour file and reload it"
+    macro	index	\eS	"!vim ~/.mutt/mutt.scoring\n:source ~/.mutt/mutt.scoring\n"		"Edit the scores file and reload it"
+  # Quicksearch
+    macro	index	/		":set simple_search='~f %s | ~s %s'\r<search>"
+    macro	index	\\		":set simple_search='~b %s'\r<search>"
+    macro	index	\e/		":set simple_search='~f %s | ~s %s'\r<search-reverse>"
+    macro	index	\e\\		":set simple_search='~b %s'\r<search-reverse>"
+
+
+# Bindings for PAGER (Message Pager)
+  # Jumping to the next mail that is still unread ('\t' means <TAB> (Tabulator)!).
+    bind	pager	\t	next-unread
+  # Jump to bottom of a message
+    bind	pager	(	bottom
+  # urlview rulez
+    #macro	pager	\ew	"|urlview\n"
+    macro pager \ew "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+    macro attach,compose \ew "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+  # Change »pager_index_lines«
+    macro	pager	\Cw	<enter-command>'set pager_index_lines=0'<enter>		"Toggle pager_index_lines to 0 lines"
+    macro	pager	\Ct	<enter-command>'set pager_index_lines=20'<enter>	"Toggle pager_index_lines to 20 lines"
+    macro	pager	\Cb	<enter-command>'set pager_index_lines=10'<enter>	"Toggle pager_index_lines back to default (10)"
+  # Prints the contents of the recieved headers
+    macro	pager	\eh	"| ~/bin/mailhops | less -c\n"					"View the path of the mail."
+  # Edit the Bindings And Macros File (~/.mutt/mutt.bind)
+    macro	pager	\eB	"!vim ~/.mutt/mutt.bind\n:source ~/.mutt/mutt.bind\n"		"Edit the bindings and macros file and reload it"
+    macro	pager	\eC	"!vim ~/.mutt/mutt.color\n:source ~/.mutt/mutt.color\n"		"Edit the colour and macros file and reload it"
+    macro	pager	\eS	"!vim ~/.mutt/mutt.scoring\n:source ~/.mutt/mutt.scoring\n"	"Edit the scores file and reload it"
+  # Rot13
+    macro	pager	<esc>r	"<enter-command>set display_filter = \"tr a-zA-Z n-za-mN-ZA-M\"<enter><exit><display-message><enter-command>unset display_filter<enter>"	"ROT13"
+  # Getting PGP/GnuPG-Key from server
+    macro	pager	P	"!gpg --keyserver pgp.mit.edu --recv-key 0x"	"Get PGP Key"
+  # Change folders
+    macro	pager	I	"<change-folder>!<enter>"			"Go to =INBOX"
+    macro	pager	E	"<change-folder>/var/spool/mail/dope<enter>"	"Show my local mailbox"
+  # SPAM? AOL? Trojans? $LUSER? welcome in my killfile (requires mailfilter  (<http://mailfilter.sourceforge.net/>))
+    macro	pager	<F2>	"| ~/.mutt/kill-from.sh\n"						"Add Sender to Killfile"
+    macro	pager	<F3>	"| ~/.mutt/kill-sub.sh\n"						"Add Subject to Killfile"
+  # Answers of messages from me are highlightet (F2) or not (F3)
+    macro	pager	<F4>	':color index brightyellow default "!~f strcat@gmx.net ~b strcat"'	'Highlight ON for answers to me'
+    macro	pager	<F5>	':uncolor index brightyellow default "!~f strcat@gmx.net ~b strcat"'	'Highlight OFF for answers to me'
+  # reload ~/.muttrc
+    macro	pager	<F12>	"<enter-command>source ~/.muttrc<enter>"				"Reload ~/.muttrc"
+  # same in pager mode - ugly but what the hell...
+    macro	pager	\e0	":unset display_filter; exec exit\n:exec display-message\n"		"Turn TOFU protection off"
+    macro	pager	\e1	":set display_filter='t-prot -acelmtS -Mmutt --spass -L$HOME/.mutt/mlfooters -A$HOME/.mutt/adfooters'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
+  # blind out this fucking GPG - Header
+    macro	pager	\e4	'<enter-command>set display_filter="/bin/sh $HOME/bin/gpg-wrap.sh"<enter><exit><display-message>'	"Strip GPG /PGP"
+    macro	pager	\e5	'<enter-command>unset display_filter<enter><exit><display-message>'					"Show GPG / PGP"
+  # Mark all messages as read (useful for NG's ;))
+    macro	index M	"T \n;WN^t \n"		"Mark all messages read"
+
+
+
+bind    editor  "\e<backspace>" kill-word
+bind    editor  <delete>        delete-char
+
+# main menus arrows
+macro   browser <left>          "<change-dir>..\n"   "Upper directory"
+bind    browser <right>         select-entry
+bind    pager   <right>         view-attachments
+bind    attach  <left>          exit
+bind    attach  <right>         view-attach
+
+
+# show folders which new mails
+macro pager . "<buffy-list>" "list mailboxes with new mail"
+
+#  Defining a default directory for saving attachments to.
+#  The trick used here is to "jump" to the beginning of the input
+#  (using ^A) which leaves default value on the input.
+#  Then you can add the default directory, eg "~/Mail/ATTACH/".
+macro attach S "<save-entry>~/MuttMail/Attach/<enter>" "Save attachements"
+
+# Relocate deleted messages in =Trash
+macro pager d s=trash/trash-`date +%Y-%m`\n "Move to Trash"
+
+# mutt-dispatch creates the temporary mutt-action.rc in a temporary folder (in this case, ramdisk), then runs the macro
+macro   index,pager  <F6>  '<shell-escape>~/.mutt/mutt-dispatch.sh reply all<return><enter-command>source /run/user/`id -u`/mutt-action.rc<return>'
+macro   index,pager  <F6>  '<shell-escape>~/.mutt/mutt-dispatch.sh new<return><enter-command>source /run/user/`id -u`/mutt-action.rc<return>'

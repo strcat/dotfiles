@@ -1,0 +1,105 @@
+# FZF is a general-purpose command-line fuzzy finder.
+export FZF_FILE_HIGHLIGHTER='cat'
+	(( $+commands[rougify]   )) && FZF_FILE_HIGHLIGHTER='rougify'
+	(( $+commands[coderay]   )) && FZF_FILE_HIGHLIGHTER='coderay'
+	(( $+commands[highlight] )) && FZF_FILE_HIGHLIGHTER='highlight --out-format="xterm256" --style="pablo"'
+	(( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --color=always'
+
+export FZF_DEFAULT_COMMAND='tty'
+	(( $+commands[rg] )) && FZF_DEFAULT_COMMAND="rg --files --no-messages --no-ignore --hidden --follow --ignore-case --glob '!{.git,node_modules}/*'"
+	(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+	(( $+commands[fd] )) && export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Setup fzf previews
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+export FZF_TMUX_OPTS=" -p90%,70% "
+export FZF_DEFAULT_OPTS="--height 50% --layout=default --border --color=hl:#2dd4bf"
+
+# Use https://github.com/alexpasmantier/television/ instead (tv git-log)
+# # fshow_preview - git commit browser with previews
+# alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+# _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+# _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+#
+# fshow() {
+#     glNoGraph |
+#         fzf --no-sort --reverse --tiebreak=index --no-multi --no-height \
+#             --ansi --preview="$_viewGitLogLine" --preview-window=right,70% \
+#                 --header "enter to view, alt-y to copy hash" \
+#                 --bind "enter:execute:$_viewGitLogLine   | less -R" \
+#                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
+# }
+
+# cdr + fzf == p0rn!!!11!
+[[ ! -d $HOME/.cache/shell ]] && mkdir -p $HOME/.cache/shell/
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+function fzf-cdr () {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-cdr
+bindkey "^x^b" fzf-cdr
+
+# list/search aliases
+fzf-alias() { alias | tr = "\t" | fzf | cut -f 1 }
+
+# Search and install packages with yay and fzf
+yi() {
+	SELECTED_PKGS="$(yay -Slq | fzf --header='Install packages' -m --height 100% --preview 'yay -Si {1}')"
+	if [ -n "$SELECTED_PKGS" ]; then
+		yay -S $(echo $SELECTED_PKGS)
+	fi
+}
+
+# Search and remove packages with yay and fzf
+yr() {
+	SELECTED_PKGS="$(yay -Qsq | fzf --header='Remove packages' -m --height 100% --preview 'yay -Si {1}')"
+	if [ -n "$SELECTED_PKGS" ]; then
+		yay -Rns $(echo $SELECTED_PKGS)
+	fi
+}
+
+# tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
+# `tm` will allow you to select your tmux session via fzf.
+# `tm irc` will attach to the irc session (if it exists), else it will create it.
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+# fzf-man-pages widget
+fzf-man-widget() {
+  batman="man {1} | col -bx | bat --language=man --plain --color always --theme=\"Monokai Extended\""
+   man -k . | sort \
+   | awk -v cyan=$(tput setaf 6) -v blue=$(tput setaf 4) -v res=$(tput sgr0) -v bld=$(tput bold) '{ $1=cyan bld $1; $2=res blue;} 1' \
+   | fzf  \
+      -q "$1" \
+      --ansi \
+      --tiebreak=begin \
+      --prompt=' Man > '  \
+      --preview-window '50%,rounded,<50(up,85%,border-bottom)' \
+      --preview "${batman}" \
+      --bind "enter:execute(man {1})" \
+      --bind "alt-c:+change-preview(cht.sh {1})+change-prompt(ﯽ Cheat > )" \
+      --bind "alt-m:+change-preview(${batman})+change-prompt( Man > )" \
+      --bind "alt-t:+change-preview(tldr --color=always {1})+change-prompt(ﳁ TLDR > )"
+  zle reset-prompt
+}
+# `Ctrl-H` keybinding to launch the widget (this widget works only on zsh, don't know how to do it on bash and fish (additionaly pressing`ctrl-backspace` will trigger the widget to be executed too because both share the same keycode)
+# bindkey '^[' fzf-man-widget
+# bindkey '^_' fzf-man-widget
+# zle -N fzf-man-widget

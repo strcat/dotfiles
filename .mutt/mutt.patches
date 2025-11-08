@@ -1,0 +1,265 @@
+# $Id: mutt.patches,v 1.1 2004/01/20 09:15:42 dope Exp dope $
+#
+# This file manage all included patches of muttng.
+
+# NNTP-Support {{{
+# To use the following options you must download and apply this
+# (<http://www.mutt.org.ua/download/mutt-1.5.4i/patch-1.5.4.vvv.nntp.gz>)
+# patch and Must must be compiled with
+#  | ./configure --enable-nntp
+#
+# Note: It's only a stopgap and *not* a replacement for Slrn.
+#
+# If set, Mutt will prompt you for follow-up groups before editing the body of
+# an outgoing message.
+#--------------------------------------------------
+# set ask_follow_up
+#--------------------------------------------------
+
+# If this variable is set and the keyword "poster" is present in
+# Followup-To header, follow-up to newsgroup function is not permitted.
+# The message will be mailed to the submitter of the message via mail.
+set nntp_followup_to_poster = ask-no
+
+# If this variable is set, Mutt will mark all articles in newsgroup as read
+# when you quit the newsgroup (catchup newsgroup).
+set nntp_catchup = ask-yes
+
+# This variable allows you to customize the newsgroup browser display to
+# your personal taste.  This string is similar to ````index_format'''',
+# but has its own set of printf()-like sequences:
+#  %C      current newsgroup number
+#  %d      description of newsgroup (becomes from server)
+#  %f      newsgroup name
+#  %M      - if newsgroup not allowed for direct post (moderated for example)
+#  %N      N if newsgroup is new, u if unsubscribed, blank otherwise
+#  %n      number of new articles in newsgroup
+#  %s      number of unread articles in newsgroup
+#  %>X     right justify the rest of the string and pad with character "X"
+#  %|X     pad to the end of the line with character "X"
+set nntp_group_index_format = "%4C %M%N %5s  %-45.45f %d"
+
+# It defaults to the newsserver specified in the environment variable
+# $NNTPSERVER or contained in the file /etc/nntpserver. You can also specify
+# username and an alternative port for each newsserver, ie:
+#  | [nntp[s]://][username[:password]@]newsserver[:port]
+#  | set news_server =news.foo.bar.tdl
+ set nntp_host = news.t-online.com
+# set news_server = freenews.netfront.net
+
+# my newsrc
+set nntp_newsrc = "~/.mutt/nntp.d/.newsrc-%s"
+
+# This variable pointing to directory where Mutt will save cached news
+# articles headers in. If unset, headers will not be saved at all and will be
+# reloaded each time when you enter to newsgroup.
+set nntp_cache_dir = ~/.mutt/nntp.d
+
+# This variable defines number of articles which will be in index when
+# newsgroup entered. If active newsgroup have more articles than this number,
+# oldest articles will be ignored. Also controls how many articles headers
+# will be saved in cache when you quit newsgroup.
+set nntp_context = 80
+
+# This variable controls whether or not descriptions for each newsgroup must
+# be loaded when newsgroup is added to list (first time list loading or new
+# newsgroup adding).
+set nntp_load_description
+
+# my password
+# set nntp_pass = "foo"
+
+# The time in seconds until any operations on newsgroup except post new
+# article will cause recheck for new news. If set to 0, Mutt will recheck
+# newsgroup on each operation in index (stepping, read article, etc.).
+set nntp_mail_check = 600
+
+# Controls whether or not Mutt will try to reconnect to newsserver when
+# connection lost.
+set nntp_reconnect = ask-no
+
+# my username
+# set nntp_user = "bar"
+
+# If set to yes, Mutt will post article to newsgroup that have not permissions
+# to posting (e.g. moderated). Note: if newsserver does not support posting to
+# that newsgroup or totally read-only, that posting will not have an effect.
+set nntp_post_moderated = ask-yes
+
+# If set, newsserver will be asked for new newsgroups on entering the browser.
+# Otherwise, it will be done only once for a newsserver. Also controls whether
+# or not number of new articles of subscribed newsgroups will be then checked.
+set nntp_show_new_news
+
+# If set, only subscribed newsgroups that contain unread articles will be
+# displayed in browser.
+unset nntp_show_only_unread
+
+# When set, info about unsubscribed newsgroups will be saved into ``newsrc''
+# file and into cache.
+set nntp_save_unsubscribed
+
+# If set, Mutt will prompt you for x-comment-to field before editing the body
+# of an outgoing message.
+set nntp_ask_x_comment_to
+
+# If set, specifies the program and arguments used to deliver news posted by
+# Mutt. Otherwise, mutt posts article using current connection to news server.
+unset nntp_inews
+
+# If unset, 8-bit 'subject:' line in article header will not be encoded
+# according to RFC2047 to base64. This is useful when message is Usenet
+# article, because MIME for news is nonstandard feature.
+unset nntp_mime_subject
+
+# If set, Mutt will add 'X-Comment-To:' field (that contains full name of
+# original article author) to article that followuped to newsgroup.
+unset nntp_x_comment_to
+# }}}
+
+# "Compressed-Support {{{
+# The compressed folders patch allows you to access mailbox
+# folders, which are compressed using something like gzip or
+# which are encrypted with something like pgp.
+#
+# append-hook, open-hook, close-hook (support for compressed folders)
+# (only with compressed folders patch from
+# <http://www.spinnaker.de/mutt/compressed/>)
+
+# gzip:
+append-hook     \\.gz$  "gzip -c %t >> %f"
+open-hook       \\.gz$  "gzip -cd %f > %t"
+close-hook      \\.gz$  "gzip -c %t > %f"
+
+# bzip2:
+open-hook       \\.bz2$ "bzip2 -cd %f > %t"
+close-hook      \\.bz2$ "bzip2 -c %t > %f"
+
+# PGP (compression and encryption of the folder):
+open-hook  \\.pgp$ "gpg -f < %f > %t"
+close-hook \\.pgp$ "gpg -fe strcat@gmx.net < %t > %f"
+
+# PGP with IDEA only (compression and encryption of the folder):
+open-hook  \\.idea$ "gpg -f < %f > %t"
+close-hook \\.idea$ "gpg -cf < %t > %f"
+# }}}
+
+# "Initials"-Support {{{
+# Use this character for quoting replies.
+# [NOTE]:
+# This requires you mutt to be patched with vvv.initials patch. You can
+# find details at <http://www.mutt.org>. The string to prepend to each line of
+# text quoted in a message to which you are replying.
+#   * %f = entire from line
+#   * %F = like %n, unless from self
+#   * %i = message-id
+#   * %I = initials of author
+#   * %l = number of lines in the message
+#   * %L = like %F, except `lists' are displayed first
+#   * %m = number of messages in the mailbox
+# set indent_str="%I> "
+set indent_string='> '
+# }}}
+
+# # "Sidebar-Patch" {{{
+# # <http://thomer.com/mutt/>
+# # set up the sidebar, default not visible
+# set sidebar_visible
+# set sidebar_width=20
+#
+# # When ``set'', the "hierarchy" of the sidebar entries will be shortened, e.g.
+# # de.alt.sysadmin.recovery becomes d.a.s.recovery.
+# set sidebar_shorten_hierarchy
+#
+# # This specifies the delimiter between the sidebar (if visible) and other
+# # screens. Defaults is ``|''
+# set sidebar_delim=' '
+# macro index B ':toggle sidebar_visible<enter>'
+# macro pager B ':toggle sidebar_visible<enter>'
+#
+# # Since revision r145 its possible to set the sidebar foreground and
+# # background color
+#   color sidebar black blue
+# # color of folders with new mail
+#   color sidebar_new  yellow black
+# # for boxes with flagged mail
+#   color sidebar_flagged black brightred
+#
+# # ctrl-n, ctrl-p to select next, prev folder
+# # ctrl-o to open selected folder
+# macro index \cW ':push <sidebar-prev-new><sidebar-open><enter>'
+# macro index \cE ':push <sidebar-next-new><sidebar-open><enter>'
+# macro index \cP ':push <sidebar-prev><enter>'
+# macro index \cN ':push <sidebar-next><enter>'
+# macro index \cO ':push <sidebar-open><enter>'
+# # }}}
+
+# {{{ Misc stuff
+# This patch introduces a new (optional) check when replying to messages
+# originating from a mailing list. It will ask the user if he really
+# intended to reply to the author only (instead of the mailing list).
+set list_reply = yes
+
+# Check for Maildir unaware programs other than mutt having modified
+# maildir files when the header cache is in use.  This incurs one
+# stat(2) per message every time the folder is opened.
+set maildir_header_cache_verify = no
+#set header_cache=~/.mutt/header_cache
+
+# If your terminal is so wide that the lines are embarrasingly long, you
+# can also set a maximum line length:
+set max_line_length = 100
+
+# Set fake operating system for User-Agent string
+set operating_system = "CRUX 2.0"
+
+# See the man page for strftime(3) for the proper syntax.
+#set msgid_format = "%Y%m%d%h%M%s.G%P%p"
+set msgid_format="%Y-%m-%dT%h-%M-%s"
+
+# Defines the password to use with SMTP AUTH. If $$smtp_auth_username is
+# set, but this variable is not, you will be prompted for a password
+# when sending.
+#set smtp_auth_username = "strcat@gmx.net"
+
+# Defines the SMTP host which will be used to deliver mail, as opposed
+# to invoking the sendmail binary.  Setting this variable overrides the
+# value of ``$$sendmail'', and any associated variables.
+#set smtp_host = "mail.gmx.net"
+
+# Defines the port that the SMTP host is listening on for mail delivery.
+# Must be specified as a number. Defaults to 25, the standard SMTP port,
+# but RFC 2476-compliant SMTP servers will probably desire 587, the mail
+# submission port.
+#set smtp_port = "42"
+
+# This variable specifies the minimum acceptable prime size (in bits)
+# for use in any Diffie-Hellman key exchange. A value of 0 will use the
+# default from the GNUTLS library.
+#set ssl_min_dh_prime_bits = 1
+
+# This variable specifies a file containing trusted CA certificates. Any
+# server certificate that is signed with one of these CA certificates
+# are also automatically accepted.
+#set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
+
+# If set to ``yes'', Mutt will post article to newsgroup that have not
+# permissions to posting (e.g. moderated). Note: if newsserver does not
+# support posting to that newsgroup or totally read-only, that posting
+# will not have an effect.
+set nntp_post_moderated = ask-no
+
+# Controls whether or not empty lines will be quoted using
+# ``$indent_string''
+set quote_empty = yes
+
+# When set, mutt-ng will remove the trailing part of the ``Subject''
+# line which matches $$strip_was_regex when replying.
+set strip_was=yes
+
+# When non-empty and $$strip_was is set, mutt-ng will remove this
+# trailing part of the ``Subject'' line when replying if it won't be
+# empty afterwards.
+set strip_was_regex = "\\([Ww][Aa][RrSs]: .*\\)[ ]*$"
+
+# }}}

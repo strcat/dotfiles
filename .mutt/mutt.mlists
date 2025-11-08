@@ -1,0 +1,12 @@
+# $Id: mutt.mlists,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+unlists *
+unsubscribe *
+subscribe vim_use@googlegroups.com
+subscribe zsh-users@zsh.org
+subscribe zsh-workers@zsh.org
+subscribe irssi-users@dragoncat.net
+subscribe irssi-dev@dragoncat.net
+subscribe vim@vim.org
+subscribe slrn-user@lists.sourceforge.net
+subscribe neomutt-users@neomutt.org

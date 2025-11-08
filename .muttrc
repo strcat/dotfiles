@@ -1,0 +1,46 @@
+# $Id: .muttrc,v 1.2 2002/09/21 22:28:45 dope Exp dope $
+#
+#  This file usually is named "$HOME/.muttrc
+#  Purpose: setup file for 'mutt'.
+#  Author: Christian Schneider <strcat@gmx.net>
+#  Structure of this file:
+#   Lines starting with an '#' are comments.
+#
+#  Note: Used and tested under OpenBSD and Linux with NeoMutt (1.7.0)
+#        Colors are /optimized/ for a transparent $TERM with a dark
+#        background(-image).
+#
+# NeoMutt 1.7.0 hat 24 synonyms and 410 options:
+#  $ grep DT_SYN, init.h | sed -e 's/.*"\(.*\)",.*/\1/' | $PAGER
+#  $ grep DT_ init.h | grep -v define | sort | $PAGER
+#
+# Do *not* use Alpine! Because:
+#  $ cd ~/neomutt-20160827 && egrep -r '(sprintf|strcpy|strcat)' * | wc -l
+#       178
+#  $ cd ~/alpine-2.00 && egrep -r '(sprintf|strcpy|strcat)' * | wc -l
+#       2699
+# reset all and show Version
+reset all
+push V
+
+# there the configfile
+source ~/.mutt/mutt.general             # general options
+source ~/.mutt/mutt.mailboxes           # my mailboxes
+# source ~/.mutt/mutt.pop                 # pop options
+source ~/.mutt/mutt.headers             # extra header and ignores
+source ~/.mutt/mutt.gpg                 # GnuPG options
+source ~/.mutt/mutt.bind                # key bindings and macros
+source ~/.mutt/mutt.save-hooks          # hooks definitions
+source ~/.mutt/mutt.scoring             # i. e. $ man lart
+source ~/.mutt/mutt.autoview            # autoview configuration
+source ~/.mutt/mutt.aliases             # mail aliases
+source ~/.mutt/mutt.ignores             # boring headers
+source ~/.mutt/mutt.unignore            # visible headers
+source ~/.mutt/mutt.various             # some baubles
+# source ~/.mutt/mutt.ssl                 # YES. I run Mutt over SSH .. sometimes ;)
+source ~/.mutt/mutt.misc-hooks          # Change settings based upon message recipients
+source ~/.mutt/mutt.mlists              # Mailinglists
+source ~/.mutt/mutt.neo                 # For NeoMutt only <https://www.neomutt.org/>
+source ~/.mutt/mutt.secret              # For NeoMutt only <https://www.neomutt.org/>
+source ~/.mutt/mutt.sidebar
+source ~/.mutt/mutt.color               # color configuration

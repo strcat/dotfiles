@@ -1,0 +1,94 @@
+# standard color
+color indicator  black     green
+color hdrdefault  color27 default
+color normal	 default default
+color quoted     color125  default
+color quoted1    yellow    default
+color quoted2    red       default
+color tree	     red       default
+color status	 color243  color233
+color signature  cyan      default
+color tilde	     blue      default
+# color status #ffffff #ff8080 
+# color index  #80c000 #007890 apple
+
+# identifies URLs
+color body	brightblue black (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
+
+# colour definitions for the index - the first screen when you open neomutt
+color index_date    red      black
+# color index_author  color21  default    ~A
+color index_author color240 color233 '.*'
+color index_subject color245 black    ~A
+color index_number  blue default
+color index_author cyan default '~t@strcat.de'
+
+# Set the color of the progress bar
+# White text on a red background
+color progress white red
+
+# Sidebars
+color sidebar_indicator color14 black   # currently selected mailbox
+color sidebar_highlight white color8    # highlighted, but not open, mailbox.
+color sidebar_ordinary color8 default   # Color to give mailboxes by default
+color sidebar_divider color8 black      # divider between sidebar & content
+color sidebar_flagged red black         # mailboxes containing flagged mail
+color sidebar_new green black           # mailboxes containing new mail
+color sidebar_unread color7 default     # mailboxes containing unread mail
+color sidebar_unread color7 default     # mailboxes containing unread mail
+
+# # Regex highlighting:
+color body green default "\`[^\`]*\`" # Green text between ` and `
+# color body brightblue default "^# \.*" # Headings as bold blue
+# color body brightcyan default "^## \.*" # Subheadings as bold cyan
+# color body brightgreen default "^### \.*" # Subsubheadings as bold green
+color body yellow default "^(\t| )*(-|\\*) \.*" # List items as yellow
+color body brightcyan default "[;:][-o][)/(|]" # emoticons
+color body brightcyan default "[;:][)(|]" # emoticons
+color body brightcyan default "[ ][*][^*]*[*][ ]?" # more emoticon?
+color body brightcyan default "[ ]?[*][^*]*[*][ ]" # more emoticon?
+color body red default "(BAD signature)"
+color body cyan default "(Good signature)"
+color body brightblack default "^gpg: Good signature .*"
+color body brightyellow default "^gpg: "
+color body brightyellow red "^gpg: BAD signature from.*"
+mono body bold "^gpg: Good signature"
+mono body bold "^gpg: BAD signature from.*"
+
+# Git patches
+color body brightred   default '^-[^-].*'
+color body brightgreen default '^\+[^\+].*'
+
+set to_chars            = "😵👤👥🙋🏠📧"
+#   = The mail is not addressed to your address.
+#   = You are the only recipient of the message.
+#   = Your address appears in the "To:" header field, but you are not the only recipient of the message.
+#   = Your address is specified in the "Cc:" header field, but you are not the only recipient.
+#   = Sent by me
+#   = Indicates the mail was sent to a mailing-list you subscribe to.
+set to_chars=" "
+### # unchanged mailbox, changed, read only, attach mode
+set status_chars = " "
+ifdef crypt_chars set crypt_chars = " "
+set flag_chars = " N    "
+# hide some tags
+# set hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
+tag-transforms "replied" "↻ "  \
+               "encrytpted" "" \
+               "signed" "" \
+               "attachment" "" \
+               "invites" ""
+# The formats must start with 'G' and the entire sequence is case sensitive.
+tag-formats "replied" "GR" \
+            "encrypted" "GE" \
+            "signed" "GS" \
+            "attachment" "GA" \
+            "invites" "GI"
+
+subjectrx 'Invitation:' '%L📅%R'
+subjectrx '\- Invitation to edit' '✏️ %L%R'
+subjectrx '\[Bitbucket\] ' '💻 %L%R'
+subjectrx 'Re: Pull Request ' '%LPR%R'
+subjectrx 'Pull Request ' '%LPR%R'
+subjectrx 'replied to your post in' '樓%R'
+subjectrx '\[neomutt-.*\]' ' %R'

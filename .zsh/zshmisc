@@ -1,0 +1,117 @@
+#  ,----
+#  | [dope@painless:~]% ulimit -a
+#  | -t: cpu time (seconds)         2000
+#  | -f: file size (blocks)         500000
+#  | -d: data seg size (kbytes)     100000
+#  | -s: stack size (kbytes)        8192
+#  | -c: core file size (blocks)    0
+#  | -m: resident set size (kbytes) unlimited
+#  | -u: processes                  1791
+#  | -n: file descriptors           1024
+#  | -l: locked-in-memory size (kb) 50000
+#  | -v: address space (kb)         unlimited
+#  | -N 10: file locks              unlimited
+#  | [dope@painless:~]%
+#  `----
+#
+# Note: This settings protect *not* against 'fork'-bombs like
+#  $ (){ :|:&};:
+#  $ perl -e 'while(1){ fork();}'
+# but i don't care a pap for it. Trust me. I know what I'm doing. See
+# zshbuiltins(1) /ulimit for details.
+ulimit -c unlimited
+ulimit -d unlimited
+ulimit -f unlimited
+ulimit -l unlimited
+ulimit -n unlimited
+ulimit -s unlimited
+ulimit -t unlimited
+
+# An array (colon separated list) containing the suffixes of files to
+# be ignored during filename completion. However, if completion only
+# generates files with suffixes in this list, then these files are
+# completed anyway.
+# Note: U can use ``ls **/*~*(${~${(j/|/)fignore}})(.)'' to list all
+#       plain files that do not have extensions listed in `fignore' or
+#       ``rm **/*(${~${(j/|/)fignore}})(.)'' to remove.
+fignore=( .part ,v .aux .toc .lot .lof .blg .bbl .bak .BAK .sav .old .o .trace .swp \~)
+
+# Setting abbreviation like 'iab' with Vim.. YES! Zsh _IS_ evil *hr*. I
+# use this instead of "global aliases".
+#  $ Igr<Space>
+# will be expanded to
+#  $ groff -s -p -t -e -Tlatin1 -mandoc
+typeset -A myiabs
+myiabs=(
+        "Im"    "| more"
+        "Ia"    "| awk"
+        "Ig"    "| grep"
+        "Ieg"   "| egrep"
+        "Iag"   "| agrep"
+        "Igr"   "groff -s -p -t -e -Tlatin1 -mandoc"
+        "Ip"    "| $PAGER"
+        "Ih"    "| head"
+        "Ik"    "| keep"
+        "It"    "| tail"
+        "Is"    "| sort"
+        "Iv"    "| $EDITOR"
+        "Iw"    "| wc"
+        "Ix"    "| xargs"
+	"Igm"   "git commit -m"
+)
+my-expand-abbrev() {
+    local MATCH
+    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+    LBUFFER+=${myiabs[$MATCH]:-$MATCH}
+    zle self-insert
+}
+
+#--------------------------------------------------
+# 'hash' often visited directorys
+#   Note: That's *not* variables or aliase!
+#    ,----
+#    | $ hash -d M=~/.mutt
+#    | $ M
+#    | ~/.mutt
+#    | $ echo $M
+#    |
+#    | $ pwd
+#    | /home/dope/.mutt
+#    | $
+#    `----
+hash -d A=~/scripts/Asciidoc				                  # selfwritten documentation in asciidoc-format
+hash -d B=~/homepage/blog
+hash -d C=~/.config/					                        # https://specifications.freedesktop.org/basedir-spec/basedir-spec-0.6.html
+hash -d D=~/Downloads/					                      # there are my downloads
+hash -d F=/usr/local/share/zsh/$ZSH_VERSION/functions	# ZSH functions (OpenBSD)
+hash -d F=/usr/share/zsh-beta/functions/		          # ZSH functions (Debian)
+hash -d F=/usr/share/zsh/$ZSH_VERSION/functions/	    # ZSH functions (Slackware)
+hash -d FD=~/.Documentations				                  # usefull documentations
+hash -d FF=/mnt/MP3/                                  # MP3s
+hash -d FP=/p0rn					                            # Pics, Clips, ..
+hash -d FS=/Backups					                          # my local backups
+hash -d G=~/.getmail					                        # Configfiles for getmail
+hash -d HG=~/download/Source/Repos			              # HG/GIT/SVN/..- Repos
+hash -d HJ=~/.jed					                            # $JED_ROOT (${HOME})
+hash -d I=~/.irssi/					                          # Files for Irssi
+hash -d J=/usr/local/jed/				                      # $JED_ROOT (Change it!)
+hash -d L=~/.slang/					                          # Files for Slrn
+hash -d M=~/.mutt/					                          # Files for Mutt
+hash -d NN=~/.config/nvim/                            # Files for nvim
+hash -d MF=~/.mailfilter				                      # Configfiles for mailfilter
+hash -d P=~/homepage/					                        # My personal webpage
+hash -d RC=/etc/conf.d/					                      # Init-Files from init (Gentoo)
+hash -d RC=/etc/init.d/					                      # executed files from init (Gentoo, Debian, ..)
+hash -d RC=/etc/rc.d/					                        # executed files from init (Slackware)
+hash -d S=~/scripts/					                        # (Un)tested local hacks
+hash -d SM=/mnt/Movies					                      # yep
+hash -d SO=~/download/Sources				                  # Mutt, Slrn, Vim, ..
+hash -d SS=/mnt/Serien					                      # name it..
+hash -d SC=/mnt/Commedy					                      # Questions? Any?
+hash -d SX=/mnt/XXX					                          # what?!
+hash -d T=/mnt/Torrents					                      # Bittorrent is evil.. isn't it?
+hash -d U=/usr/src/linux/				                      # Linux-Kernel
+hash -d V=~/Videos/					                          # Downloaded video-files
+hash -d VL=/var/log					                          # often visited ;)
+hash -d Z=~/.zsh/					                            # "setupfiles" for ZSH
+hash -d _S=~/.sigs/					                          # My signature collection

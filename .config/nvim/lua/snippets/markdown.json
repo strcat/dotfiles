@@ -1,0 +1,548 @@
+{
+  "MkDocsAdmonition": {
+    "prefix": "mkdocs-admonition",
+    "body": [
+      "!!! ${1|summary,info,tip,success,question,warning,failure,danger,bug,example,quote|} \"${2}\"",
+      "",
+      "    ${0}"
+    ],
+    "description": "Add admonition to document"
+  },
+  "Admonition": {
+    "prefix": "admonition",
+    "body": [
+      ":::${1|note,tip,info,caution,danger|} ${2}",
+      "",
+      "${0}",
+      "",
+      ":::"
+    ],
+    "description": "Add admonition to document"
+  },
+  "Blockquote": {
+          "prefix": "pblock",
+          "body": [ ">>>",
+                  "${1}",
+                  "<cite class=\"cblock\">${2}<cite>",
+                  ">>>",
+                  "${0}"],
+                  "description": "Blockquote for Press"
+  },
+  "Content tabs": {
+    "prefix": "contenttabs",
+    "body": [
+      "===! \"${1}\"",
+      "",
+      "    ${2}",
+      "",
+      "=== \"${3}\"",
+      "",
+      "    ${0}"
+    ],
+    "description": "Add content tabs to document"
+  },
+  "Prettier ignore": {
+    "prefix": "prettier-ignore",
+    "body": ["<!-- prettier-ignore -->", "${0}"],
+    "description": "Add prettier-ignore mark to document"
+  },
+  "Test": {
+          "prefix": "bcite",
+          "body": ["<cite class=\"cblock\">${0}<cite>"],
+          "description": "Linkclass for Links in Blockquote"
+  },
+  "Cite source": {
+    "prefix": "cite",
+    "body": ["-- <cite>${0}</cite>"],
+    "description": "Add cited source to document"
+  },
+  "Sec": {
+    "prefix": "sec",
+    "description": "Section",
+    "body": ["# ${1:Section Name} #", "$0"]
+  },
+  "ssec": {
+    "prefix": "ssec",
+    "description": "Sub Section",
+    "body": ["## ${1:Section Name} ##", "$0"]
+  },
+  "Insert code block": {
+    "prefix": "cbl",
+    "body": [
+      "```${1:language}",
+      "$2",
+      "```",
+      "$0"
+    ],
+    "description": "Insert fenced code block"
+  },
+  "fnt": {
+    "prefix": "fnt",
+    "description": "Footnote",
+    "body": [
+      "[^${1:${TM_SELECTED_TEXT:Footnote}}]$0",
+      "",
+      "[^$1]:${2:Text}"
+    ]
+  },
+  "ssec": {
+    "prefix": "ssec",
+    "description": "Sub Section",
+    "body": ["## ${1:Section Name} ##", "$0"]
+  },
+  "sssec": {
+    "prefix": "sssec",
+    "description": "SubSub Section",
+    "body": "### ${1:Section Name} ### $0"
+  },
+  "par": {
+    "prefix": "par",
+    "description": "Paragraph",
+    "body": ["#### ${1:Paragraph Name} ####", "$0"]
+  },
+  "spar": {
+    "prefix": "spar",
+    "description": "Paragraph",
+    "body": ["##### ${1:Paragraph Name} #####", "$0"]
+  },
+  "ilc": {
+    "prefix": "ilc",
+    "description": "Inline Code",
+    "body": "`$1`$0"
+  },
+  "link": {
+    "prefix": "link",
+    "description": "link",
+    "body": "[$1]($2)"
+  },
+  "table": {
+    "prefix": "table",
+    "description": "gfm table",
+    "body": [
+      "| ${1:...}                  | ${2:...}                  |",
+      "| ------------------------- | ------------------------- |",
+      "| ${3:...}                  | ${4:...}                  |"
+    ]
+  },
+  "keyboard tag": {
+    "prefix": "kbd",
+    "body": "<kbd>${1}</kbd> ${0}",
+    "description": "Add an HTML keyboard tag"
+  },
+  "hugo frontmatter": {
+    "prefix": "hugofmt",
+    "body": [
+      "---",
+      "title: '${1:$TM_FILENAME_BASE}'",
+      "date: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      "---",
+      "${0}"
+    ],
+    "description": "Add hugo TOML frontmatter"
+  },
+  "Comment": {
+    "prefix": "<!",
+    "body": "<!-- ${1} -->${0}",
+    "description": "Add a comment span"
+  },
+  "collapse": {
+    "prefix": "collapse",
+    "body": [
+      "<details>",
+      "    <summary markdown=\"span\">${1}</summary>",
+      "</details>"
+    ],
+    "description": "Create a collapsible content"
+  },
+  "Katex Block": {
+    "prefix": "$$",
+    "body": "\\$\\$${1}\\$\\$${0}",
+    "description": "Add a Katex block"
+  },
+  "Katex Inline": {
+    "prefix": "katex",
+    "body": "\\\\\\\\(${1}\\\\\\\\)${0}",
+    "description": "Add a Katex inline block"
+  },
+  "Link Killercoda": {
+    "prefix": "linkkc",
+    "scope": "markdown",
+    "body": ["[${1:Link text}]({{TRAFFIC_HOST1_${2:PORT}}})${0}"],
+    "description": "Link to Killercoda"
+  },
+  "Details HTML": {
+    "prefix": "det",
+    "scope": "markdown",
+    "body": [
+      "### ${1:TASK_DETAILS}",
+      "",
+      "<details>",
+      "<summary>click to see the answer</summary>",
+      "<code>${2:ANSWER}</code>",
+      "</details>${0}"
+    ],
+    "description": "Details HTML snippet"
+  },
+  "Highlight text to make it stand out on the page": {
+    "prefix": "diff",
+    "scope": "markdown",
+    "body": ["```diff", "! ${1:TEXT} !", "```${0}"],
+    "description": "Highlight markdown text as important, it will render differently depending on the diff highlighting tooling"
+  },
+  "Markdown reference href part": {
+    "prefix": "refh",
+    "scope": "markdown",
+    "body": ["<a id=\"${1}\" href=\"$CLIPBOARD\">[[${1}]]</a> : ${3:desc}"],
+    "description": "Insert href reference at the bottom"
+  },
+  "Markdown reference": {
+    "prefix": "ref",
+    "scope": "markdown",
+    "body": ["[[${1}]](#${1})"],
+    "description": "Insert reference to something"
+  },
+  "YAML Code Snippet": {
+    "prefix": "yml",
+    "scope": "markdown",
+    "body": ["```yaml", "${1}", "```", "${0}"],
+    "description": "Inserts YAML code snippet"
+  },
+  "Rust Code Snippet": {
+    "prefix": "rst",
+    "scope": "markdown",
+    "body": ["```rust", "${1}", "```", "${0}"],
+    "description": "Inserts rust code snippet"
+  },
+  "Bash Code Snippet": {
+    "prefix": "bsh",
+    "scope": "markdown",
+    "body": ["```bash", "${1}", "```", "${0}"],
+    "description": "Inserts bash code snippet"
+  },
+  "Slides pre-processing": {
+    "prefix": "slides_pre",
+    "scope": "markdown",
+    "body": ["```bash", "~~~${1:command}", "${0}", "~~~", "```"],
+    "description": "Inserts slides pre-processing snippet"
+  },
+  "Parenthesis []": {
+    "prefix": "par",
+    "scope": "markdown",
+    "body": ["[${1:$TM_SELECTED_TEXT}]"],
+    "description": "Wrap selected in parenthesis"
+  },
+  "Bash Code Snippet with surround": {
+    "prefix": "bshs",
+    "scope": "markdown",
+    "body": ["```bash", "${1:$TM_SELECTED_TEXT}", "```", "${0}"],
+    "description": "Inserts bash code snippet"
+  },
+  "Document Front Matter": {
+    "prefix": "docyaml",
+    "body": [
+      "---",
+      "title: ${1:title}",
+      "sidebar_label: ${2:label}",
+      "tags:",
+      "\t- ${3:tag1}",
+      "\t- ${4:tag1}",
+      "---\n${0}"
+    ],
+    "description": "Front matter snippet for docosaurus docs"
+  },
+
+  "Slides Theme": {
+    "prefix": "theme",
+    "body": [
+      "---",
+      "theme: ~/slides-themes/theme.json",
+      "author: Piotr Zaniewski",
+      "date: MMMM dd, YYYY",
+      "paging: Slide %d / %d",
+      "---"
+    ],
+    "description": "Insert header with slides theme"
+  },
+    "Insert 2x1 table": {
+      "prefix": "2x1table",
+      "body": [
+        "| ${1:Column1}  |",
+        "|-------------- |",
+        "| ${2:Item1}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 2 rows and 1 column. First row is heading."
+    },
+    "Insert 3x1 table": {
+      "prefix": "3x1table",
+      "body": [
+        "| ${1:Column1}  |",
+        "|-------------- |",
+        "| ${2:Item1}    |",
+        "| ${3:Item2}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 3 rows and 1 column. First row is heading."
+    },
+    "Insert 4x1 table": {
+      "prefix": "4x1table",
+      "body": [
+        "| ${1:Column1}  |",
+        "|-------------- |",
+        "| ${2:Item1}    |",
+        "| ${3:Item2}    |",
+        "| ${4:Item3}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 4 rows and 1 column. First row is heading."
+    },
+    "Insert 5x1 table": {
+      "prefix": "5x1table",
+      "body": [
+        "| ${1:Column1}  |",
+        "|-------------- |",
+        "| ${2:Item1}    |",
+        "| ${3:Item2}    |",
+        "| ${4:Item3}    |",
+        "| ${5:Item4}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 5 rows and 1 column. First row is heading."
+    },
+    "Insert 2x2 table": {
+      "prefix": "2x2table",
+      "body": [
+        "| ${1:Column1}   | ${2:Column2}    |",
+        "|--------------- | --------------- |",
+        "| ${3:Item1.1}   | ${4:Item2.1}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 2 rows and 2 columns. First row is heading."
+    },
+    "Insert 3x2 table": {
+      "prefix": "3x2table",
+      "body": [
+        "| ${1:Column1}   | ${2:Column2}    |",
+        "|--------------- | --------------- |",
+        "| ${3:Item1.1}   | ${4:Item2.1}   |",
+        "| ${5:Item1.2}   | ${6:Item2.2}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 3 rows and 2 columns. First row is heading."
+    },
+    "Insert 4x2 table": {
+      "prefix": "4x2table",
+      "body": [
+        "| ${1:Column1}   | ${2:Column2}    |",
+        "|--------------- | --------------- |",
+        "| ${3:Item1.1}   | ${4:Item2.1}   |",
+        "| ${5:Item1.2}   | ${6:Item2.2}   |",
+        "| ${7:Item1.3}   | ${8:Item2.3}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 4 rows and 2 columns. First row is heading."
+    },
+    "Insert 5x2 table": {
+      "prefix": "5x2table",
+      "body": [
+        "| ${1:Column1}   | ${2:Column2}    |",
+        "|--------------- | --------------- |",
+        "| ${3:Item1.1}   | ${4:Item2.1}   |",
+        "| ${4:Item1.2}   | ${5:Item2.2}   |",
+        "| ${6:Item1.3}   | ${7:Item2.3}   |",
+        "| ${8:Item1.4}   | ${9:Item2.4}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 5 rows and 2 columns. First row is heading."
+    },
+    "Insert 2x3 table": {
+      "prefix": "2x3table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    |",
+        "|---------------- | --------------- | --------------- |",
+        "| ${4:Item1.1}    | ${5:Item2.1}    | ${6:Item3.1}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 2 rows and 3 columns. First row is heading."
+    },
+    "Insert 3x3 table": {
+      "prefix": "3x3table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    |",
+        "|---------------- | --------------- | --------------- |",
+        "| ${4:Item1.1}    | ${5:Item2.1}    | ${6:Item3.1}    |",
+        "| ${7:Item1.2}    | ${8:Item2.2}    | ${9:Item3.2}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 3 rows and 3 columns. First row is heading."
+    },
+    "Insert 4x3 table": {
+      "prefix": "4x3table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    |",
+        "|---------------- | --------------- | --------------- |",
+        "| ${4:Item1.1}    | ${5:Item2.1}    | ${6:Item3.1}    |",
+        "| ${7:Item1.2}    | ${8:Item2.2}    | ${9:Item3.2}    |",
+        "| ${10:Item1.3}   | ${11:Item2.3}   | ${12:Item3.3}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 4 rows and 3 columns. First row is heading."
+    },
+    "Insert 5x3 table": {
+      "prefix": "5x3table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    |",
+        "|---------------- | --------------- | --------------- |",
+        "| ${4:Item1.1}    | ${5:Item2.1}    | ${6:Item3.1}    |",
+        "| ${7:Item1.2}    | ${8:Item2.2}    | ${9:Item3.2}    |",
+        "| ${10:Item1.3}   | ${11:Item2.3}   | ${12:Item3.3}   |",
+        "| ${13:Item1.4}   | ${14:Item2.4}   | ${15:Item3.4}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 5 rows and 3 columns. First row is heading."
+    },
+    "Insert 2x4 table": {
+      "prefix": "2x4table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    |",
+        "|---------------- | --------------- | --------------- | --------------- |",
+        "| ${5:Item1.1}    | ${6:Item2.1}    | ${7:Item3.1}    | ${8:Item4.1}    |",
+        "${0}"
+      ],
+      "description": "Insert table with 2 rows and 4 columns. First row is heading."
+    },
+    "Insert 3x4 table": {
+      "prefix": "3x4table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    |",
+        "|---------------- | --------------- | --------------- | --------------- |",
+        "| ${5:Item1.1}    | ${6:Item2.1}    | ${7:Item3.1}    | ${8:Item4.1}    |",
+        "| ${9:Item1.2}    | ${10:Item2.2}   | ${11:Item3.2}   | ${12:Item4.2}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 3 rows and 4 columns. First row is heading."
+    },
+    "Insert 4x4 table": {
+      "prefix": "4x4table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    |",
+        "|---------------- | --------------- | --------------- | --------------- |",
+        "| ${5:Item1.1}    | ${6:Item2.1}    | ${7:Item3.1}    | ${8:Item4.1}    |",
+        "| ${9:Item1.2}    | ${10:Item2.2}   | ${11:Item3.2}   | ${12:Item4.2}   |",
+        "| ${13:Item1.3}   | ${14:Item2.3}   | ${15:Item3.3}   | ${16:Item4.3}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 4 rows and 4 columns. First row is heading."
+    },
+    "Insert 5x4 table": {
+      "prefix": "5x4table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    |",
+        "|---------------- | --------------- | --------------- | --------------- |",
+        "| ${5:Item1.1}    | ${6:Item2.1}    | ${7:Item3.1}    | ${8:Item4.1}    |",
+        "| ${9:Item1.2}    | ${10:Item2.2}   | ${11:Item3.2}   | ${12:Item4.2}   |",
+        "| ${13:Item1.3}   | ${14:Item2.3}   | ${15:Item3.3}   | ${16:Item4.3}   |",
+        "| ${17:Item1.4}   | ${18:Item2.4}   | ${19:Item3.4}   | ${20:Item4.4}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 5 rows and 4 columns. First row is heading."
+    },
+    "Insert 2x5 table": {
+      "prefix": "2x5table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    | ${5:Column5}    |",
+        "|---------------- | --------------- | --------------- | --------------- | --------------- |",
+        "| ${6:Item1.1}    | ${7:Item2.1}    | ${8:Item3.1}    | ${9:Item4.1}    | ${10:Item5.1}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 2 rows and 5 columns. First row is heading."
+    },
+    "Insert 3x5 table": {
+      "prefix": "3x5table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    | ${5:Column5}    |",
+        "|---------------- | --------------- | --------------- | --------------- | --------------- |",
+        "| ${6:Item1.1}    | ${7:Item2.1}    | ${8:Item3.1}    | ${9:Item4.1}    | ${10:Item5.1}   |",
+        "| ${11:Item1.2}   | ${12:Item2.2}   | ${13:Item3.2}   | ${14:Item4.2}   | ${15:Item5.2}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 3 rows and 5 columns. First row is heading."
+    },
+    "Insert 4x5 table": {
+      "prefix": "4x5table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    | ${5:Column5}    |",
+        "|---------------- | --------------- | --------------- | --------------- | --------------- |",
+        "| ${6:Item1.1}    | ${7:Item2.1}    | ${8:Item3.1}    | ${9:Item4.1}    | ${10:Item5.1}   |",
+        "| ${11:Item1.2}   | ${12:Item2.2}   | ${13:Item3.2}   | ${14:Item4.2}   | ${15:Item5.2}   |",
+        "| ${16:Item1.3}   | ${17:Item2.3}   | ${18:Item3.3}   | ${19:Item4.3}   | ${20:Item5.3}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 4 rows and 5 columns. First row is heading."
+    },
+    "Insert 5x5 table": {
+      "prefix": "5x5table",
+      "body": [
+        "| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    | ${5:Column5}    |",
+        "|---------------- | --------------- | --------------- | --------------- | --------------- |",
+        "| ${6:Item1.1}    | ${7:Item2.1}    | ${8:Item3.1}    | ${9:Item4.1}    | ${10:Item5.1}   |",
+        "| ${11:Item1.2}   | ${12:Item2.2}   | ${13:Item3.2}   | ${14:Item4.2}   | ${15:Item5.2}   |",
+        "| ${16:Item1.3}   | ${17:Item2.3}   | ${18:Item3.3}   | ${19:Item4.3}   | ${20:Item5.3}   |",
+        "| ${21:Item1.4}   | ${22:Item2.4}   | ${23:Item3.4}   | ${24:Item4.4}   | ${25:Item5.4}   |",
+        "${0}"
+      ],
+      "description": "Insert table with 5 rows and 5 columns. First row is heading."
+    },
+  "Center Text": {
+    "prefix": "caption",
+    "scope": "html, markdown",
+    "body": "<p style=\"text-align: center;\"><small>${1:ImageDescription}</small></p>\n",
+    "description": "Center caption under an image"
+  },
+  "log": {
+    "prefix": ["log"],
+    "body": "console.log(${1:$TM_SELECTED_TEXT});"
+  },
+  "blog": {
+    "scope": "markdown",
+    "prefix": ["blog"],
+    "body": [
+      "---",
+      "title: Welcome Docusaurus v2",
+      "description: $1",
+      "tags: [$2, $3]",
+      "image: ./_media/",
+      "hide_table_of_contents: false",
+      "---",
+      "$0"
+    ]
+  },
+  "text": {
+    "prefix": ["text"],
+    "body": "```text\n${1:$tm_selected_text}\n```"
+  },
+  "copy": {
+    "prefix": ["copy"],
+    "body": "{{copy}}\n"
+  },
+  "exec": {
+    "prefix": ["exec"],
+    "body": "{{exec}}\n"
+  },
+  "exec_interrupt": {
+    "prefix": ["execi"],
+    "body": "{{exec interrupt}}\n"
+  },
+  "note": {
+    "prefix": ["note"],
+    "body": "> [!NOTE]\n> ${0}"
+  },
+  "warn": {
+    "prefix": ["warn"],
+    "body": "> [!WARNING]\n> ${0}"
+  },
+  "imp": {
+    "prefix": ["imp"],
+    "body": "> [!IMPORTANT]\n> ${0}"
+  }
+  }

@@ -1,0 +1,3 @@
+variable t_prot_params = "-cemtS";
+variable t_prot_tmpdir = "$HOME/tmp";
+variable t_prot_qp     = "";

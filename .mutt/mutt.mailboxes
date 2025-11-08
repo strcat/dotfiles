@@ -1,0 +1,80 @@
+# $Id: mutt.mailboxes,v 1.1 2003/06/19 03:11:59 dope Exp dope $
+
+# | :r !(cd ~/Mail && echo * | sed -e 's/msgid.cache//' -e 's/  / /' | tr " " "\n" | sed -e 's/^/mailboxes +/')
+# | ls -1 ~/Mail |grep -v 'sent'|grep -v 'postponed'|sed -n 's#^#=#p'
+# | cd ~/MuttMail && ls | egrep -v ' |spam' | sed -e 's/^/=/'
+# | for file in ~/MuttMail/*; do print -l -o "mailboxes +$(basename $file) "; done
+# Zsh only!
+# | $ FNORDS=(cur new tmp)
+# | $ cd ~/Maildir
+# | $ print -lo **/*~*(${~${(j/|/)FNORDS}})(/) > >(sed 's/^/mailboxes +/' >~/.mutt/mutt.mailboxes)
+
+# mailboxes +Boards			# Notify from some boards
+# mailboxes +eBay				# <http://www.ebay.{net,com,de}
+# mailboxes +info				# /* No Comment */
+# mailboxes +/strcat/blog			# Notifications by my blog
+# mailboxes +Subscriptions		# "Welcome to the $foobar mailinglist!
+# mailboxes +Mutt/Mutt-`date +%Y-%m`	# <http://www.mutt.org/>
+# mailboxes +Outgone/`date +%Y-%m`	# /* No Comment */
+# mailboxes +SPAM/SPAM-`date +%Y-%m`	# Is luscious. Isn't it?
+# mailboxes +strcat/strcat-`date +%Y-%m`	# The root of all evil :>
+# mailboxes +/Zsh/Zsh-`date +%Y-%m`	# <http://www.zsh.org/>
+
+# Generalized mailboxes from Notmuch.
+# virtual-mailboxes "Global Inbox" "notmuch://?query=tag:inbox"
+# virtual-mailboxes "Global Unread" "notmuch://?query=tag:unread"
+# virtual-mailboxes "Mailing Lists" "notmuch://?query=tag:lists"
+# virtual-mailboxes "Flagged" "notmuch://?query=tag:flagged"
+
+
+
+named-mailboxes \
+  "  Inbox" =INBOX \
+  "  Zsh" +/Zsh/Zsh-`date +%Y-%m`	\
+  "ﮊ Spam" +SPAM/SPAM-`date +%Y-%m` \
+  "  eBay" +eBay \
+  # "  NeoMutt" "notmuch://?query=List:neomutt.org" \
+  "  Outgone" +/Outgone/`date +%Y-%m` \
+  "  Schwesterherz" +barone \
+  # "  archives/today"                       "notmuch://?query=date:today      NOT (query:junk)" \
+  # "  archives/yesterday"                   "notmuch://?query=date:yesterday  NOT (query:junk)" \
+  # "  archives/this week"                   "notmuch://?query=date:this_week  NOT (query:junk)" \
+  # "  archives/last week"                   "notmuch://?query=date:last_week  NOT (query:junk)" \
+  # "  archives/this month"                  "notmuch://?query=date:this_month NOT (query:junk)" \
+  # "  archives/last month"                  "notmuch://?query=date:last_month NOT (query:junk)" \
+  # "  archives/this year"                   "notmuch://?query=date:this_year  NOT (query:junk)" \
+  # "  archives/last year"                   "notmuch://?query=date:last_year  NOT (query:junk)"
+  #
+
+# named-mailboxes "   Inbox" =INBOX
+# named-mailboxes "―――――――――― ♠ ―――――――――" =code.@
+# named-mailboxes "   Drafts" =[Gmail].Drafts
+# named-mailboxes "   Sent Mail" ="[Gmail].Sent Mail"
+# named-mailboxes "   All Mail" ="[Gmail].All Mail"
+# named-mailboxes "   Spam" =[Gmail].Spam
+# named-mailboxes "   Trash" =[Gmail].Trash
+# named-mailboxes "   Starred" =[Gmail].Starred
+# named-mailboxes "―――――――――― ♠ ―――――――――" =code.@@
+# named-mailboxes " •  code" =code
+# named-mailboxes " •  free" =free
+# named-mailboxes " •  KET" =KET
+# named-mailboxes "―――――――――― ♠ ―――――――――" =code.@@@
+# named-mailboxes "   notmuch" ~/.mail/temporary/search
+# named-mailboxes "  UT" =utmail/inbox
+# named-mailboxes "    archive " =utmail/archive
+# named-mailboxes "    sent " =utmail/sent
+# named-mailboxes "    drafts " =utmail/drafts
+# named-mailboxes "   ﮊ spam " =utmail/junk
+# named-mailboxes "    trash " =utmail/trash
+# named-mailboxes "  Gmail" =gmail/inbox
+# named-mailboxes "    archive " =gmail/archive
+# named-mailboxes "    sent " =gmail/sent
+# named-mailboxes "    drafts " =gmail/drafts
+# named-mailboxes "   ﮊ spam " =gmail/junk
+# named-mailboxes "    trash " =gmail/trash
+# named-mailboxes "  Daytum" =daytum/inbox
+# named-mailboxes "    archive " =daytum/archive
+# named-mailboxes "    sent " =daytum/sent
+# named-mailboxes "    drafts " =daytum/drafts
+# named-mailboxes "   ﮊ spam " =daytum/junk
+# named-mailboxes "    trash " =daytum/trash

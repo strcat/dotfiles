@@ -1,0 +1,53 @@
+# $Id: mutt.mailcap,v 1.2 2003/06/30 14:16:38 dope Exp dope $
+# Not loaded, but it works .. holy moly ..
+text/html; firefox -remote 'openURL(%s)'
+message/html    ; lynx -dump -force_html %s ; copiousoutput
+message/htm     ; lynx -dump -force_html %s ; copiousoutput
+#image/jpeg; showpicture -viewer feh -FZ %s
+image/*; feh -FZ  %s
+application/msword; antiword %s | less
+#image/gif; feh %s
+application/x-perl; less %s ;copiousoutput
+application/zip; zipinfo %s; copiousoutput
+application/octet-stream; gunzip -c %s | less
+application/x-gunzip;   gzcat; copiousoutput
+application/x-gzip; gunzip -c %s | tar -tf - ; copiousoutput
+application/gzip; gunzip -c %s | tar -tf - ; copiousoutput
+application/x-tar-gz; gunzip -c %s | tar -tf - ; copiousoutput
+application/x-tar; tar -ztf %s ;copiousoutput
+application/x-tgz; tar -ztf %s ;copiousoutput
+application/x-tex; less %s ; copiousoutput
+application/postscript; ps2ascii %s ; copiousoutput
+application/octet-stream; less %s ; copiousoutput
+image/gif; showpicture %s; compose="xwd -frame | xwdtopnm | ppmtogif > %s\; exit 0"; description="An X11 window image dump in GIF format"
+image/x-xwd; showpicture %s; description="An X11 window image dump in X-XWD format"
+message/partial; showpartial %s %{id} %{number} %{total}
+message/external-body; showexternal %s %{access-type} %{name} %{site} %{directory} %{mode} %{server}; \
+	needsterminal; composetyped = extcompose %s; \
+	description="A reference to data stored in an external location"
+application/postscript ; lpr %s \; echo SENT FILE TO PRINTER ; description="A Postscript File";\
+	compose="getfilename Postscript %s"
+x-be2;     ezview %s ; copiousoutput
+application/andrew-inset;     ezview %s ; copiousoutput; edit=ez -d %s; compose="ez -d %s"; description="An Andrew inset/document"
+text/richtext; shownonascii iso-8859-8 -e richtext -p %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`"  = iso-8859-8; copiousoutput
+text/richtext; shownonascii iso-8859-1 -e richtext -p %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`"  = iso-8859-1; copiousoutput
+text/plain; shownonascii iso-8859-8 %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`" = iso-8859-8; copiousoutput
+text/plain; shownonascii iso-8859-1 %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`" = iso-8859-1; copiousoutput
+text/enriched; shownonascii iso-8859-8 -e richtext -e -p %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`"  = iso-8859-8; copiousoutput
+text/enriched; shownonascii iso-8859-1 -e richtext -e -p %s; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`"  = iso-8859-1; copiousoutput
+#text/plain; kterm -geometry +0+0  -e more %s /dev/null; test=test "`echo %{charset} | tr '[A-Z]' '[a-z]'`" = iso-2022-jp
+text/richtext; richtext %s; copiousoutput
+text/enriched; richtext -e %s; copiousoutput
+text/x-patch; less %s; copiousoutput
+x-sun-attachment; sun2mime %s
+application/x-shar; less %s ; copiousoutput
+audio-file; sun-audio-file %s
+default; sun-message.csh %s %{encoding}; needsterminal
+mail-file; sun-message.csh %s %{encoding}; needsterminal
+sun-deskset-message; sun-message.csh %s %{encoding}; needsterminal
+application/x-metamail-patch; cat %s > /dev/null \; patch-metamail source-tree-root %{patchnumber}; needsterminal
+application/applefile; rcvAppleSingle %s; compose="sndAppleSingle %s";description="An Apple Macintosh file in AppleSingle format"
+text/html;                      elinks %s; nametemplate=%s.html
+text/html;                      elinks -dump %s; nametemplate=%s.html; copiousoutput
+text/x-diff;  cat %s | colordiff;copiousoutput
+text/x-patch; cat %s | colordiff;copiousoutput
