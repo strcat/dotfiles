@@ -151,7 +151,11 @@
 --     },
 --   },
 -- }
-
+local function enable_transparency()
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+end
 return {
 	"thesimonho/kanagawa-paper.nvim",
 	lazy = false,
@@ -187,6 +191,7 @@ return {
           WhichKeyNormal = { bg = "#3b4261" },
 				}
 			end,
+      enable_transparency()
 		})
 		vim.cmd("colorscheme kanagawa-paper")
 	end,
