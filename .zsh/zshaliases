@@ -122,6 +122,10 @@ fi
 # GIT
   alias gfuck='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
   alias gp="git pull"
+  alias gu="git push"
+  alias gs="git status -s"
+  alias ga="git add "
+  alias gd="git diff"
 
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
