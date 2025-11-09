@@ -44,20 +44,20 @@ fi
 
 # "better" grep
 if (( $+commands[ugrep] )); then
-  alias uq='ug -Q'       # short & quick query UI (interactive, uses .ugrep config)
-  alias ux='ug -UX'      # short & quick binary pattern search (uses .ugrep config)
-  alias uz='ug -z'       # short & quick compressed files and archives search (uses .ugrep config)
+  alias uq='ug -Q'                  # short & quick query UI (interactive, uses .ugrep config)
+  alias ux='ug -UX'                 # short & quick binary pattern search (uses .ugrep config)
+  alias uz='ug -z'                  # short & quick compressed files and archives search (uses .ugrep config)
   alias ugit='ug -R --ignore-files' # works like git-grep & define your preferences in .ugrep config
-  alias grep='ugrep -G'    # search with basic regular expressions (BRE)
-  alias egrep='ugrep -E'    # search with extended regular expressions (ERE)
-  alias fgrep='ugrep -F'    # find string(s)
-  alias pgrep='ugrep -P'    # search with Perl regular expressions
-  alias xgrep='ugrep -W'    # search (ERE) and output text or hex for binary
-  alias zgrep='ugrep -zG'   # search compressed files and archives with BRE
-  alias zegrep='ugrep -zE'   # search compressed files and archives with ERE
-  alias zfgrep='ugrep -zF'   # find string(s) in compressed files and/or archives
-  alias zpgrep='ugrep -zP'   # search compressed files and archives with Perl regular expressions
-  alias zxgrep='ugrep -zW'   # search (ERE) compressed files/archives and output text or hex for binary
+  alias grep='ugrep -G'             # search with basic regular expressions (BRE)
+  alias egrep='ugrep -E'            # search with extended regular expressions (ERE)
+  alias fgrep='ugrep -F'            # find string(s)
+  alias pgrep='ugrep -P'            # search with Perl regular expressions
+  alias xgrep='ugrep -W'            # search (ERE) and output text or hex for binary
+  alias zgrep='ugrep -zG'           # search compressed files and archives with BRE
+  alias zegrep='ugrep -zE'          # search compressed files and archives with ERE
+  alias zfgrep='ugrep -zF'          # find string(s) in compressed files and/or archives
+  alias zpgrep='ugrep -zP'          # search compressed files and archives with Perl regular expressions
+  alias zxgrep='ugrep -zW'          # search (ERE) compressed files/archives and output text or hex for binary
 fi
 
 # ripgrep - https://github.com/BurntSushi/ripgrep
@@ -84,7 +84,6 @@ fi
 # (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
 if (( ${+commands[aria2c]} )); then
 	# https://aria2.github.io/
-	# alias youtube-dl="youtube-dl --ignore-errors --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
     alias yt-dlp="yt-dlp --ignore-errors --downloader aria2c --downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"
 elif (( ${+commands[axel]} )); then
 	# https://github.com/axel-download-accelerator/axel
@@ -121,7 +120,7 @@ fi
    alias group="stat -c '%G - %g - %n'"
 
 # GIT
-  alias gfuck="git commit -am '`curl -s http://whatthecommit.com/index.txt`'"
+  alias gfuck='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
   alias gp="git pull"
 
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
@@ -131,21 +130,6 @@ fi
 
 # quick&dirty mirror
   alias mirror="noglob wget --mirror --no-parent --timestamping --continue --recursive $1"
-
-# access the database of ${HOME} (Note: This is for *OpenBSD*! Not for
-# Linux!
-  if [ "${OS}" = openbsd ]; then
-     alias hupdatedb="updatedb --searchpaths="$HOME" --prunepaths="/" --fcodes=$HOME/.locatedb"
-     alias hlocate="locate -d ${HOME}/.locatedb"
-  else
-     if [[ "${OS}" =  "linux-gnu" ]] && [[ -x $(which plocate) ]] ; then
- 	   alias hupdatedb="$BOSS updatedb"
-  else
-     # That's for GNU updatedb
-     alias hupdatedb="$BOSS updatedb --localpaths="$HOME" --output=$HOME/.locatedb --prunefs="/""
-     alias hlocate="locate -d ${HOME}/.locatedb"
-  fi
-fi
 
 # Only non-root need this aliases
 if (( EUID != 0 )); then
@@ -204,10 +188,6 @@ fi
    alias painless="ssh dope@192.168.1.6"
    alias diehard="ssh lart@192.168.1.7"
    alias goliath='ssh god@192.168.1.8'
-   alias vhost='ssh dope@80.190.98.198'
-   alias sourceforge="ssh strcat@shell.sf.net"
-   alias gohome="ssh dope@strcat.ath.cx"
-   alias vms="ssh strcat@dahmer.vistech.net"
 
 # "-" is the same as the -l option (deprecated).
    alias su="su -"
@@ -225,7 +205,6 @@ fi
 # spool (needed for slrnpull)
   alias news='slrn -C -n --kill-log ~/.slang/KILL --spool -f ~/.jnewsrc'
   alias gnews='slrnpull -d ~/nslrn/slrnpull --logfile ~/nslrn/slrnpull/log -h news.solani.org'
-  # alias gnews='slrnpull -d ~/nslrn/slrnpull --logfile ~/nslrn/slrnpull/log -h news.uni-stuttgart.de'
 
 # call mailfilter and start getmail after a positive return value
 # <http://mailfilter.sourceforge.net/> && <http://www.qcc.ca/~charlesc/software/getmail-3.0/>
@@ -247,20 +226,20 @@ fi
    alias null-irssi='irssi --config=/dev/null'
 
 if (( $+commands[eza] )); then
-    alias ls='eza --color=always --group-directories-first --icons=always' # my preferred listing
-    alias l='eza -al --color=always --group-directories-first --icons=always' # my preferred listing
+    alias ls='eza --color=always --group-directories-first --icons=always'     # my preferred listing
+    alias l='eza -al --color=always --group-directories-first --icons=always'  # my preferred listing
     alias la='eza -a --color=always --group-directories-first --icons=always'  # all files and dirs
     alias ll='eza -l --color=always --group-directories-first --icons=always'  # long format
     alias lt='eza -aT --color=always --group-directories-first --icons=always' # tree listing
-    alias lsa='eza -a | egrep "^\."'
-    alias lsd='eza -D' #  list only directories
-    alias lad='eza -Da' # only directories including dots
-    alias lsg='eza --long --git' # git status
-    alias lsnew='eza -lsnew | tail $@' # newest files
-    alias lsold='eza -lsold | tail $@' # oldest files
-    alias lsbig='eza -lssize | tail $@' # biggest files
-    alias lssmall='eza -lssize | head $@' # smalles files
-    alias lt2="eza -lTg --level=2 --icons=always"
+    alias lsa='eza -a | egrep "^\."'                                           # only dotfiles
+    alias lsd='eza -D'                                                         # list only directories
+    alias lad='eza -Da'                                                        # only directories including dots
+    alias lsg='eza --long --git'                                               # git status
+    alias lsnew='eza -lsnew | tail $@'                                         # newest files
+    alias lsold='eza -lsold | tail $@'                                         # oldest files
+    alias lsbig='eza -lssize | tail $@'                                        # biggest files
+    alias lssmall='eza -lssize | head $@'                                      # smallest files
+    alias lt2="eza -lTg --level=2 --icons=always"                              # tree-like view
     alias lt3="eza -lTg --level=3 --icons=always"
     alias lt4="eza -lTg --level=4 --icons=always"
     alias lta="eza -lTag --icons=always"
@@ -280,10 +259,10 @@ if (( $+commands[eza] )); then
     alias lsx='lsd -l -- *(*) | head $@'
   else
     # *Very* often used!
-    alias lad='=ls -d -- .*(/)'				# only show dot-directories
-    alias lsa='ls -a -- .*(.)'				# only show dot-files
-    alias lse='=ls -ld -- *(/^F)'				# only show empty directories
-    alias lsen='=ls -d *(/om[1])'				# newest directory
+    alias lad='=ls -d -- .*(/)'		# only show dot-directories
+    alias lsa='ls -a -- .*(.)'		# only show dot-files
+    alias lse='=ls -ld -- *(/^F)'	# only show empty directories
+    alias lsen='=ls -d *(/om[1])'	# newest directory
     # FIXME: Replace the ``grep -v'', ``2&>/dev/null'' by zsh-only syntax
     alias lsnew='=ls -rtlh -- *(.) | tail $@ 2&>/dev/null'  # only the newest files
     alias lsold="=ls -rtl -- *(.) | head $@ 2&>/dev/null"   # display the oldest files
