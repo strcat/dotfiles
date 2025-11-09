@@ -35,18 +35,18 @@ return { -- Collection of various small independent plugins/modules
 		-- :Pick buffers, Files, ..
 		require("mini.pick").setup()
 		-- Move any selection in any direction
-		require("mini.move").setup({
-			mappings = {
-				left = "H",
-				right = "L",
-				down = "J",
-				up = "K",
-				line_left = "H",
-				line_right = "L",
-				line_down = "J",
-				line_up = "K",
-			},
-		})
+		-- require("mini.move").setup({
+		-- 	mappings = {
+		-- 		left = "H",
+		-- 		right = "L",
+		-- 		down = "J",
+		-- 		up = "K",
+		-- 		line_left = "H",
+		-- 		line_right = "L",
+		-- 		line_down = "J",
+		-- 		line_up = "K",
+		-- 	},
+		-- })
 		-- Align text interactively
 		require("mini.align").setup()
 		-- Tabline
