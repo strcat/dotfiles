@@ -72,11 +72,37 @@ if [ -e "/etc/arch-release" ]; then
 fi
 
 # search "interactive" with ripgrep and open the result in nvim
-function rgv () {
+function rgv() {
 	rg --color=always --line-number --no-heading --smart-case "${*:-}" | \
           fzf --ansi --height 80% --tmux 100%,80% --color "hl:-1:underline,hl+:-1:underline:reverse" \
           --delimiter : --preview 'bat --color=always {1} --highlight-line {2}' \
           --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' --bind 'enter:become(nvim {1} +{2})'
+}
+
+# Replacement for my E.-aliases
+function Ez() {
+        local configs=(
+                ~/.zshrc
+                ~/.zlogin
+                ~/.zlogout
+                ~/.zsh/zshzle
+                ~/.zsh/zshmisc
+                ~/.zsh/zshaliases
+                ~/.zsh/zshexports
+                ~/.zsh/zshbindings
+                ~/.zsh/zshfunctions
+                ~/.tmux.conf
+                ~/.slrnrc
+                ~/.muttrc
+                ~/.vimrc
+                ~/.config/nvim/init.lua
+                ~/.sigs/own-stuff
+                ~/.bashrc
+                ~/.bash_profile
+        )
+        local IFS=$'\n'
+  local files=($(echo "${configs[*]}" | fzf-tmux -m -1 --tiebreak=index))
+  [[ -n $files ]] && $EDITOR "${files[@]}"
 }
 
 # Pretty output of PATH and FPATH
