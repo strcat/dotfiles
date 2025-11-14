@@ -80,15 +80,6 @@ elif (( ${+commands[curl]} )); then
 	alias curl='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 fi
 
-# Quick edit often used setup file
-  alias Ez='$EDITOR ~/.zshrc'
-  alias Es='$EDITOR ~/.slrnrc'
-  alias Ev='$EDITOR ~/.vimrc'
-  alias En='$EDITOR ~/.config/nvim/init.lua'
-  alias Em='$EDITOR ~/.muttrc'
-  alias Et='$EDITOR ~/.tmux.conf'
-  alias Esig="$EDITOR ~/.sigs/own-stuff"
-
 # Disable "spell-correction" for this commands:
   alias cp="${aliases[cp]:-cp} -iv"
   alias ln="${aliases[ln]:-ln} -iv"
