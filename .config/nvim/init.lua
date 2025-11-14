@@ -21,7 +21,6 @@ require("lazy").setup({
 	require("plugins.fzflua"),
 	require("plugins.gitsigns"),
 	require("plugins.image"),
-	require("plugins.snacks"),
 	require("plugins.lint"),
 	require("plugins.lsp"),
 	require("plugins.lualine"),
