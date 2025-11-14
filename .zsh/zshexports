@@ -43,6 +43,9 @@ if (( $+commands[git] )); then
 	(( ${+GIT_PRETTY_FORMAT_AUTHOR} )) || export GIT_PRETTY_FORMAT_AUTHOR="--pretty=\"%C(bold green)%h%Creset %C(yellow)%an%Creset%C(auto)%d%Creset %s\""
 fi
 
+# Ripgrep
+(( $+commands[rg])) && export RIPGREP_CONFIG_PATH=~/.ripgreprc
+
 HISTFILE=~/.zsh_history
 
 # https://github.com/zsh-users/zsh-autosuggestions
