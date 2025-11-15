@@ -151,10 +151,11 @@
 --     },
 --   },
 -- }
+
 local function enable_transparency()
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+	vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
 end
 return {
 	"thesimonho/kanagawa-paper.nvim",
@@ -188,11 +189,22 @@ return {
 					MiniTablineModifiedVisible = { bg = "#1e2030", fg = "#ffc777" },
 					MiniTablineTabpagesection = { bg = "#1e2030", fg = "NONE" },
 					MiniTablineVisible = { bg = "#1e2030", fg = "#c8d3f5" },
-          WhichKeyNormal = { bg = "#1f2335" },
-          -- WhichKeyNormal = { bg = "#3b4261" },
+					WhichKeyNormal = { bg = "#1f2335" },
+					TelescopeNormal = { bg = "#24273a" },
+					TelescopeBorder = { fg = "#8aadf4", bg = "#24273a" },
+					TelescopePromptNormal = { bg = "#24273a" },
+					TelescopePromptBorder = { fg = "#8aadf4", bg = "#24273a" },
+					TelescopeResultsNormal = { bg = "#24273a" },
+					TelescopeResultsBorder = { fg = "#8aadf4", bg = "#24273a" },
+					TelescopePreviewNormal = { bg = "#24273a" },
+					TelescopePreviewBorder = { fg = "#8aadf4", bg = "#24273a" },
+					TelescopeTitle = { fg = "#c6a0f6", bg = "#24273a" },
+					TelescopePromptTitle = { fg = "#c6a0f6", bg = "#24273a" },
+					TelescopeResultsTitle = { fg = "#c6a0f6", bg = "#24273a" },
+					TelescopePreviewTitle = { fg = "#c6a0f6", bg = "#24273a" },
 				}
 			end,
-      enable_transparency()
+			enable_transparency(),
 		})
 		vim.cmd("colorscheme kanagawa-paper")
 	end,
