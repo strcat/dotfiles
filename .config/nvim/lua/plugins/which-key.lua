@@ -22,7 +22,7 @@ return {
 		})
 	end,
 	opts = {
-		preset = "classic",
+		preset = "modern",
 		-- modes = {
 		-- 	x = false,
 		-- },
