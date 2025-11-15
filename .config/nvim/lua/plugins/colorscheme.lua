@@ -188,7 +188,8 @@ return {
 					MiniTablineModifiedVisible = { bg = "#1e2030", fg = "#ffc777" },
 					MiniTablineTabpagesection = { bg = "#1e2030", fg = "NONE" },
 					MiniTablineVisible = { bg = "#1e2030", fg = "#c8d3f5" },
-          WhichKeyNormal = { bg = "#3b4261" },
+          WhichKeyNormal = { bg = "#1f2335" },
+          -- WhichKeyNormal = { bg = "#3b4261" },
 				}
 			end,
       enable_transparency()
