@@ -1,0 +1,88 @@
+# General
+#
+# If set to yes, all feeds will be automatically reloaded at start up
+# and then continuously after a certain time has passed (see reload-time).
+  auto-reload yes
+# Set the browser command to use when opening an article in the browser.
+  # browser "chromium 2>/dev/null %u"
+  # browser "firefox --new-tab %u"
+  browser "zen-browser --new-tab %u"
+  # browser "firefox %u"
+# If set to yes, then Newsboat will ask for confirmation whether the user
+# really wants to quit Newsboat.
+  confirm-exit yes
+# If set to yes, then Newsboat will ask for confirmation on whether the
+# user wants to mark a feed as read.
+  confirm-mark-feed-read no
+# This format specifies the date/time format in the article list
+  datetime-format  "%d.%m.%Y"
+# The <sortfield> specifies which feed property shall be used for
+# sorting; currently available are: firsttag, title, articlecount,
+# unreadarticlecount, lastupdated and none.
+  feed-sort-order lastupdated
+# If set to no, then these keys will stop in the current feed.
+  goto-next-feed no
+# Specifies the player that shall be used for playback of downloaded files.
+  player mpv
+# If set to yes, then all feeds will be reloaded when Newsboat starts up.
+  refresh-on-startup no
+# The number of parallel reload threads that shall be started when all
+# feeds are reloaded.
+  reload-threads 100
+# The number of minutes between automatic reloads.
+  reload-time 10
+# The default path where articles shall be saved to. If an invalid path
+# is specified, the current directory is used.
+  save-path "~/Notes/Bookmarks"
+# If set to yes, then all articles of a feed are listed in the article
+# list. If set to no, then only unread articles are listed.
+  show-read-articles no
+# If set to yes, then all feeds, including those without unread articles,
+# are listed. If set to no, then only feeds with one or more unread articles are list.
+  show-read-feeds no
+
+# colors                            fg          bg      style
+# formatting and colorization ------------------------------------------ {{{
+  highlight all		      "━━.*━━                                 "		yellow	 black	 blink
+  highlight article	    ":.*\\(image\\)$                        "	color74  default
+  highlight article	    ":.*\\(link\\)$                         "	color74  default
+  highlight article	    "\\[[0-9][0-9]*\\]                      "	color72  default	 bold
+  highlight article	    "^Links:                                "		white	 color240 underline
+  highlight articlelist "^ *[0-9]+ *N                           "		color156 default
+  highlight feedlist	  "^ *[0-9]+ *N                           "		color156 default
+  highlight article	    "\\[embedded flash: [0-9][0-9]*\\]      "	  color72  default bold
+  highlight article	    "\\[image [0-9][0-9]*\\]                "		  color72  default bold
+  highlight article	    "^(Feed|Title|Author|Link|Date|Linux):.*" color208 default
+  highlight article	    "^Podcast Download URL:.*               " color71 default
+  color info blue default
+  color listnormal color237 default
+  color listnormal_unread color244 default
+  color listfocus_unread color7 color27
+  color listfocus color7 color27
+
+# Ignore
+ignore-mode "display"
+ignore-article "*" "title =~ \"sport\""
+ignore-article "*" "title =~ \"sponsor\""
+ignore-article "*" "title =~ \"advertisement\""
+
+# Key bindings ---------------------------------- {{{
+  bind-key j down feedlist
+  bind-key k up feedlist
+  bind-key j next articlelist
+  bind-key k prev articlelist
+  bind-key J next-feed articlelist
+  bind-key K prev-feed articlelist
+  bind-key j down article
+  bind-key k up article
+  bind-key B bookmark article
+  bind-key O open-in-browser-and-mark-read
+  bind-key U show-urls
+  bind-key a toggle-article-read
+# }}}
+
+feedlist-title-format     "%N %V | %u/%t | Feeds              "
+articlelist-title-format  "%N %V | %u/%t | Artikel im Feed: %T"
+searchresult-title-format "%N %V | %u/%t | Suchergebnisse     "
+itemview-title-format     "%N %V | %u/%t | Artikel: %T        "
+
