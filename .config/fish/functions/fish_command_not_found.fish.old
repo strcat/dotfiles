@@ -1,0 +1,4 @@
+function fish_command_not_found
+        echo "Command not found, potential packages: "
+        /usr/bin/pkgfile $argv[1]
+end

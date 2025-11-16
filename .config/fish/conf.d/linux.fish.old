@@ -1,0 +1,35 @@
+# yay.. it works under artix too
+
+# order of preference: aria2c, axel, wget, curl. This order is derrived from speed based on personal tests.
+# (( $+commands[aria2c] )) && alias youtube-dl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+if (( ${+commands[aria2c]} )); then
+	# https://aria2.github.io/
+	# alias youtube-dl="youtube-dl --ignore-errors --external-downloader aria2c --external-downloader-args '-c -x 5 -k 2M '"
+    alias yt-dlp="yt-dlp --ignore-errors --downloader aria2c --downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"
+elif (( ${+commands[axel]} )); then
+	# https://github.com/axel-download-accelerator/axel
+        alias axel='axel --num-connections=5 --alternate'
+elif (( ${+commands[wget]} )); then
+	#https://www.gnu.org/software/wget/
+	alias wget='wget --continue --progress=bar --timestamping'
+elif (( ${+commands[curl]} )); then
+	# https://curl.haxx.se/
+	alias curl='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+fi
+
+if [ uname = "Darwin" ]
+    alias get="brew install"
+    alias search="brew search"
+else if [ -f /etc/arch-release ]
+    alias get="sudo pacman -S"
+    alias search="pacman -Ss"
+else if [ -f /etc/lsb-release ]
+    alias get="sudo apt install"
+    alias search="apt search"
+else if [ -f /etc/alpine-release ]
+    alias get="apk add"
+    alias search="apk search"
+else if [ uname = "FreeBSD" ]
+    alias get="sudo pkg install -y"
+    alias search="pkg search"
+end
