@@ -1,0 +1,8 @@
+# --no-heading
+--case-sensitive
+# Disable Searching Inside Compressed Files
+--no-search-zip
+# Exclude directories
+--glob=!{.git,.svn,node_modules,tealdeer,Trash,vendor}
+# Search case-insensitively if pattern is all lowercase.
+--smart-case
