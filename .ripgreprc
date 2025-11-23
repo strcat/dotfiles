@@ -1,8 +1,21 @@
-# --no-heading
---case-sensitive
+# its already default and overrides --smart-case, so...
+# --case-sensitive
 # Disable Searching Inside Compressed Files
 --no-search-zip
 # Exclude directories
 --glob=!{.git,.svn,node_modules,tealdeer,Trash,vendor}
 # Search case-insensitively if pattern is all lowercase.
 --smart-case
+# sort by path
+--sort=path
+# Follow symbolic links
+--follow
+# Don't print lines longer than this limit
+--max-columns=1000
+# Configure color settings and styles
+--colors=path:bg:0x3b,0x3b,0x3b
+--colors=path:fg:magenta
+--colors=line:fg:0xf2,0xc2,0x60
+--colors=match:bg:0x2b,0x83,0xa6
+--colors=match:fg:0xff,0xff,0xff
+--colors=match:style:nobold
