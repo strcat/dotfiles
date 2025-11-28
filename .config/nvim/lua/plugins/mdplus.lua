@@ -1,10 +1,10 @@
-return
-{
-  "yousefhadder/markdown-plus.nvim",
-  ft = { "markdown", "text", "txt" },  -- Match your filetypes config
-  config = function()
-	require("markdown-plus").setup({
-		filetypes = { "markdown", "text", "txt" },
-	})
-  end,
+return {
+	"MeanderingProgrammer/render-markdown.nvim",
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+		"nvim-mini/mini.nvim",
+	},
+	config = function()
+		require("render-markdown").setup({})
+	end,
 }
