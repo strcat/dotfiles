@@ -277,6 +277,10 @@ LOGCHECK=20
   [ -d "${HOME}/dev-bin" ] && PATH="${PATH}:${HOME}/dev-bin/bin"
   # Check some directories and add existing to $PATH
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+  # TODO: Make rubys path dynamic because ruby (needed for asciidoc{,tor})
+  #       changes his path every version. Something like 
+  #         ${HOME}/.gem/ruby/${$(ruby --version)[2]}/bin
+  #       or some shitfuck like that.
   for dir in \
           /usr/local/bin \
           /usr/local/sbin \
@@ -286,7 +290,7 @@ LOGCHECK=20
           /usr/games/bin \
           /usr/bin/core_perl \
           ${HOME}/perl5/bin \
-          ${HOME}/.gem/ruby/3.0.0/bin \
+          ${HOME}/.gem/ruby/3.4.0/bin \
           ${HOME}/.local/bin \
           ${HOME}/.local/share/flatpak/exports/share \
           ${HOME}/.local/bin \
