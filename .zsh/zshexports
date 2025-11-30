@@ -4,10 +4,10 @@
 if (( $+commands[nvim] )); then
 	(( ${+EDITOR} )) || export EDITOR="nvim" # **EDIT**
 	(( ${+VISUAL} )) || export VISUAL="nvim" # **EDIT**
-  (( ${+MANPAGER} )) || export MANPAGER='nvim +Man!'
 fi
 if (( $+commands[bat] )); then
   export PAGER=bat
+  export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
   alias less=bat
 else
         export PAGER=less
