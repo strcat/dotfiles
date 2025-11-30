@@ -262,6 +262,11 @@ fi
 # zmv -- see ``less ${^fpath}/zmv(N)'' for more details.
    alias zcp='zmv -C'
    alias zln='zmv -L'
+   alias zmv2lower='zmv      "*" "\${(L)f}"'
+   alias zmv2upper='zmv      "*" "\${(U)f}"'
+   alias zmv2capital='zmv    "*" "\${(C)f}"'
+   alias zmv2hypen='zmv      "*" "\$f:gs/ /-/"'
+   alias zmv2underscore='zmv "*" "\$f:gs/ /_/"'
 
 # Some aliases for the OpenBSD - Portcollection
    if [ "${OS}" = openbsd ]; then
