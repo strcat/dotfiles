@@ -27,6 +27,7 @@ require("lazy").setup({
 	require("plugins.luasnip"),
 	require("plugins.mini"),
 	require("plugins.markdown"),
+	require("plugins.mdplus"),
 	require("plugins.misc"),
 	require("plugins.neoscroll"),
 	require("plugins.noice"),
