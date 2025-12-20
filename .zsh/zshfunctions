@@ -234,7 +234,9 @@ fi
 
 # tmux split git updates from package-manager udpates
 if (( ${+TMUX} )); then
-	if (( $+commands[paru] )); then
+  if (( $+commands[yay])); then
+    alias UU='tmux split -h yay -Suy --devel'
+  elif (( $+commands[paru] )); then
 		alias UU='tmux split -h  paru -Suy --devel --skipreview'
 	elif (( $+commands[pkg] )); then
 		alias UU='tmux split -h pkg update'
