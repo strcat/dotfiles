@@ -11,7 +11,8 @@
           // "template": "{{ .UserName }}@{{ .HostName }} ",
           // "template": "  <#1F73CA>\uf007 {{ .UserName }}</> <#17B5C8>|</> <#65B4E7>\udb80\udf79 {{ .HostName }}</>",
           //"template": "{{ if .SSHSession }} SSH: {{ end }}{{ .UserName }}@{{ .HostName }} ",
-          "template":  "{{ if .SSHSession }} SSH: {{ .UserName }}@{{ .HostName }} {{else}}{{.UserName}}@{{ .HostName }}{{ end }}",
+          //"template":  "{{ if .SSHSession }} SSH: {{ .UserName }}@{{ .HostName }} {{else}}{{.UserName}}@{{ .HostName }}{{ end }}",
+          "template": "{{ if ne .UserName \"dope\" }}{{ .UserName }}@{{ .HostName }}{{end}} ",
           "type": "session"
         },
         {
