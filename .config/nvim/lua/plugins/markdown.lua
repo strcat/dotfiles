@@ -21,7 +21,7 @@ return {
 		code = {
 			enabled = true,
 			sign = "language",
-			style = "full",
+			style = "block",
 			position = "left",
 			language_pad = 0,
 			language_name = true,
