@@ -8,6 +8,10 @@
   # browser "firefox --new-tab %u"
   browser "zen-browser --new-tab %u"
   # browser "firefox %u"
+# If set to yes, then the cache gets locked and superfluous feeds and items are
+# removed, such as feeds that can’t be found in the urls configuration file
+# anymore. I'm to lazy for `newsboat --cleanup`
+  cleanup-on-quit yes
 # If set to yes, then Newsboat will ask for confirmation whether the user
 # really wants to quit Newsboat.
   confirm-exit yes
