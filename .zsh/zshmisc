@@ -102,5 +102,6 @@ my-expand-abbrev() {
 [ -d /mnt/Torrents ] && hash -d T=/mnt/Torrents                       # Bittorrent is evil.. isn't it?
 [ -d ~/Videos ] && hash -d V=~/Videos/                                # Downloaded video-files
 [ -d /var/log ] && hash -d VL=/var/log                                # often visited ;)
+[ -d ~/.config/weechat ] && hash -d W=~/.config/weechat/              # Can i go weeeee now?!
 [ -d ~/.zsh ] && hash -d Z=~/.zsh/                                    # "setupfiles" for ZSH
 [ -d ~/.sigs ] && hash -d _S=~/.sigs/                                 # My signature collection
