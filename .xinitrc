@@ -47,8 +47,10 @@ clipmenud &
 ~/bin/monitorlayout.sh &
 
 # Disable display power management and prevent screen from blanking (monitor is
-# turned on but with a black image); check with "xset q"
-xset s off -dpms
+# turned on but with a black image); check with "xset q"; time is in seconds
+# xset s off -dpms
+# Standby after 10mins
+xset dpms 600
 
 # Start the window manager...
 exec $WINDOWMANAGER
