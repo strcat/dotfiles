@@ -350,3 +350,8 @@ done
 # the string which presumably needs spelling correction, and `%r' expands
 # to the proposed correction. All other prompt escapes are also allowed.
 SPROMPT=$'%BError!%b Correct %{\e[31m%}%R%{ \e[0m%}to%{ \e[36m%}%r%{ \e[0m%}? [No/Yes/Abort/Edit]: '
+
+# https://codeberg.org/dnkl/foot/wiki#zsh-1
+precmd() {
+    print -Pn "\e]133;A\e\\"
+}
