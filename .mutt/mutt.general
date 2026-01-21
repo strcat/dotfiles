@@ -26,7 +26,6 @@ unset arrow_cursor
 unset ascii_chars
 unset askbcc
 unset askcc
-unset autoedit
 unset collapse_unread
 unset uncollapse_jump
 unset confirmappend
@@ -91,9 +90,6 @@ set alias_file=~/.mutt/mutt.aliases
 
 # dont move! I am the boss
 set nomove
-
-# aks you for To: and Subject: before starting vi
-set noautoedit
 
 # utomatically encrypt replies to encrypted mail
 #set pgp_replyencrypt
@@ -193,7 +189,7 @@ set digest_collapse
 
 # # allows you to edit the header of your outgoing messages along with
 # # the body of your message.
-# set edit_headers
+set edit_headers
 
 # # I use '+14' to start edit at line 14 (on ma attributionline)
 # # set editor="nvim +14 "
@@ -214,7 +210,7 @@ set digest_collapse
 # set escape="~"
 
 # # prompt for recipients and subject are skipped when replying to messages
-# set fast_reply
+set fast_reply
 
 # # controls whether or not attachments on outgoing messages are saved
 # # along with the main body of your message.
