@@ -9,14 +9,14 @@ set hdrs
 # The complete 'From:' - Line
 #--------------------------------------------------
 # my_hdr From: Christian Schneider <strcat@gmx.net>
-#-------------------------------------------------- 
+#--------------------------------------------------
 
 # my Organization
 my_hdr Organization: Guerrilla UNIX Development (Venimus, Vidimus, Dolavimus)
- 
+
 # How to get my GPG-Key
-my_hdr X-GPG-Key: gpg --recv-keys --keyserver wwwkeys.eu.pgp.net F678E1DA
- 
+my_hdr X-GPG-Key: gpg --keyserver hkp://keys.gnupg.net --recv-keys 74AB1DF9
+
 #my_hdr X-Message-Flag: Microsoft Security Advice: Youre machine has been compromised. Reinstall Windows
 # Born to frag!
 #my_hdr X-Editor: `vim --version | grep "VIM - Vi IM" | sed 's/(.*)/\<http:\/\/www.vim.org\>/g'`
@@ -26,24 +26,24 @@ my_hdr X-GPG-Key: gpg --recv-keys --keyserver wwwkeys.eu.pgp.net F678E1DA
 # my_hdr User-Agent: Mutt/1.5.4i (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`)
 # Result        : User-Agent: Mutt/1.5.4i (OpenBSD 3.2)
 # Disadvantage  : The "versions-part" ist static :/
-# 
+#
 # YES!!!11!
 # Result: User-Agent: Mutt/1.5.4i (OpenBSD 3.2)
 #my_hdr User-Agent: Mutt/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`)
 #--------------------------------------------------
 # my_hdr User-Agent: Mutt/1.5.9 (UNIX)
-#-------------------------------------------------- 
+#--------------------------------------------------
 #my_hdr User-Agent: Mutt/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -sr`)
 #--------------------------------------------------
 # my_hdr User-Agent: Mutt/`muttng -v | head -n 1 | cut -f 7 -d " "`
-#-------------------------------------------------- 
+#--------------------------------------------------
 # Too simple? Hey .. no problem ;)
-# my_hdr User-Agent: `mutt -v | head -n 1 |  awk '{ print $1}'`/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`) 
+# my_hdr User-Agent: `mutt -v | head -n 1 |  awk '{ print $1}'`/`mutt -v | head -1 | cut -f 2 -d " "` (`uname -a | tr -s ' ' ' ' | cut -d ' ' -f1,3 | tr ' ' ' '`)
 
-# *bg* 
+# *bg*
 #
-# X-Header-001:  	 
-# X-Header-002:  	 
+# X-Header-001:
+# X-Header-002:
 # X-Header-003:  	                          ,.--..
 # X-Header-004:  	                       ,:".   .'"V:.::..  .
 # X-Header-005:  	                     ,::.'..  . . "VI:I:".':-.,.
