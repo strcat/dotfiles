@@ -201,7 +201,7 @@ set edit_headers
 # # set editor="vim %s +\`awk ' /^$/ {print i+2; exit} {i++}' %s\` -c ':0;/^$/+'
 # # *Strike* Write a reply without quote the signature!
 # #  Hint: Display a errormessage with a new mail.
-# #set editor="vim -c '/^> -- $/,\$d' +12 -c 'set nobackup' -c 'set tw=72'"
+set editor="nvim -c '/^> -- $/,\$d' +12 -c 'set nobackup' -c 'set tw=72'"
 
 # # try to derive the message's envelope sender from the "From:" header
 # set use_envelope_from=yes
