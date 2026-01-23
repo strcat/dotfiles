@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 	-- command = "so ~/.config/nvim/lua/plugins/abolish.txt",
 })
-
+--
 -- -- config for built-in undotree plugin
 -- vim.cmd.packadd("nvim.undotree") -- load on startup
 -- vim.api.nvim_create_autocmd("FileType", {
@@ -186,7 +186,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		"gitsigns-blame",
 		"AvanteAsk",
 		"AvanteInput",
-		"markdown",
 		"Trouble",
 		-- "PlenaryTestPopup",
 		-- "grug-far",
