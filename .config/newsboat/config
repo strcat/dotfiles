@@ -5,8 +5,8 @@
   auto-reload yes
 # Set the browser command to use when opening an article in the browser.
   # browser "chromium 2>/dev/null %u"
-  # browser "firefox --new-tab %u"
-  browser "zen-browser --new-tab %u"
+  browser "firefox --new-tab %u"
+  # browser "zen-browser --new-tab %u"
   # browser "firefox %u"
 # If set to yes, then the cache gets locked and superfluous feeds and items are
 # removed, such as feeds that can’t be found in the urls configuration file
