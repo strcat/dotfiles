@@ -105,7 +105,7 @@ set("n", "<leader>mt", ":Markview toggleAll<CR>", { desc = "Toggle all chunks" }
 -- FzfLua
 set("n", "<leader>tg", ":FzfLua live_grep_native<CR>", { desc = "FzfLua livegrep" })
 set("n", "<leader>tm", ":FzfLua marks<CR>", { desc = "FzfLua marks" })
-set("n", "<leader>tf", ":FzfLua files<CR>", { desc = "FzfLua Files" })
+set("n", "<leader>ff", ":FzfLua files<CR>", { desc = "FzfLua Files" })
 set("n", "<leader>tr", ":FzfLua resume<CR>", { desc = "FzfLua resume" })
 set("n", "<leader>tF", function()
 	require("fzf-lua").files({ cwd = "~" })
