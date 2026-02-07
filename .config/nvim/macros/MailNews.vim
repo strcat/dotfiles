@@ -65,8 +65,8 @@
 
 " Load some files. See »:h filereadable« for details
 "  +--> Make footnotes in Vim
-  let FOOTNOTE=expand("~/.vim/macros/vimfootnotes.vim")
-  if filereadable(FOOTNOTE) | exe "source " . FOOTNOTE | endif
+  " let FOOTNOTE=expand("~/.vim/macros/vimfootnotes.vim")
+  " if filereadable(FOOTNOTE) | exe "source " . FOOTNOTE | endif
 "
 " +--> Insert (Quote) stuff the way some emacs people do.
   let BLOCKQUOTE=expand("~/.vim/macros/VBlockquote.vim")
