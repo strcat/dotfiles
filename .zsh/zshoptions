@@ -45,7 +45,7 @@ autoload -Uz smart-insert-last-word
 # Edit the command line using your usual editor.
   autoload -U edit-command-line
   zle -N edit-command-line
-  bindkey -M vicmd "^v" edit-command-line
+  bindkey '\C-x\C-e' edit-command-line
 
 # This module should be automatically loaded if u use menu selection but
 # to be sure we do it here
