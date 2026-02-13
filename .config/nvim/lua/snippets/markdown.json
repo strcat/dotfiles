@@ -493,6 +493,16 @@
       ],
       "description": "Insert table with 5 rows and 5 columns. First row is heading."
     },
+  "Image Rightfloat": {
+          "prefix": "imgfl",
+          "body": "<div class=floatleft><img class=scaled src=\"${1}\"><p>${2}</p></div>",
+          "description": "Float left"
+  },
+  "Image Leftfloat": {
+          "prefix": "imgfr",
+          "body": "<div class=floatright><img class=scaled src=\"${1}\"><p>${2}</p></div>",
+          "description": "Float right"
+  },
   "Center Text": {
     "prefix": "caption",
     "scope": "html, markdown",
