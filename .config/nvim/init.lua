@@ -20,7 +20,7 @@ require("lazy").setup({
 	require("plugins.formatting"),
 	require("plugins.fzflua"),
 	require("plugins.gitsigns"),
-	require("plugins.image"),
+	-- require("plugins.image"),
 	require("plugins.lint"),
 	require("plugins.lsp"),
 	require("plugins.lualine"),
