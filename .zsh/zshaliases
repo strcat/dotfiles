@@ -194,7 +194,8 @@ fi
                 --rcfile ${HOME}/.getmail/getmailrc-blog \
                 --rcfile ${HOME}/.getmail/getmailrc-web \
                 --rcfile ${HOME}/.getmail/getmailrc-eigenes \
-                --rcfile ${HOME}/.getmail/getmailrc-404'
+                --rcfile ${HOME}/.getmail/getmailrc-404 \
+                --rcfile ${HOME}/.getmail/getmailrc-dotfiles'
 # the two above together..
    alias gall="gmail ; gnews"
 
