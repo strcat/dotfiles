@@ -1,0 +1,32 @@
+@import "./moon.css";
+* {
+  background: @base;
+  /* border: 1px solid @overlay; */
+  /* reference the color by using @color-name */
+  /* color: @text; */
+  /* font-size: 12px; */
+  /* min-height: 1.66em; */
+  /* font-weight: 700; */
+}
+
+.modules-right {
+  margin: 0 0.2em;
+}
+
+.modules-right * {
+  margin: 0 0.2rem;
+}
+#clock.date {
+  color: #dddaa0;
+}
+#clock.time {
+  color: #d3869b;
+}
+#custom-np.module {
+  /* color: #D3869B; */
+  color: #99d1db;
+}
+#window.2 {
+  color: #777;
+  /* color: #dddaa0; */
+}

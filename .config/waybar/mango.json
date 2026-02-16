@@ -1,0 +1,80 @@
+// -*- mode: jsonc -*-
+{
+  "layer": "top",
+  "spacing": 4,
+  "modules-left": ["ext/workspaces", "custom/np"],
+  "modules-center": ["dwl/window"],
+  "modules-right": ["dwl/window#2", "tray", "clock#date", "clock#time"],
+  "custom/np": {
+    "interval": 3,
+    "exec": "/home/dope/bin/ircnp.sh"
+  },
+  "custom/layout": {
+    "format": "[{layout}]{title}",
+    "menu": "on-click",
+    "menu-actions": {
+      "centerTiling": "mmsg -l CT",
+      "deck": "mmsg -l K",
+      "grid": "mmsg -l G",
+      "monocle": "mmsg -l M",
+      "rightTiling": "mmsg -l RT",
+      "scrolling": "mmsg -l S",
+      "tgmix": "mmsg -l TG",
+      "tiling": "mmsg -l T",
+      "verticalDeck": "mmsg -l VK",
+      "verticalGrid": "mmsg -l VG",
+      "verticalScrolling": "mmsg -l VS",
+      "verticalTiling": "mmsg -l VT"
+    },
+    "menu-file": "$HOME/.config/waybar/mango-menu.xml"
+  },
+  "dwl/window#2": {
+    "format": "[{layout}]"
+  },
+  "dwl/window": {
+    "format": "{title}"
+  },
+  "ext/workspaces": {
+    "format": "{name}: {icon}",
+    "ignore-hidden": true,
+    "on-click": "activate",
+    "on-click-right": "deactivate",
+    "on-scroll-up": "mmsg -d viewtoleft_have_client",
+    "on-scroll-down": "mmsg -d viewtoright_have_client",
+    "sort-by-id": true,
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": ""
+    }
+  },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 20,
+    "all-outputs": false,
+    "tooltip-format": "{title}",
+    "markup": true,
+    "on-click": "activate",
+    "on-click-right": "minimize",
+    "ignore-list": ["Rofi", "wofi"]
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "clock#date": {
+    "timezone": "Europe/Berlin",
+    "tooltip": false,
+    "format": "{:%a %d %b}",
+    "interval": 1
+  },
+  "clock#time": {
+    "timezone": "Europe/Berlin",
+    "tooltip": false,
+    "format": "{:%H:%M}",
+    "interval": 1
+  }
+}
