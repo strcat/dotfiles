@@ -16,3 +16,9 @@ Questions? Suggestions? Send a email at dotfiles@strcat.de
 ![Neovim](screenshots/2025-11-09_14-01.png)
 
 ![tmux, eza, ..](screenshots/2025-11-09_13-34.png)
+
+![mangowc+waybar](screenshots/mango-empty.png)
+
+![mangowc+rofi+tmux+...](screenshots/mango-rmpc.png)
+
+![mangowc+tmux+slrn+..](screenshots/mango-busy.png)
