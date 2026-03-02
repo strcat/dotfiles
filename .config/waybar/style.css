@@ -1,5 +1,6 @@
 @import "./moon.css";
 * {
+  color: @text;
   background: @base;
   /* border: 1px solid @overlay; */
   /* reference the color by using @color-name */
@@ -8,7 +9,6 @@
   /* min-height: 1.66em; */
   /* font-weight: 700; */
 }
-
 .modules-right {
   margin: 0 0.2em;
 }
