@@ -17,6 +17,11 @@ if (( $+commands[gtrash] )); then
   # alias rm="trash-put"
 fi
 
+# https://github.com/dalance/procs/
+if (( $+commands[procs])); then
+  alias pas='procs'
+fi
+
 # grc - frontend for generic colouriser grcat(1)
 if (( $+commands[grc] )); then
 	alias grc='grc --colour=auto'
