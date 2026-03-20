@@ -295,6 +295,7 @@ LOGCHECK=20
           ${HOME}/.local/share/flatpak/exports/share \
           ${HOME}/.local/bin \
           ${HOME}/.cargo/bin \
+          ${HOME}/go/bin \
           /var/lib/snapd/snap/bin \
           /snap/bin \
           /var/lib/flatpak/exports/share \
