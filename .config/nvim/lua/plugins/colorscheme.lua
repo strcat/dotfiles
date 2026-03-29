@@ -1,211 +1,76 @@
--- return {
---   -- recolor devicons to match theme
---   {
---     'rachartier/tiny-devicons-auto-colors.nvim',
---     event = 'UIEnter',
---     dependencies = {
---       { 'nvim-tree/nvim-web-devicons', commit = '9154484705968658e9aab2b894d1b2a64bf9f83d' },
---     },
---     config = true,
---   },
---
---   -- main theme
---   {
---     'navarasu/onedark.nvim',
---     lazy = false,
---     priority = 1000,
---     config = function(_, opts)
---       require('onedark').setup(opts)
---       require('onedark').load()
---
---       vim.api.nvim_set_hl(0, 'BlinkIndentOrange', { link = 'RainbowOrange' })
---       vim.api.nvim_set_hl(0, 'BlinkIndentViolet', { link = 'RainbowPurple' })
---       vim.api.nvim_set_hl(0, 'BlinkIndentBlue', { link = 'RainbowBlue' })
---     end,
---     opts = {
---       transparent = false,
---       colors = {
---
---         -- todo: change these
---         dark_bg_blue = '#16334B',
---         dark_bg_green = '#2b3425',
---         dark_bg_red = '#301c1e',
---         dark_bg_yellow = '#685127',
---         dark_bg_purple = '#42204C',
---
---         -- blue = vim.g.colors.blue,
---         -- cyan = vim.g.colors.cyan,
---         -- green = vim.g.colors.green,
---         -- orange = vim.g.colors.peach,
---         -- purple = vim.g.colors.muave,
---         -- red = vim.g.colors.red,
---         -- yellow = vim.g.colors.yellow,
---       },
---       highlights = {
---         Blue = { fg = '$blue' },
---         Cyan = { fg = '$cyan' },
---         Green = { fg = '$green' },
---         Orange = { fg = '$orange' },
---         Purple = { fg = '$purple' },
---         Red = { fg = '$red' },
---         Yellow = { fg = '$yellow' },
---
---         Primary = { fg = '$blue' },
---         -- fixme: breaks copilot and lines with LSP hints
---         -- Comment = { fg = '$blue' },
---         ['@comment'] = { fg = '$blue' },
---         ['@lsp.type.comment'] = { fg = '$blue' },
---
---         ['@operator'] = { fg = '$cyan' },
---         ['@lsp.type.variable'] = { fg = '$yellow' },
---         ['@lsp.type.property'] = { fg = '$red' },
---         ['@lsp.type.generic'] = { fg = '$red' },
---
---         NormalFloat = { bg = '$bg_d' },
---         FloatBorder = { bg = '$bg_d' },
---         PMenuSel = { bg = '$blue', fg = '$bg1' },
---         WinSeparator = { fg = '$bg2', bg = '$bg_d' },
---         WinBar = { bg = '$bg0' },
---         WinBarNC = { bg = '$bg0' },
---         StatusLine = { bg = '$bg0', fg = '$bg0' },
---         StatusLineNC = { bg = '$bg0', fg = '$bg0' },
---
---         BufferCurrentMod = { fg = '$yellow', fmt = 'bold' },
---
---         RainbowOrange = { fg = '$orange' },
---         RainbowPurple = { fg = '$purple' },
---         RainbowBlue = { fg = '$blue' },
---         RainbowOrangeUnderline = { sp = '$orange', fmt = 'underline' },
---         RainbowPurpleUnderline = { sp = '$purple', fmt = 'underline' },
---         RainbowBlueUnderline = { sp = '$blue', fmt = 'underline' },
---
---         BlinkPairsOrange = { fg = '$orange' },
---         BlinkPairsPurple = { fg = '$purple' },
---         BlinkPairsBlue = { fg = '$blue' },
---         BlinkPairsUnmatched = { fg = '$red' },
---         MatchParen = { fg = '$yellow', bg = 'transparent' },
---
---         DashboardHeader = { fg = '$blue' },
---
---         InclineNormal = { bg = '$bg1' },
---         InclineNormalNC = { bg = '$bg1' },
---
---         EdgyNormal = { bg = '$bg_d' },
---
---         BlinkCmpGhostText = { fg = '$grey' },
---         BlinkCmpMenu = { bg = '$bg1' },
---         BlinkCmpMenuSelection = { bg = '$bg3' },
---         BlinkCmpLabelMatch = { fmt = 'bold', fg = '$fg' },
---         BlinkCmpLabelDetail = { fg = '$light_grey' },
---         BlinkCmpLabelDescription = { fg = '$light_grey' },
---         BlinkCmpDoc = { bg = '$bg_d' },
---         BlinkCmpDocBorder = { bg = '$bg_d' },
---         BlinkCmpScrollBarThumb = { bg = '$grey' },
---         BlinkCmpScrollBarGutter = { bg = '$bg1' },
---
---         BlinkTreeNormal = { bg = '$bg_d' },
---         BlinkTreeNormalNC = { bg = '$bg_d' },
---         BlinkTreeIndent = { fg = '$bg3' },
---         BlinkTreeModified = { fg = '$yellow' },
---         BlinkTreeGitStaged = { fg = '$green' },
---         BlinkTreeGitModified = { fg = '$yellow' },
---         BlinkTreeGitAdded = { fg = '$blue' },
---         BlinkTreeGitConflict = { fg = '$red' },
---         BlinkTreeGitUntracked = { fg = '$red' },
---         BlinkTreeFlagCut = { fg = '$green', fmt = 'italic' },
---         BlinkTreeFlagCopy = { fg = '$blue', fmt = 'italic' },
---
---         BlinkIndent = { fg = '$bg1' },
---
---         CursorLine = { bg = '$bg1' },
---         CursorLineNr = { bg = '$bg1' },
---         CursorLineSign = { bg = '$bg1' },
---         ModeNormal = { fg = '$green', bg = '$bg1' },
---         ModeInsert = { fg = '$blue', bg = '$bg1' },
---         ModeVisual = { fg = '$purple', bg = '$bg1' },
---         ModeCommand = { fg = '$red', bg = '$bg1' },
---         ModeSelect = { fg = '$purple', bg = '$bg1' },
---         ModeReplace = { fg = '$red', bg = '$bg1' },
---         ModeTerminal = { fg = '$yellow', bg = '$bg1' },
---
---         MiniClueBorder = { fg = '$bg_d', bg = '$bg_d' },
---         MiniClueSeparator = { fg = '$bg2' },
---         MiniClueTitle = { fg = '$blue', bg = '$bg_d' },
---         MiniClueDescGroup = { fg = '$grey', bg = '$bg_d' },
---         MiniClueDescSingle = { bg = '$bg_d' },
---
---         TelescopePathSeparator = { fg = '$light_grey' },
---
---         TelescopePreviewBorder = { fg = '$grey' },
---         TelescopePromptBorder = { fg = '$grey' },
---         TelescopeResultsBorder = { fg = '$grey' },
---
---         TelescopePreviewTitle = { fg = '$blue' },
---         TelescopePromptTitle = { fg = '$blue' },
---         TelescopeResultsTitle = { fg = '$blue' },
---
---         TerminalWinbarFocus = { bg = '$blue', fg = '$black' },
---
---         ObsidianRefText = { bg = '$blue' },
---       },
---     },
---   },
--- }
-
 local function enable_transparency()
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 	vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
 end
 return {
-	"thesimonho/kanagawa-paper.nvim",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		require("kanagawa-paper").setup({
+	{
+		"thesimonho/kanagawa-paper.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+	require("kanagawa-paper").setup({
+		transparent = true,
+		overrides = function(colors)
+			local theme = colors.theme
+			local background = "#000000"
+			local foreground_dim = "#333333"
+			local red = "#d3d3d3"
+			local blue = "#fafafa"
+			return {
+				["@string.special.url"] = { undercurl = false },
+				Underlined = { fg = blue },
+				Normal = { fg = red },
+				LineNr = { fg = foreground_dim },
+				FloatBorder = { bg = background, fg = theme.ui.fg },
+				WinSeparator = { fg = foreground_dim },
+				BufferLineSeparator = { fg = foreground_dim },
+				VertSplit = { fg = foreground_dim },
+				FloatTitle = { bg = background },
+				Folded = { fg = "none", bg = "none" },
+				MiniTablineCurrent = { bg = "#3b4261", fg = "#c8d3f5" },
+				MiniTablineFill = { bg = "#1b1d2b" },
+				MiniTablineHidden = { bg = "#1e2030", fg = "#737aa2" },
+				MiniTablineModifiedCurrent = { bg = "#3b4261", fg = "#ffc777" },
+				MiniTablineModifiedHidden = { bg = "#1e2030", fg = "#bd9664" },
+				MiniTablineModifiedVisible = { bg = "#1e2030", fg = "#ffc777" },
+				MiniTablineTabpagesection = { bg = "#1e2030", fg = "NONE" },
+				MiniTablineVisible = { bg = "#1e2030", fg = "#c8d3f5" },
+				WhichKeyNormal = { bg = "#1f2335" },
+				TelescopeNormal = { bg = "#24273a" },
+				TelescopeBorder = { fg = "#8aadf4", bg = "#24273a" },
+				TelescopePromptNormal = { bg = "#24273a" },
+				TelescopePromptBorder = { fg = "#8aadf4", bg = "#24273a" },
+				TelescopeResultsNormal = { bg = "#24273a" },
+				TelescopeResultsBorder = { fg = "#8aadf4", bg = "#24273a" },
+				TelescopePreviewNormal = { bg = "#24273a" },
+				TelescopePreviewBorder = { fg = "#8aadf4", bg = "#24273a" },
+				TelescopeTitle = { fg = "#c6a0f6", bg = "#24273a" },
+				TelescopePromptTitle = { fg = "#c6a0f6", bg = "#24273a" },
+				TelescopeResultsTitle = { fg = "#c6a0f6", bg = "#24273a" },
+				TelescopePreviewTitle = { fg = "#c6a0f6", bg = "#24273a" },
+			}
+		end,
+		enable_transparency(),
+	})
+		end,
+	},
+	{
+		"ankushbhagats/pastel.nvim",
+		config = function()
+	require("pastel").setup({
+		style = {
+			italic = true,
 			transparent = true,
-			overrides = function(colors)
-				local theme = colors.theme
-				local background = "#000000"
-				local foreground_dim = "#333333"
-				local red = "#d3d3d3"
-				local blue = "#fafafa"
-				return {
-					["@string.special.url"] = { undercurl = false },
-					Underlined = { fg = blue },
-					Normal = { fg = red },
-					LineNr = { fg = foreground_dim },
-					FloatBorder = { bg = background, fg = theme.ui.fg },
-					WinSeparator = { fg = foreground_dim },
-					BufferLineSeparator = { fg = foreground_dim },
-					VertSplit = { fg = foreground_dim },
-					FloatTitle = { bg = background },
-					Folded = { fg = "none", bg = "none" },
-					MiniTablineCurrent = { bg = "#3b4261", fg = "#c8d3f5" },
-					MiniTablineFill = { bg = "#1b1d2b" },
-					MiniTablineHidden = { bg = "#1e2030", fg = "#737aa2" },
-					MiniTablineModifiedCurrent = { bg = "#3b4261", fg = "#ffc777" },
-					MiniTablineModifiedHidden = { bg = "#1e2030", fg = "#bd9664" },
-					MiniTablineModifiedVisible = { bg = "#1e2030", fg = "#ffc777" },
-					MiniTablineTabpagesection = { bg = "#1e2030", fg = "NONE" },
-					MiniTablineVisible = { bg = "#1e2030", fg = "#c8d3f5" },
-					WhichKeyNormal = { bg = "#1f2335" },
-					TelescopeNormal = { bg = "#24273a" },
-					TelescopeBorder = { fg = "#8aadf4", bg = "#24273a" },
-					TelescopePromptNormal = { bg = "#24273a" },
-					TelescopePromptBorder = { fg = "#8aadf4", bg = "#24273a" },
-					TelescopeResultsNormal = { bg = "#24273a" },
-					TelescopeResultsBorder = { fg = "#8aadf4", bg = "#24273a" },
-					TelescopePreviewNormal = { bg = "#24273a" },
-					TelescopePreviewBorder = { fg = "#8aadf4", bg = "#24273a" },
-					TelescopeTitle = { fg = "#c6a0f6", bg = "#24273a" },
-					TelescopePromptTitle = { fg = "#c6a0f6", bg = "#24273a" },
-					TelescopeResultsTitle = { fg = "#c6a0f6", bg = "#24273a" },
-					TelescopePreviewTitle = { fg = "#c6a0f6", bg = "#24273a" },
-				}
+			dynamic_statusline = true,
+		},
+		highlights = {
+			global = function(hl)
+				hl.Normal.bg = "#11111b"
 			end,
-			enable_transparency(),
-		})
-		vim.cmd("colorscheme kanagawa-paper")
-	end,
+		},
+	})
+	vim.cmd("colorscheme pasteldark")
+		end,
+	},
 }
