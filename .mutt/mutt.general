@@ -1,4 +1,3 @@
-# set color_directcolor = yes
 # $Id: mutt.general,v 1.1 2003/06/19 03:11:59 dope Exp dope $
 #
 # unset some shit
@@ -75,6 +74,9 @@ unset write_bcc
 unset mh_purge
 
 
+# When set , NeoMutt will use and allow 24-bit colours (aka truecolor aka
+# directcolor).
+set color_directcolor=yes
 
 # my aliase
 set alias_file=~/.mutt/mutt.aliases
