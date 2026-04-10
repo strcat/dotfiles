@@ -19,17 +19,14 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 	-- command = "so ~/.config/nvim/lua/plugins/abolish.txt",
 })
---
--- -- config for built-in undotree plugin
--- vim.cmd.packadd("nvim.undotree") -- load on startup
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = "nvim-undotree",
---     callback = function()
---         vim.cmd.wincmd("H")
---         vim.api.nvim_win_set_width(0, 40)
---     end,
--- })
 
+-- Useful for nvim 0.12
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
+})
+
+-- currently not in use
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = function()
 		vim.api.nvim_set_hl(0, "HopNextKey", { fg = "#ff9900", bold = true, ctermfg = 198, cterm = { bold = true } })
@@ -69,14 +66,6 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 		})
 	end,
 })
-
--- -- Disable autoformat for C/CPP, LUA, ..
--- vim.api.nvim_create_autocmd({ "FileType" }, {
--- 	pattern = { "cpp", "html", "css", "sh" },
--- 	callback = function()
--- 		vim.b.autoformat = false
--- 	end,
--- })
 
 vim.api.nvim_create_autocmd("Filetype", {
 	pattern = { "html", "shtml", "htm" },
@@ -231,18 +220,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.spell = true
 	end,
 })
-
--- -- Disable `treesitter-context` for certain filetypes.
--- local disabled_filetypes = { "markdown", "help", "txt" }
--- local context_group = vim.api.nvim_create_augroup("TreesitterContextToggle", { clear = true })
--- vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
---   group = context_group,
---   callback = function()
---     local current_ft = vim.bo.filetype
---     if vim.tbl_contains(disabled_filetypes, current_ft) then
---       require("treesitter-context").disable()
---     else
---       require("treesitter-context").enable()
---     end
---   end,
--- })
