@@ -1,10 +1,6 @@
 {
        "contributes": {
               "snippets": [
-                      {
-                              "language": "lua",
-                              "path": "./lua.json"
-                      },
                      {
                             "language": "asciidoc",
                             "path": "./adoc.json"
