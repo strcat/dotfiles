@@ -1,9 +1,2 @@
-return {
-	"yousefhadder/markdown-plus.nvim",
-	ft = "markdown",
-	config = function()
-		require("markdown-plus").setup({
-			-- Your custom configuration here
-		})
-	end,
-}
+vim.pack.add{ 'https://github.com/YousefHadder/markdown-plus.nvim' }
+require('markdown-plus').setup {}

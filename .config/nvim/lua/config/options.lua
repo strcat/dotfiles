@@ -14,14 +14,11 @@ o.showmode = false          -- we don't need to see things like -- INSERT -- any
 o.tabstop = 2               -- insert n spaces for a tab
 o.softtabstop = 2
 o.expandtab = true
-
 o.splitbelow = true         -- better splitting
-o.splitright = true
-
+o.splitright = true         -- Configure how new splits should be opened
 o.inccommand = "split"      -- Preview substitutions live, as you type!
 o.ignorecase = true         -- Case-insensitive searching UNLESS \C or one
 o.smartcase = true          -- or more capital letters in the search term
-
 o.signcolumn = "yes"        -- Enable the sign column to prevent the screen from jumping
 o.cursorline = true         -- Enable cursor line highlight
 o.number = true             -- numbers and relativenumbers

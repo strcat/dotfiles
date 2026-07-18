@@ -1,30 +1,11 @@
-return {
-	{
-		"sontungexpt/url-open",
-		event = "VeryLazy",
-		cmd = "URLOpenUnderCursor",
-		config = function()
-			local status_ok, url_open = pcall(require, "url-open")
-			if not status_ok then
-				return
-			end
-			url_open.setup({
-				extra_patterns = {
-					-- Markdown
-					{ pattern = "<([%a%-]*:[^%s]*)>" },
-					-- Org Mode
-					{ pattern = "%[%[(.*)%]%[.*%]%]" },
-				},
-				deep_pattern = true,
-			})
-		end,
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		config = function()
-			require("nvim-ts-autotag").setup({})
-		end,
-		lazy = true,
-		event = "VeryLazy",
-	},
-}
+vim.pack.add({ 
+        { src = "https://github.com/sontungexpt/url-open" },
+        { src = "https://github.com/windwp/nvim-ts-autotag" }
+})
+
+-- Open URLs 
+require("url-open").setup({})
+vim.keymap.set("n", "gx", "<cmd>URLOpenUnderCursor<cr>", { desc = "Open URL" })
+
+-- autotag
+require("nvim-ts-autotag").setup({})
