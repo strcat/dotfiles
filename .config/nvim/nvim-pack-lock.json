@@ -20,6 +20,10 @@
       "rev": "073698c8e7dad9f6106d23ef588f5ebc7f98b326",
       "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
+    "flash.nvim": {
+      "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
+      "src": "https://github.com/folke/flash.nvim"
+    },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
