@@ -1,0 +1,30 @@
+{
+       "contributes": {
+              "snippets": [
+                      {
+                              "language": "lua",
+                              "path": "./lua.json"
+                      },
+                     {
+                            "language": "asciidoc",
+                            "path": "./adoc.json"
+                     },
+                     {
+                            "language": "cpp",
+                            "path": "./cpp.json"
+                     },
+                     {
+                            "language": "markdown",
+                            "path": "./markdown.json"
+                     },
+                     {
+                            "language": "html",
+                            "path": "./html.json"
+                     },
+                     {
+                            "language": "zsh",
+                            "path": "./zsh.json"
+                     }
+              ]
+       }
+}
