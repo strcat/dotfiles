@@ -33,7 +33,6 @@
 │   │   ├── conform.lua
 │   │   ├── colorscheme.lua
 │   │   ├── blink.lua
-│   │   └── b.lua
 │   └── config
 │       ├── options.lua
 │       ├── keymaps.lua
