@@ -100,7 +100,7 @@ fi
    alias group="stat -c '%G - %g - %n'"
 
 # GIT
-  alias gfuck='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
+  alias gfuck='git commit -m "$(curl --silent --fail http://whatthecommit.com/index.txt)"'
   alias gp="git pull"
   alias gu="git push"
   alias gs="git status -s"
