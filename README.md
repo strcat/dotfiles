@@ -1,4 +1,10 @@
 # Well..
+
+> [!CAUTION]
+> **nvim-old** contains the old configuration for Neovim ≤ 0.12 and uses
+> LazyVim. The configuration files under ./config/nvim are for Neovim ≥ 0.12 and
+> use vim.pack.
+
 These files are only for myself. I suggest those who want to use it to take
 it as a reference instead of using it directly.
 
