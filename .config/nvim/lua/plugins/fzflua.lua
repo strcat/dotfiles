@@ -65,7 +65,7 @@ local set = vim.keymap.set
 set('n', '<leader>,', ':FzfLua buffers<CR>', { desc = 'FzfLua Buffer' })
 set('n', '<leader>tg', ':FzfLua live_grep_native<CR>', { desc = 'FzfLua livegrep' })
 set('n', '<leader>tm', ':FzfLua marks<CR>', { desc = 'FzfLua marks' })
-set('n', '<leader>ff', ':FzfLua files<CR>', { desc = 'FzfLua Files' })
+set('n', '<leader>Ff', ':FzfLua files<CR>', { desc = 'FzfLua Files' })
 set('n', '<leader>tr', ':FzfLua resume<CR>', { desc = 'FzfLua resume' })
 set('n', '<leader>tF', function() require('fzf-lua').files { cwd = '~' } end, { desc = 'Files in $HOME' })
 set('n', '=z', ':FzfLua spell_suggest<CR>', { desc = 'Spelling Suggestion (FZF)' })
